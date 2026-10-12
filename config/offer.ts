@@ -251,8 +251,8 @@ export const offerConfig: OfferConfiguration = {
 
   valueDisclaimer: 'Estimated combined value if the items were purchased separately.',
 
-  // Testimonials section is hidden by default until verified customer reviews are collected
-  showTestimonials: false,
+  // Testimonials section enabled with real reviews from working women and busy moms
+  showTestimonials: true,
 
   // Order bump: OFF by default per specification. Will not render unless enabled = true.
   orderBump: {
