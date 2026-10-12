@@ -100,68 +100,70 @@ const completePrice = offerConfig.complete.price; // $47
       </table>
     </div>
 
-    <!-- Mobile Stacked Card View (No Horizontal Scroll) -->
-    <div class="comparison-mobile mobile-only">
-      <!-- Mobile Complete Card First -->
-      <div class="mobile-tier-card mobile-complete-card">
-        <div class="mobile-card-head">
-          <div class="mobile-badge-row">
-            <span class="badge-best-value">Best Value</span>
-            <span class="badge-savings">Save $85</span>
+    <!-- Mobile Responsive Side-by-Side Matrix Table -->
+    <div class="comparison-mobile-matrix mobile-only">
+      <div class="mobile-matrix-card">
+        <!-- Matrix Header -->
+        <div class="matrix-header-row">
+          <div class="m-col-resource">
+            <span class="m-header-label">Resource</span>
           </div>
-          <h3>Complete Kit</h3>
-          <div class="mobile-price-row">
-            <span class="m-price">${completePrice}</span>
-            <span class="m-val">Est. Value: <del>${completeVal}</del></span>
+          <div class="m-col-tier m-col-starter">
+            <span class="m-tier-title">Starter</span>
+            <span class="m-tier-price">${starterPrice}</span>
           </div>
-          <p class="m-summary">All 11 resources: choosing, setup, 38-page execution, 30-day roadmap, scripts, video tracks, and AI prompts.</p>
+          <div class="m-col-tier m-col-complete">
+            <span class="m-tier-badge">Best Value</span>
+            <span class="m-tier-title">Complete</span>
+            <span class="m-tier-price">${completePrice}</span>
+          </div>
         </div>
 
-        <div class="mobile-items-list">
-          <div class="m-group-title">All 11 Included Assets:</div>
-          {allItems.map((item) => (
-            <div class="m-item-row">
-              <div class="m-check">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
+        <!-- Matrix Rows -->
+        <div class="matrix-body">
+          {allItems.map((item, idx) => (
+            <div class={`matrix-row ${idx % 2 === 0 ? 'matrix-row-even' : 'matrix-row-odd'}`}>
+              <div class="m-col-resource">
+                <span class="m-res-name">{item.title}</span>
+                <span class="m-res-val">Est. ${item.estimatedValue}</span>
               </div>
-              <div class="m-item-name">
-                <span>{item.title}</span>
-                <span class="m-item-tag">Est. ${item.estimatedValue}</span>
+              <div class="m-col-tier m-col-starter">
+                {item.inStarter ? (
+                  <span class="m-check-icon check-starter" aria-label="Included in Starter">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </span>
+                ) : (
+                  <span class="m-dash" aria-label="Not included">&mdash;</span>
+                )}
+              </div>
+              <div class="m-col-tier m-col-complete highlight-col">
+                <span class="m-check-icon check-complete" aria-label="Included in Complete">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </span>
               </div>
             </div>
           ))}
         </div>
-      </div>
 
-      <!-- Mobile Starter Card -->
-      <div class="mobile-tier-card mobile-starter-card">
-        <div class="mobile-card-head">
-          <span class="badge-starter">Foundation Level</span>
-          <h3>Starter Kit</h3>
-          <div class="mobile-price-row">
-            <span class="m-price">${starterPrice}</span>
-            <span class="m-val">Est. Value: <del>${starterVal}</del></span>
+        <!-- Matrix Totals Footer -->
+        <div class="matrix-footer-row">
+          <div class="m-col-resource">
+            <span class="m-footer-title">Total Value</span>
+            <span class="m-footer-sub">One-time</span>
           </div>
-          <p class="m-summary">6 core foundation resources: choosing your path, 145 templates, tech stack, and checklists.</p>
-        </div>
-
-        <div class="mobile-items-list">
-          <div class="m-group-title">6 Included Foundation Assets:</div>
-          {STARTER_ITEMS.map((item) => (
-            <div class="m-item-row">
-              <div class="m-check">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-              </div>
-              <div class="m-item-name">
-                <span>{item.title}</span>
-                <span class="m-item-tag">Est. ${item.estimatedValue}</span>
-              </div>
-            </div>
-          ))}
+          <div class="m-col-tier m-col-starter">
+            <span class="m-footer-val">${starterVal}</span>
+            <span class="m-footer-price">${starterPrice}</span>
+          </div>
+          <div class="m-col-tier m-col-complete highlight-col">
+            <span class="m-footer-val">${completeVal}</span>
+            <span class="m-footer-price">${completePrice}</span>
+            <span class="m-footer-save">Save 64%</span>
+          </div>
         </div>
       </div>
     </div>
@@ -375,101 +377,170 @@ const completePrice = offerConfig.complete.price; // $47
       gap: 1.5rem;
     }
 
-    .mobile-tier-card {
+    .mobile-matrix-card {
       background: #FFFFFF;
       border: 1px solid var(--border-medium);
       border-radius: var(--radius-lg);
-      padding: 1.5rem;
       box-shadow: var(--shadow-card);
+      overflow: hidden;
     }
 
-    .mobile-complete-card {
-      border: 2px solid var(--sage-700);
-    }
-
-    .mobile-badge-row {
-      display: flex;
-      justify-content: space-between;
+    .matrix-header-row {
+      display: grid;
+      grid-template-columns: 1fr 68px 84px;
       align-items: center;
-      margin-bottom: 0.75rem;
+      background: var(--bg-surface-subtle);
+      border-bottom: 2px solid var(--border-medium);
+      padding: 0.85rem 0.65rem;
     }
 
-    .mobile-tier-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 0.35rem;
-    }
-
-    .mobile-price-row {
-      display: flex;
-      align-items: baseline;
-      gap: 0.75rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .m-price {
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: var(--text-headline);
-    }
-
-    .m-val {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .m-summary {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-      margin-bottom: 1.25rem;
-    }
-
-    .mobile-items-list {
-      border-top: 1px solid var(--border-light);
-      padding-top: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .m-group-title {
+    .m-header-label {
       font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--sage-800);
-      margin-bottom: 0.25rem;
+      color: var(--text-muted);
     }
 
-    .m-item-row {
+    .m-col-tier {
       display: flex;
-      align-items: flex-start;
-      gap: 0.65rem;
-      font-size: 0.875rem;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
 
-    .m-check {
-      flex-shrink: 0;
-      width: 18px;
-      height: 18px;
+    .m-tier-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-headline);
+      line-height: 1.2;
+    }
+
+    .m-tier-price {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-headline);
+    }
+
+    .m-tier-badge {
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--sage-900);
       background: var(--sage-100);
-      color: var(--sage-800);
+      padding: 0.15rem 0.45rem;
+      border-radius: var(--radius-pill);
+      margin-bottom: 0.2rem;
+    }
+
+    .matrix-row {
+      display: grid;
+      grid-template-columns: 1fr 68px 84px;
+      align-items: center;
+      padding: 0.7rem 0.65rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .matrix-row-even {
+      background: #FFFFFF;
+    }
+
+    .matrix-row-odd {
+      background: var(--bg-surface-subtle);
+    }
+
+    .m-col-resource {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      padding-right: 0.5rem;
+    }
+
+    .m-res-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-headline);
+      line-height: 1.35;
+    }
+
+    .m-res-val {
+      font-size: 0.7rem;
+      color: var(--text-light);
+    }
+
+    .highlight-col {
+      background: rgba(75, 94, 78, 0.04);
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .m-check-icon {
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 2px;
     }
 
-    .m-item-name {
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
+    .check-starter {
+      background: var(--sage-100);
+      color: var(--sage-800);
     }
 
-    .m-item-tag {
-      font-size: 0.75rem;
+    .check-complete {
+      background: var(--sage-700);
+      color: #FFFFFF;
+    }
+
+    .m-dash {
       color: var(--text-light);
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .matrix-footer-row {
+      display: grid;
+      grid-template-columns: 1fr 68px 84px;
+      align-items: center;
+      padding: 0.85rem 0.65rem;
+      background: var(--bg-surface-subtle);
+      border-top: 2px solid var(--border-medium);
+    }
+
+    .m-footer-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-headline);
+    }
+
+    .m-footer-sub {
+      font-size: 0.675rem;
+      color: var(--text-muted);
+    }
+
+    .m-footer-val {
+      font-size: 0.725rem;
+      color: var(--text-light);
+      text-decoration: line-through;
+    }
+
+    .m-footer-price {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-headline);
+    }
+
+    .m-footer-save {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--sage-900);
+      background: var(--sage-100);
+      padding: 0.1rem 0.35rem;
+      border-radius: var(--radius-pill);
+      margin-top: 0.15rem;
     }
   }
 

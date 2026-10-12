@@ -25,6 +25,31 @@ const isCompleteFirst = tierOrderMobile === 'complete-first';
       </div>
     )}
 
+    <!-- Mobile Segmented Tier Switcher -->
+    <div class="pricing-mobile-switcher mobile-only" role="tablist" aria-label="Select pricing tier">
+      <button
+        type="button"
+        class="switcher-tab active"
+        role="tab"
+        aria-selected="true"
+        data-target-tier="complete"
+      >
+        <span class="tab-label">Complete</span>
+        <span class="tab-price">${complete.price}</span>
+        <span class="tab-badge">Best Value</span>
+      </button>
+      <button
+        type="button"
+        class="switcher-tab"
+        role="tab"
+        aria-selected="false"
+        data-target-tier="starter"
+      >
+        <span class="tab-label">Starter</span>
+        <span class="tab-price">${starter.price}</span>
+      </button>
+    </div>
+
     <div class={`pricing-cards-container ${isCompleteFirst ? 'order-complete-mobile-first' : ''}`}>
       <!-- COMPLETE CARD ($47) -->
       <div class="pricing-card complete-card" id="card-complete">
@@ -105,6 +130,13 @@ const isCompleteFirst = tierOrderMobile === 'complete-first';
               </li>
             ))}
           </ul>
+        </div>
+
+        <!-- Mobile Switch Helper -->
+        <div class="card-switch-helper mobile-only">
+          <button type="button" class="btn-switch-inline" data-switch-to="starter">
+            Prefer the Starter Kit ($17)? Tap to switch &rarr;
+          </button>
         </div>
       </div>
 
@@ -187,6 +219,13 @@ const isCompleteFirst = tierOrderMobile === 'complete-first';
             ))}
           </ul>
         </div>
+
+        <!-- Mobile Switch Helper -->
+        <div class="card-switch-helper mobile-only">
+          <button type="button" class="btn-switch-inline" data-switch-to="complete">
+            Want the Complete Kit ($47)? Tap to switch &rarr;
+          </button>
+        </div>
       </div>
     </div>
 
@@ -218,28 +257,145 @@ const isCompleteFirst = tierOrderMobile === 'complete-first';
     margin: 0 auto;
   }
 
+  /* Mobile Segmented Switcher */
+  .pricing-mobile-switcher {
+    display: none;
+    background: #EBE7DF;
+    padding: 0.35rem;
+    border-radius: var(--radius-pill);
+    gap: 0.35rem;
+    max-width: 340px;
+    margin: 0 auto 1.5rem;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+  }
+
+  .switcher-tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.65rem 0.75rem;
+    border-radius: var(--radius-pill);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    color: var(--text-muted);
+  }
+
+  .switcher-tab.active {
+    background: #FFFFFF;
+    color: var(--text-headline);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .tab-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .tab-price {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-headline);
+  }
+
+  .tab-badge {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: var(--sage-100);
+    color: var(--sage-900);
+    padding: 0.15rem 0.4rem;
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.03em;
+  }
+
   /* On desktop: Starter left, Complete right */
   @media (min-width: 820px) {
     .pricing-cards-container {
       grid-template-columns: 1fr 1fr;
       align-items: stretch;
     }
-    /* If complete-first is configured, keep Complete on right for desktop reading, or switchable */
     .order-complete-mobile-first #card-starter {
       order: 1;
     }
     .order-complete-mobile-first #card-complete {
       order: 2;
     }
+    .card-switch-helper {
+      display: none !important;
+    }
   }
 
-  /* On mobile: If complete-first is enabled, Complete renders FIRST */
+  /* On mobile: Tab toggle switches between Complete & Starter */
   @media (max-width: 819px) {
-    .order-complete-mobile-first #card-complete {
-      order: -1;
+    .pricing-mobile-switcher {
+      display: flex;
     }
-    .order-complete-mobile-first #card-starter {
-      order: 1;
+
+    .pricing-cards-container {
+      gap: 1.25rem;
+    }
+
+    /* By default: Show Complete, Hide Starter */
+    .pricing-cards-container:not(.mobile-show-starter) .starter-card {
+      display: none !important;
+    }
+    .pricing-cards-container:not(.mobile-show-starter) .complete-card {
+      display: flex !important;
+    }
+
+    /* When Starter tab is active: Show Starter, Hide Complete */
+    .pricing-cards-container.mobile-show-starter .complete-card {
+      display: none !important;
+    }
+    .pricing-cards-container.mobile-show-starter .starter-card {
+      display: flex !important;
+    }
+
+    .pricing-card {
+      padding: 1.5rem 1.25rem;
+    }
+
+    .tier-pitch {
+      min-height: auto;
+      margin-bottom: 1rem;
+    }
+
+    .card-cta-wrap {
+      margin-bottom: 1.25rem;
+    }
+
+    .tier-item-list {
+      gap: 0.85rem;
+    }
+
+    .item-desc {
+      font-size: 0.8rem;
+      line-height: 1.4;
+      margin-top: 0.2rem;
+    }
+
+    .card-switch-helper {
+      margin-top: 1.5rem;
+      text-align: center;
+      padding-top: 1rem;
+      border-top: 1px dashed var(--border-medium);
+    }
+
+    .btn-switch-inline {
+      background: none;
+      border: none;
+      color: var(--sage-800);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0.25rem 0.5rem;
+      font-family: inherit;
     }
   }
 
@@ -453,3 +609,56 @@ const isCompleteFirst = tierOrderMobile === 'complete-first';
     margin-top: 2rem;
   }
 </style>
+
+<script is:inline>
+  function initPricingSwitchers() {
+    var sections = document.querySelectorAll('.pricing-section, .pricing-compact');
+    sections.forEach(function (sec) {
+      var container = sec.querySelector('.pricing-cards-container');
+      var switcher = sec.querySelector('.pricing-mobile-switcher');
+      if (!container || !switcher) return;
+
+      var tabs = switcher.querySelectorAll('.switcher-tab');
+      var switchBtns = sec.querySelectorAll('.btn-switch-inline');
+
+      function setTier(tier) {
+        tabs.forEach(function (tab) {
+          var isMatch = tab.getAttribute('data-target-tier') === tier;
+          tab.classList.toggle('active', isMatch);
+          tab.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+        });
+
+        if (tier === 'starter') {
+          container.classList.add('mobile-show-starter');
+        } else {
+          container.classList.remove('mobile-show-starter');
+        }
+      }
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          var targetTier = tab.getAttribute('data-target-tier') || 'complete';
+          setTier(targetTier);
+        });
+      });
+
+      switchBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var targetTier = btn.getAttribute('data-switch-to') || 'complete';
+          setTier(targetTier);
+          // Smooth scroll to card top on mobile switch
+          var targetCard = sec.querySelector(targetTier === 'starter' ? '.starter-card' : '.complete-card');
+          if (targetCard) {
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPricingSwitchers);
+  } else {
+    initPricingSwitchers();
+  }
+</script>
