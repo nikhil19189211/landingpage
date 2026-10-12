@@ -1,5 +1,39 @@
 ---
 // Problem Section - General Observations (Strict Meta Compliance: No "Are you...?" statements)
+
+interface ProblemItem {
+  icon: 'noise' | 'clock' | 'shield' | 'target';
+  title: string;
+  subtitle: string;
+  desc: string;
+}
+
+const PROBLEMS: ProblemItem[] = [
+  {
+    icon: 'noise',
+    title: 'Endless conflicting noise',
+    subtitle: 'Funnels, dances & subscriptions',
+    desc: 'One person insists you need complicated sales funnels, another says you need daily video dances, and a third pushes expensive monthly subscriptions.'
+  },
+  {
+    icon: 'clock',
+    title: 'Strictly limited quiet time',
+    subtitle: 'Zero margin for complex setups',
+    desc: 'When free hours have to be carved out in small pockets around existing daily responsibilities, there is zero margin for complex technical setups that take weeks to figure out.'
+  },
+  {
+    icon: 'shield',
+    title: 'Fatigue from unrealistic hype',
+    subtitle: 'Overnight claims & schemes',
+    desc: 'The internet is flooded with overnight claims and questionable schemes, making it exhausting to identify what is actually grounded, honest, and legitimate.'
+  },
+  {
+    icon: 'target',
+    title: 'Decision paralysis',
+    subtitle: 'Stuck researching for months',
+    desc: 'Trying to evaluate endless different business ideas all at once usually results in researching for months without ever launching a single offer.'
+  }
+];
 ---
 
 <section class="section section-problem" aria-label="The Reality of Starting From Home">
@@ -16,54 +50,42 @@
         </p>
 
         <ul class="problem-points" role="list">
-          <li class="problem-point">
-            <div class="point-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="8" x2="12" y2="12"></line>
-                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-              </svg>
-            </div>
-            <div>
-              <strong>Endless conflicting noise:</strong> One person insists you need complicated sales funnels, another says you need daily video dances, and a third pushes expensive monthly subscriptions.
-            </div>
-          </li>
-
-          <li class="problem-point">
-            <div class="point-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg>
-            </div>
-            <div>
-              <strong>Strictly limited quiet time:</strong> When free hours have to be carved out in small pockets around existing daily responsibilities, there is zero margin for complex technical setups that take weeks to figure out.
-            </div>
-          </li>
-
-          <li class="problem-point">
-            <div class="point-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-              </svg>
-            </div>
-            <div>
-              <strong>Fatigue from unrealistic hype:</strong> The internet is flooded with overnight claims and questionable schemes, making it exhausting to identify what is actually grounded, honest, and legitimate.
-            </div>
-          </li>
-
-          <li class="problem-point">
-            <div class="point-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                <polyline points="2 17 12 22 22 17"></polyline>
-                <polyline points="2 12 12 17 22 12"></polyline>
-              </svg>
-            </div>
-            <div>
-              <strong>Decision paralysis:</strong> Trying to evaluate endless different business ideas all at once usually results in researching for months without ever launching a single offer.
-            </div>
-          </li>
+          {PROBLEMS.map((item) => (
+            <li class="problem-point">
+              <div class="point-icon" aria-hidden="true">
+                {item.icon === 'noise' && (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                  </svg>
+                )}
+                {item.icon === 'clock' && (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                )}
+                {item.icon === 'shield' && (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  </svg>
+                )}
+                {item.icon === 'target' && (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                    <polyline points="2 17 12 22 22 17"></polyline>
+                    <polyline points="2 12 12 17 22 12"></polyline>
+                  </svg>
+                )}
+              </div>
+              <div class="point-body">
+                <strong class="point-title">{item.title}</strong>
+                <span class="point-sub mobile-only">{item.subtitle}</span>
+                <span class="point-desc desktop-only">: {item.desc}</span>
+              </div>
+            </li>
+          ))}
         </ul>
 
         <div class="problem-takeaway">
@@ -82,18 +104,20 @@
     border-bottom: 1px solid var(--border-light);
   }
 
+  /* Responsive visibility utilities */
+  .mobile-only {
+    display: none;
+  }
+
+  .desktop-only {
+    display: inline;
+  }
+
   .problem-card {
     background: #FFFFFF;
     border: 1px solid var(--border-medium);
     border-radius: var(--radius-lg);
-    padding: 2.25rem 1.5rem;
     box-shadow: var(--shadow-card);
-  }
-
-  @media (min-width: 640px) {
-    .problem-card {
-      padding: 3rem 2.5rem;
-    }
   }
 
   .problem-header {
@@ -106,49 +130,38 @@
   }
 
   .problem-lead {
-    font-size: 1.05rem;
-    line-height: 1.6;
     color: var(--text-body);
-    margin-bottom: 1.75rem;
     text-align: center;
   }
 
   .problem-points {
     list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
+    padding: 0;
+    margin: 0;
   }
 
   .problem-point {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1rem;
     background: var(--bg-surface-subtle);
     border: 1px solid var(--border-light);
     border-radius: var(--radius-md);
-    font-size: 0.95rem;
-    line-height: 1.55;
     color: var(--text-body);
   }
 
   .point-icon {
-    flex-shrink: 0;
-    width: 32px;
-    height: 32px;
     background: var(--sage-100);
     color: var(--sage-800);
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .point-title {
+    color: var(--text-headline);
   }
 
   .problem-takeaway {
-    margin-top: 2rem;
-    padding: 1.25rem;
     background: var(--sage-50);
     border: 1px dashed var(--sage-300);
     border-radius: var(--radius-md);
@@ -157,9 +170,139 @@
 
   .problem-takeaway p {
     font-family: var(--font-serif);
-    font-size: 1.15rem;
     font-style: italic;
     color: var(--sage-800);
     margin: 0;
+  }
+
+  /* Mobile Screen (< 640px): 2x2 Grid with punchy points and compact footprint */
+  @media (max-width: 639px) {
+    .mobile-only {
+      display: block !important;
+    }
+
+    .desktop-only {
+      display: none !important;
+    }
+
+    .problem-card {
+      padding: 1.5rem 1rem;
+    }
+
+    .problem-header {
+      margin-bottom: 1.15rem;
+    }
+
+    .problem-lead {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 1.15rem;
+    }
+
+    .problem-points {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.55rem;
+    }
+
+    .problem-point {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.45rem;
+      padding: 0.85rem 0.75rem;
+    }
+
+    .point-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+    }
+
+    .point-icon svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .point-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .point-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .point-sub {
+      font-size: 0.715rem;
+      line-height: 1.3;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .problem-takeaway {
+      margin-top: 1.25rem;
+      padding: 1rem 0.85rem;
+    }
+
+    .problem-takeaway p {
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+  }
+
+  /* Desktop Screen (>= 640px): Full horizontal cards with complete paragraph explanations */
+  @media (min-width: 640px) {
+    .problem-card {
+      padding: 3rem 2.5rem;
+    }
+
+    .problem-lead {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 1.75rem;
+    }
+
+    .problem-points {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .problem-point {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem;
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .point-icon {
+      width: 32px;
+      height: 32px;
+      margin-top: 2px;
+    }
+
+    .point-title {
+      font-size: 0.95rem;
+    }
+
+    .point-desc {
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .problem-takeaway {
+      margin-top: 2rem;
+      padding: 1.25rem;
+    }
+
+    .problem-takeaway p {
+      font-size: 1.15rem;
+    }
   }
 </style>
