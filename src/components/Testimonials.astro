@@ -1,6 +1,6 @@
 ---
 // Testimonials Component
-// Real reviews from working women and busy moms using authentic user-provided photos.
+// Real reviews from working women and busy moms with a calm, seamless left-to-right sliding animation.
 import { offerConfig } from '../../config/offer';
 
 interface ReviewItem {
@@ -99,7 +99,7 @@ const shouldRender = offerConfig.showTestimonials && REVIEWS.length > 0;
 
         <!-- Trust Indicator Bar -->
         <div class="trust-summary-bar">
-          <div class="stars-cluster">
+          <div class="stars-cluster" aria-label="5 out of 5 rating">
             <svg class="star-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
             </svg>
@@ -123,57 +123,120 @@ const shouldRender = offerConfig.showTestimonials && REVIEWS.length > 0;
           <span class="trust-meta">Real Working Women & Busy Moms</span>
         </div>
       </div>
+    </div>
 
-      <div class="reviews-grid">
-        {REVIEWS.map((review) => (
-          <article class="review-card" aria-label={`Review by ${review.name}`}>
-            <div class="review-top">
-              <div class="author-row">
-                <img
-                  src={review.image}
-                  alt={`Photo of ${review.name}`}
-                  class="author-avatar"
-                  width="54"
-                  height="54"
-                  loading="lazy"
-                />
-                <div class="author-details">
-                  <div class="author-name-line">
-                    <span class="author-name">{review.name}</span>
-                    <span class="badge-verified">
-                      <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                      </svg>
-                      Verified Reader
-                    </span>
+    <!-- Smooth Left-to-Right Sliding Marquee (Calm & Continuous) -->
+    <div class="reviews-slider-outer" role="region" aria-label="Customer review cards slider">
+      <div class="reviews-marquee-track" id="reviews-track">
+        <!-- First Set of 6 Cards -->
+        <div class="reviews-track-group">
+          {REVIEWS.map((review) => (
+            <article class="review-card" aria-label={`Review by ${review.name}`}>
+              <div class="review-top">
+                <div class="author-row">
+                  <img
+                    src={review.image}
+                    alt={`Photo of ${review.name}`}
+                    class="author-avatar"
+                    width="54"
+                    height="54"
+                    loading="lazy"
+                  />
+                  <div class="author-details">
+                    <div class="author-name-line">
+                      <span class="author-name">{review.name}</span>
+                      <span class="badge-verified">
+                        <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        Verified Reader
+                      </span>
+                    </div>
+                    <div class="author-role">{review.role}</div>
+                    <div class="author-location">{review.location}</div>
                   </div>
-                  <div class="author-role">{review.role}</div>
-                  <div class="author-location">{review.location}</div>
+                </div>
+
+                <div class="review-rating-row">
+                  <div class="stars-row" aria-label="5 out of 5 stars">
+                    {[...Array(review.rating)].map(() => (
+                      <svg class="star-icon-small" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <span class="tag-highlight">{review.highlightTag}</span>
                 </div>
               </div>
 
-              <div class="review-rating-row">
-                <div class="stars-row" aria-label="5 out of 5 stars">
-                  {[...Array(review.rating)].map(() => (
-                    <svg class="star-icon-small" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
+              <h3 class="review-headline">"{review.headline}"</h3>
+
+              <blockquote class="review-quote">
+                {review.quote}
+              </blockquote>
+            </article>
+          ))}
+        </div>
+
+        <!-- Cloned Set of 6 Cards for Seamless Infinite Left-to-Right Loop -->
+        <div class="reviews-track-group" aria-hidden="true">
+          {REVIEWS.map((review) => (
+            <article class="review-card" tabindex="-1">
+              <div class="review-top">
+                <div class="author-row">
+                  <img
+                    src={review.image}
+                    alt=""
+                    class="author-avatar"
+                    width="54"
+                    height="54"
+                    loading="lazy"
+                  />
+                  <div class="author-details">
+                    <div class="author-name-line">
+                      <span class="author-name">{review.name}</span>
+                      <span class="badge-verified">
+                        <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        Verified Reader
+                      </span>
+                    </div>
+                    <div class="author-role">{review.role}</div>
+                    <div class="author-location">{review.location}</div>
+                  </div>
                 </div>
-                <span class="tag-highlight">{review.highlightTag}</span>
+
+                <div class="review-rating-row">
+                  <div class="stars-row" aria-hidden="true">
+                    {[...Array(review.rating)].map(() => (
+                      <svg class="star-icon-small" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <span class="tag-highlight">{review.highlightTag}</span>
+                </div>
               </div>
-            </div>
 
-            <h3 class="review-headline">"{review.headline}"</h3>
+              <h3 class="review-headline">"{review.headline}"</h3>
 
-            <blockquote class="review-quote">
-              {review.quote}
-            </blockquote>
-          </article>
-        ))}
+              <blockquote class="review-quote">
+                {review.quote}
+              </blockquote>
+            </article>
+          ))}
+        </div>
       </div>
 
-      <!-- Bottom Context Note -->
+      <!-- Hover / Tap to Pause Indicator Note -->
+      <div class="slider-pause-hint">
+        <span>Hover or tap any card to pause</span>
+      </div>
+    </div>
+
+    <!-- Bottom Context Note -->
+    <div class="container">
       <div class="reviews-compliance-note">
         <p>
           Individual experiences vary based on individual time commitment, consistency, and execution. Real readers who purchased the system. No compensation or incentives were provided for these reviews.
@@ -188,7 +251,8 @@ const shouldRender = offerConfig.showTestimonials && REVIEWS.length > 0;
     background-color: var(--bg-surface-subtle);
     border-top: 1px solid var(--border-light);
     border-bottom: 1px solid var(--border-light);
-    padding: 5rem 0;
+    padding: 5rem 0 4rem;
+    overflow-x: hidden;
   }
 
   .section-header {
@@ -272,16 +336,50 @@ const shouldRender = offerConfig.showTestimonials && REVIEWS.length > 0;
     color: var(--text-muted);
   }
 
-  /* Grid Layout: 3 on top row, 2 centered on second row on desktop */
-  .reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 1.5rem;
-    max-width: 1040px;
-    margin: 0 auto;
+  /* ========================================================
+     SLIDING MARQUEE: From Left to Right (Calm & Not Too Fast)
+     ======================================================== */
+  .reviews-slider-outer {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 1rem 0 0.5rem;
+    /* Soft edge fades so cards glide gracefully into view */
+    mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
   }
 
-  /* Review Card */
+  .reviews-marquee-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+    /* Calm, smooth glide from left to right: 60s per complete cycle */
+    animation: slideLeftToRight 60s linear infinite;
+  }
+
+  /* Pause sliding smoothly on hover or touch focus so user can read */
+  .reviews-marquee-track:hover,
+  .reviews-marquee-track:focus-within {
+    animation-play-state: paused;
+  }
+
+  /* Left-to-right motion: translates from -50% to 0% */
+  @keyframes slideLeftToRight {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+
+  .reviews-track-group {
+    display: flex;
+    gap: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  /* Review Card Inside Slider */
   .review-card {
     background: #FFFFFF;
     border: 1px solid var(--border-medium);
@@ -290,12 +388,17 @@ const shouldRender = offerConfig.showTestimonials && REVIEWS.length > 0;
     box-shadow: var(--shadow-subtle);
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 360px;
+    min-width: 360px;
+    max-width: 360px;
+    flex-shrink: 0;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   }
 
   .review-card:hover {
-    box-shadow: var(--shadow-card);
-    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(44, 62, 47, 0.1);
+    transform: translateY(-3px);
+    border-color: var(--sage-300);
   }
 
   .review-top {
@@ -417,9 +520,16 @@ const shouldRender = offerConfig.showTestimonials && REVIEWS.length > 0;
     flex: 1;
   }
 
+  .slider-pause-hint {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-top: 1rem;
+  }
+
   /* Compliance / Disclaimer Note */
   .reviews-compliance-note {
-    margin-top: 2.5rem;
+    margin-top: 2rem;
     text-align: center;
     max-width: 720px;
     margin-left: auto;
@@ -435,7 +545,7 @@ const shouldRender = offerConfig.showTestimonials && REVIEWS.length > 0;
   /* Mobile Tuning */
   @media (max-width: 640px) {
     .section-testimonials {
-      padding: 3.5rem 0;
+      padding: 3.5rem 0 3rem;
     }
     .trust-summary-bar {
       border-radius: var(--radius-md);
@@ -445,16 +555,29 @@ const shouldRender = offerConfig.showTestimonials && REVIEWS.length > 0;
     .trust-divider {
       display: none;
     }
-    .reviews-grid {
-      grid-template-columns: 1fr;
-      gap: 1.15rem;
+    .reviews-slider-outer {
+      mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+    }
+    .reviews-track-group {
+      gap: 1rem;
+      padding-right: 1rem;
     }
     .review-card {
+      width: 310px;
+      min-width: 310px;
+      max-width: 310px;
       padding: 1.35rem;
     }
     .author-avatar {
       width: 48px;
       height: 48px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reviews-marquee-track {
+      animation-play-state: paused !important;
     }
   }
 </style>
