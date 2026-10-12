@@ -154,12 +154,9 @@ const VAULT_RESOURCES: VaultResource[] = [
                 )}
               </div>
 
-              <div class="badge-row">
-                <span class="card-step-indicator mobile-only">Card {idx + 1} of 6</span>
-                <span class={`vault-badge ${item.isUpsell ? 'badge-upsell-premium' : 'badge-base-clean'}`}>
-                  {item.badge}
-                </span>
-              </div>
+              <span class={`vault-badge ${item.isUpsell ? 'badge-upsell-premium' : 'badge-base-clean'}`}>
+                {item.badge}
+              </span>
             </div>
 
             <h3 class="vault-resource-title">{item.name}</h3>
@@ -179,45 +176,18 @@ const VAULT_RESOURCES: VaultResource[] = [
         ))}
       </div>
 
-      <!-- Mobile Navigation Bar (1 Card at a time controls) -->
-      <div class="vault-mobile-controls mobile-only" aria-label="Carousel navigation">
-        <button
-          type="button"
-          class="vault-nav-btn btn-prev"
-          id="vault-prev-btn"
-          aria-label="Previous card"
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </button>
-
-        <div class="vault-nav-center">
-          <div class="vault-dots" role="tablist" aria-label="Card pagination">
-            {VAULT_RESOURCES.map((_, dotIdx) => (
-              <button
-                type="button"
-                class={`vault-dot ${dotIdx === 0 ? 'active' : ''}`}
-                data-dot-index={dotIdx}
-                role="tab"
-                aria-selected={dotIdx === 0 ? 'true' : 'false'}
-                aria-label={`Go to card ${dotIdx + 1}`}
-              ></button>
-            ))}
-          </div>
-          <span class="vault-counter" id="vault-counter-text">1 of 6</span>
-        </div>
-
-        <button
-          type="button"
-          class="vault-nav-btn btn-next"
-          id="vault-next-btn"
-          aria-label="Next card"
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
+      <!-- Mobile Pagination Dots -->
+      <div class="vault-dots mobile-only" role="tablist" aria-label="Card pagination">
+        {VAULT_RESOURCES.map((_, dotIdx) => (
+          <button
+            type="button"
+            class={`vault-dot ${dotIdx === 0 ? 'active' : ''}`}
+            data-dot-index={dotIdx}
+            role="tab"
+            aria-selected={dotIdx === 0 ? 'true' : 'false'}
+            aria-label={`Go to resource ${dotIdx + 1}`}
+          ></button>
+        ))}
       </div>
 
       <div class="vault-mobile-hint mobile-only">
@@ -294,22 +264,6 @@ const VAULT_RESOURCES: VaultResource[] = [
     align-items: center;
     gap: 0.75rem;
     margin-bottom: 1.25rem;
-  }
-
-  .badge-row {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .card-step-indicator {
-    font-size: 0.725rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    background: var(--bg-surface-subtle);
-    padding: 0.2rem 0.5rem;
-    border-radius: var(--radius-pill);
-    border: 1px solid var(--border-light);
   }
 
   /* Refined Icon Containers */
@@ -478,58 +432,12 @@ const VAULT_RESOURCES: VaultResource[] = [
       min-height: 380px;
     }
 
-    .vault-mobile-controls {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      background: #FFFFFF;
-      border: 1px solid var(--border-medium);
-      border-radius: var(--radius-pill);
-      padding: 0.4rem 0.75rem;
-      max-width: 280px;
-      margin: 0.75rem auto 0;
-      box-shadow: var(--shadow-subtle);
-    }
-
-    .vault-nav-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 1px solid var(--border-medium);
-      background: var(--bg-surface-subtle);
-      color: var(--text-headline);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      flex-shrink: 0;
-    }
-
-    .vault-nav-btn:hover,
-    .vault-nav-btn:active {
-      background: var(--sage-100);
-      color: var(--sage-900);
-      border-color: var(--sage-300);
-    }
-
-    .vault-nav-btn:disabled {
-      opacity: 0.35;
-      cursor: not-allowed;
-    }
-
-    .vault-nav-center {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.2rem;
-    }
-
     .vault-dots {
       display: flex;
       align-items: center;
-      gap: 0.35rem;
+      justify-content: center;
+      gap: 0.45rem;
+      margin: 1rem auto 0;
     }
 
     .vault-dot {
@@ -544,14 +452,8 @@ const VAULT_RESOURCES: VaultResource[] = [
     }
 
     .vault-dot.active {
-      width: 20px;
+      width: 22px;
       background: var(--sage-800);
-    }
-
-    .vault-counter {
-      font-size: 0.725rem;
-      font-weight: 700;
-      color: var(--text-muted);
     }
 
     .vault-mobile-hint {
@@ -574,11 +476,8 @@ const VAULT_RESOURCES: VaultResource[] = [
 <script is:inline>
   (function initVaultCarousel() {
     const track = document.getElementById('vault-track');
-    const prevBtn = document.getElementById('vault-prev-btn');
-    const nextBtn = document.getElementById('vault-next-btn');
-    const counterText = document.getElementById('vault-counter-text');
     const dots = document.querySelectorAll('.vault-dot');
-    if (!track || !prevBtn || !nextBtn) return;
+    if (!track || dots.length === 0) return;
 
     const cards = track.querySelectorAll('.vault-card');
     const total = cards.length;
@@ -595,15 +494,6 @@ const VAULT_RESOURCES: VaultResource[] = [
         dot.classList.toggle('active', isActive);
         dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
       });
-
-      // Update counter
-      if (counterText) {
-        counterText.textContent = `${currentIndex + 1} of ${total}`;
-      }
-
-      // Update button disabled state
-      prevBtn.disabled = currentIndex === 0;
-      nextBtn.disabled = currentIndex === total - 1;
     }
 
     function scrollToIndex(index) {
@@ -618,9 +508,6 @@ const VAULT_RESOURCES: VaultResource[] = [
       }
     }
 
-    prevBtn.addEventListener('click', () => scrollToIndex(currentIndex - 1));
-    nextBtn.addEventListener('click', () => scrollToIndex(currentIndex + 1));
-
     dots.forEach((dot) => {
       dot.addEventListener('click', () => {
         const targetIdx = parseInt(dot.getAttribute('data-dot-index') || '0', 10);
@@ -628,7 +515,7 @@ const VAULT_RESOURCES: VaultResource[] = [
       });
     });
 
-    // Detect scroll end to sync dots & buttons
+    // Detect scroll end to sync dots
     let scrollTimeout;
     track.addEventListener('scroll', () => {
       clearTimeout(scrollTimeout);
