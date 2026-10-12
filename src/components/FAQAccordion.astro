@@ -1,0 +1,144 @@
+---
+// FAQ Accordion - 8 Questions (Accessible HTML details/summary)
+
+const FAQS = [
+  {
+    q: 'What format are the materials, and how are they delivered?',
+    a: 'Everything is delivered digitally as high-resolution PDF guides, checklists, and editable template documents (Google Docs and text formats). Immediately after completing your order, you will receive an email with direct download links. You can read them on your smartphone, tablet, e-reader, or computer, or print them out.'
+  },
+  {
+    q: 'Is this really suitable for complete beginners with no online experience?',
+    a: 'Yes. It was specifically built from the ground up for people who have never earned an independent dollar online. We do not assume prior knowledge of marketing, coding, or graphic design. Every term is explained simply, and every tool recommended has a zero-cost learning curve.'
+  },
+  {
+    q: 'Do I need extra money or paid software to start?',
+    a: 'No. The entire system is built around The Zero-Dollar Tech Stack. Regardless of which model you choose, we provide tested, reputable free tools and free tiers so you can launch and begin pitching without spending money on software subscriptions.'
+  },
+  {
+    q: 'How much time do I realistically need to put in each week?',
+    a: 'Most readers work in pockets of 60 to 90 minutes per day (around 5 to 7 hours per week). The 30-Day First Dollar Momentum Roadmap includes 30-minute, 60-minute, and 90-minute options for every single daily task so you can adjust depending on what your day looks like.'
+  },
+  {
+    q: 'What is the main difference between Starter and Complete?',
+    a: 'Starter helps you choose your path and get set up with the foundational guides, checklists, and 145 fill-in templates. Complete adds the deep 38-page execution blueprints, the day-by-day 30-day roadmap, 9 commercial pitch scripts, 21 curated video tutorials, and 60+ AI prompts to follow through without second-guessing.'
+  },
+  {
+    q: 'Can I start with Starter and upgrade to Complete later?',
+    a: 'Yes. When you purchase the Starter Kit, you will be offered a special post-purchase credit to upgrade for just $30 (making your total $47). If you decline, you can still purchase Complete later from our site at its standard standalone price of $47.'
+  },
+  {
+    q: 'How does the refund process work if it is not right for me?',
+    a: 'Since this is a digital product delivered instantly via email, all sales are generally final. If you experience any technical issue accessing your files, assistance is provided directly through your checkout receipt.'
+  },
+  {
+    q: 'Are results or specific earnings guaranteed?',
+    a: 'No. We do not make false guarantees or hype promises. Success depends entirely on your own consistent execution, the path you select, the skills you develop, and real market factors. What we do provide is honest, structured, high-value guidance to help you get started with confidence.'
+  }
+];
+---
+
+<section class="section section-sage" id="faq">
+  <div class="container-narrow">
+    <div class="section-header">
+      <span class="section-label">Questions & Answers</span>
+      <h2>Frequently Asked Questions</h2>
+      <p>Clear, direct answers so you can make an informed decision.</p>
+    </div>
+
+    <div class="faq-list" role="region" aria-label="Frequently Asked Questions list">
+      {FAQS.map((item, index) => (
+        <details class="faq-item" id={`faq-${index + 1}`}>
+          <summary class="faq-question">
+            <span class="faq-q-text">{item.q}</span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </span>
+          </summary>
+          <div class="faq-answer">
+            <p>{item.a}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .faq-item {
+    background: #FFFFFF;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: border-color 0.15s ease;
+  }
+
+  .faq-item[open] {
+    border-color: var(--sage-700);
+    box-shadow: var(--shadow-subtle);
+  }
+
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-headline);
+    cursor: pointer;
+    user-select: none;
+    list-style: none; /* removes native triangle */
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-q-text {
+    flex: 1;
+    padding-right: 1rem;
+    line-height: 1.4;
+  }
+
+  .faq-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    background: var(--sage-50);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sage-800);
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    background: var(--terracotta-subtle);
+    color: var(--terracotta);
+  }
+
+  .faq-answer {
+    padding: 0 1.5rem 1.35rem 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-body);
+    border-top: 1px solid var(--border-light);
+    margin-top: 0.25rem;
+    padding-top: 1rem;
+  }
+
+  .faq-answer p {
+    margin: 0;
+  }
+</style>

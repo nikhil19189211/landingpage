@@ -1,0 +1,154 @@
+---
+// International Cookie Consent Banner (UK, EU, CA, AU Compliant)
+---
+
+<div class="cookie-consent-bar" id="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie Preferences">
+  <div class="container consent-inner">
+    <div class="consent-text">
+      <p>
+        We use essential cookies to securely deliver your digital files and optional analytics to measure site traffic. We never sell your personal data. Read our <a href="/privacy">Privacy Policy</a> for full details.
+      </p>
+    </div>
+    <div class="consent-actions">
+      <button type="button" class="btn-consent-decline" id="btn-consent-decline">
+        Essential Only
+      </button>
+      <button type="button" class="btn-consent-accept" id="btn-consent-accept">
+        Accept All
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    const banner = document.getElementById('cookie-banner');
+    const acceptBtn = document.getElementById('btn-consent-accept');
+    const declineBtn = document.getElementById('btn-consent-decline');
+
+    if (!banner || !acceptBtn || !declineBtn) return;
+
+    try {
+      const consent = localStorage.getItem('hfi_cookie_consent');
+      if (!consent) {
+        // Show banner after short delay
+        setTimeout(() => banner.classList.add('visible'), 500);
+      } else if (consent === 'accepted') {
+        // Already accepted in past session, trigger page events
+        if (typeof window.trackFunnelEvent === 'function') {
+          window.trackFunnelEvent('PageView');
+        }
+      }
+    } catch (e) {
+      console.warn('Consent check error', e);
+    }
+
+    function saveChoice(status) {
+      try {
+        localStorage.setItem('hfi_cookie_consent', status);
+      } catch (e) {}
+      banner.classList.remove('visible');
+
+      if (status === 'accepted' && typeof window.trackFunnelEvent === 'function') {
+        window.trackFunnelEvent('PageView');
+        window.trackFunnelEvent('ViewContent', {
+          content_name: 'Her First Income Landing Page',
+          content_category: 'Offer'
+        });
+      }
+    }
+
+    acceptBtn.addEventListener('click', () => saveChoice('accepted'));
+    declineBtn.addEventListener('click', () => saveChoice('declined'));
+  })();
+</script>
+
+<style>
+  .cookie-consent-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #24201D;
+    color: #E2DDD6;
+    border-top: 1px solid #38322D;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
+    padding: 1rem 1.25rem;
+    transform: translateY(120%);
+    transition: transform 0.3s ease;
+  }
+
+  .cookie-consent-bar.visible {
+    transform: translateY(0);
+  }
+
+  .consent-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  @media (min-width: 768px) {
+    .consent-inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+  }
+
+  .consent-text p {
+    font-size: 0.825rem;
+    line-height: 1.5;
+    color: #CFC7BD;
+    margin: 0;
+  }
+
+  .consent-text a {
+    color: #F1A38E;
+    text-decoration: underline;
+  }
+
+  .consent-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .btn-consent-decline {
+    min-height: 40px;
+    padding: 0.5rem 1rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #CFC7BD;
+    background: transparent;
+    border: 1px solid #574F47;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  .btn-consent-decline:hover {
+    background: #332D28;
+    color: #FFFFFF;
+  }
+
+  .btn-consent-accept {
+    min-height: 40px;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: var(--terracotta);
+    border: 1px solid var(--terracotta-hover);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  .btn-consent-accept:hover {
+    background: var(--terracotta-hover);
+  }
+</style>

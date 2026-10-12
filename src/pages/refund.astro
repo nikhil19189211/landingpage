@@ -1,0 +1,89 @@
+---
+// Refund Policy Page (/refund) - Digital Product Policy
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { offerConfig } from '../../config/offer';
+
+const { productName } = offerConfig;
+---
+
+<BaseLayout
+  title={`Refund Policy | ${productName}`}
+  description={`Refund policy for ${productName}. Digital product delivery and support contact information.`}
+>
+  <div class="container-narrow legal-container">
+    <div class="legal-card">
+      <span class="section-label">Our Policy</span>
+      <h1>Refund Policy</h1>
+      <p class="legal-updated">Last Updated: October 2026</p>
+
+      <section class="legal-section">
+        <h2>Digital Product — All Sales Final</h2>
+        <p>
+          Because <strong>{productName}</strong> is a digital product delivered instantly via email upon purchase, all sales are generally considered final. Once the download links have been sent, the product has been fully delivered.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>Technical Issues</h2>
+        <p>
+          If you experience any technical difficulty accessing or downloading your files, assistance is provided directly through your checkout receipt portal to ensure you receive full access to the materials you purchased.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>Duplicate Purchases</h2>
+        <p>
+          If you accidentally purchased the same product twice, please submit a request through your checkout provider receipt with your order details. Duplicate charges will be promptly refunded.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>Order Assistance</h2>
+        <p>
+          For any questions regarding order delivery or accessing your files, please manage your order directly through your purchase confirmation receipt portal.
+        </p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .legal-container {
+    padding: 3.5rem 0 5rem;
+  }
+  .legal-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem 1.75rem;
+    box-shadow: var(--shadow-card);
+  }
+  @media (min-width: 640px) {
+    .legal-card {
+      padding: 3.5rem 3rem;
+    }
+  }
+  .legal-card h1 {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    margin: 0.5rem 0 0.5rem;
+  }
+  .legal-updated {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 2.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .legal-section {
+    margin-bottom: 2rem;
+  }
+  .legal-section h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
+  }
+  .legal-section p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--text-body);
+  }
+</style>

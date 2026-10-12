@@ -1,0 +1,106 @@
+---
+// Terms of Service Page (/terms)
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { offerConfig } from '../../config/offer';
+
+const { productName } = offerConfig;
+---
+
+<BaseLayout
+  title={`Terms of Service | ${productName}`}
+  description={`Terms of Service for ${productName}. Single-user digital license, intellectual property guidelines, and disclaimers.`}
+>
+  <div class="container-narrow legal-container">
+    <div class="legal-card">
+      <span class="section-label">Legal Documentation</span>
+      <h1>Terms of Service</h1>
+      <p class="legal-updated">Last Updated: October 2026</p>
+
+      <section class="legal-section">
+        <h2>1. Acceptance of Terms</h2>
+        <p>
+          By accessing or purchasing digital resources from <strong>{productName}</strong>, you agree to be bound by these Terms of Service. If you do not agree with any part of these terms, please do not purchase or use our materials.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>2. Single-User Digital License</h2>
+        <p>
+          Upon purchasing, you are granted a non-exclusive, non-transferable, single-user revocable license to download, read, and utilize the guides, checklists, and templates for your own personal or independent business operations.
+        </p>
+        <p>
+          <strong>Restrictions:</strong> You may NOT resell, redistribute, sub-license, upload to public file-sharing networks, share log-in access, or repackage the copyrighted text, guides, or video compilations as your own commercial product.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>3. Educational Nature & Earnings Disclaimer</h2>
+        <p>
+          All materials provided within {productName} are strictly for educational and informational purposes. We do not guarantee specific income outcomes, financial milestones, or client acquisitions. Results depend entirely on individual application, skillset, background, and external economic variables.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>4. No Professional Financial, Legal, or Tax Advice</h2>
+        <p>
+          The content of these guides does not constitute professional accounting, tax, legal, or investment advice. Readers are responsible for consulting qualified local accountants or legal counsel regarding registration, sales tax, self-employment taxes, and local business regulations.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>5. Refund Policy</h2>
+        <p>
+          Due to the instant digital nature of this product, all sales are generally final. If you experience a technical issue with accessing your files, assistance is provided directly via your checkout order confirmation. Please refer to our <a href="/refund">Refund Policy</a> for complete details.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>6. Inquiries</h2>
+        <p>
+          Questions concerning these Terms of Service or order delivery should be directed through your checkout portal.
+        </p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .legal-container {
+    padding: 3.5rem 0 5rem;
+  }
+  .legal-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem 1.75rem;
+    box-shadow: var(--shadow-card);
+  }
+  @media (min-width: 640px) {
+    .legal-card {
+      padding: 3.5rem 3rem;
+    }
+  }
+  .legal-card h1 {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    margin: 0.5rem 0 0.5rem;
+  }
+  .legal-updated {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 2.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .legal-section {
+    margin-bottom: 2rem;
+  }
+  .legal-section h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
+  }
+  .legal-section p, .legal-section li {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--text-body);
+  }
+</style>

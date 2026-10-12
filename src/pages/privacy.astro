@@ -1,0 +1,119 @@
+---
+// Privacy Policy Page (/privacy) - Compliant for UK, EU, US, CA, and AU visitors
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { offerConfig } from '../../config/offer';
+
+const { productName } = offerConfig;
+---
+
+<BaseLayout
+  title={`Privacy Policy | ${productName}`}
+  description={`Privacy Policy for ${productName}. Learn how we protect your personal information and uphold your privacy rights.`}
+>
+  <div class="container-narrow legal-container">
+    <div class="legal-card">
+      <span class="section-label">Legal Documentation</span>
+      <h1>Privacy Policy</h1>
+      <p class="legal-updated">Last Updated: October 2026</p>
+
+      <section class="legal-section">
+        <h2>1. Overview & Commitment</h2>
+        <p>
+          At <strong>{productName}</strong> ("we," "our," or "us"), we respect your privacy and are committed to protecting any personal information you share with us. This Privacy Policy details our data collection, usage, and safeguarding practices across our websites, checkout processes, and email communications.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>2. Information We Collect</h2>
+        <p>When you browse our website or purchase digital materials, we collect:</p>
+        <ul>
+          <li><strong>Order & Contact Data:</strong> Your name, email address, and billing country provided at checkout for digital file fulfillment.</li>
+          <li><strong>Payment Information:</strong> All payment transactions are securely handled by our PCI-compliant third-party checkout processors (e.g., Lemon Squeezy, Gumroad, or ThriveCart). We never see, process, or store your credit card or bank account details.</li>
+          <li><strong>Technical & Analytical Data:</strong> IP address, device type, browser information, and referral URLs via cookies and pixels (subject to your consent preferences).</li>
+        </ul>
+      </section>
+
+      <section class="legal-section">
+        <h2>3. How We Use Your Information</h2>
+        <ul>
+          <li>Delivering your purchased digital PDFs, templates, and download links via email.</li>
+          <li>Providing responsive customer support and responding to refund requests.</li>
+          <li>Sending critical updates regarding file revisions or product access.</li>
+          <li>Measuring anonymized site performance and advertising effectiveness (via Meta Pixel and Conversions API with consent).</li>
+        </ul>
+      </section>
+
+      <section class="legal-section">
+        <h2>4. Cookies & Advertising Tracking (Meta Pixel / CAPI)</h2>
+        <p>
+          We employ cookies and server-side tracking tools, including the Meta Pixel and Meta Conversions API (CAPI), to evaluate how visitors interact with our offer pages and to deliver relevant advertising. We do not sell your personal data.
+        </p>
+        <p>
+          Visitors from the European Union (EU/EEA), United Kingdom (UK), Canada (PIPEDA), and Australia have full rights to accept or decline non-essential cookies via our consent preferences banner.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>5. Data Retention & Security</h2>
+        <p>
+          We retain order verification details for legitimate accounting and tax compliance purposes. We implement industry-standard 256-bit SSL encryption to protect data in transit.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>6. Your Rights</h2>
+        <p>
+          Depending on your location, you may have the right to access, rectify, or request deletion of your personal data. You may manage your cookie preferences through the on-site consent banner or submit inquiries through your checkout provider portal.
+        </p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .legal-container {
+    padding: 3.5rem 0 5rem;
+  }
+  .legal-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem 1.75rem;
+    box-shadow: var(--shadow-card);
+  }
+  @media (min-width: 640px) {
+    .legal-card {
+      padding: 3.5rem 3rem;
+    }
+  }
+  .legal-card h1 {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    margin: 0.5rem 0 0.5rem;
+  }
+  .legal-updated {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 2.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .legal-section {
+    margin-bottom: 2rem;
+  }
+  .legal-section h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
+  }
+  .legal-section p, .legal-section li {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--text-body);
+  }
+  .legal-section ul {
+    padding-left: 1.25rem;
+    margin: 0.75rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+</style>

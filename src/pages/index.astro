@@ -1,0 +1,51 @@
+---
+// Her First Income - Main Landing Page
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ProblemSection from '../components/ProblemSection.astro';
+import SolutionSection from '../components/SolutionSection.astro';
+import PricingCards from '../components/PricingCards.astro';
+import ComparisonTable from '../components/ComparisonTable.astro';
+import VaultSpotlight from '../components/VaultSpotlight.astro';
+import WhoItsFor from '../components/WhoItsFor.astro';
+import Testimonials from '../components/Testimonials.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+---
+
+<BaseLayout
+  title="Her First Income | Honest Guidance for Building At-Home Income"
+  description="A calm, realistic system to choose and launch one legitimate at-home income path. Zero hype, zero expensive software, and 145 fill-in templates."
+>
+  <!-- 2. Hero Section -->
+  <Hero />
+
+  <!-- 3. Problem Section (Meta compliance: General observations only) -->
+  <ProblemSection />
+
+  <!-- 4. Solution Section -->
+  <SolutionSection />
+
+
+  <!-- 6. Pricing Cards Section -->
+  <PricingCards />
+
+  <!-- 7. Full Comparison Table & Mobile Stacked View -->
+  <ComparisonTable />
+
+  <!-- 8. Template Vault Spotlight (145 Templates) -->
+  <VaultSpotlight />
+
+  <!-- 9. Who It's For / Who It's Not For -->
+  <WhoItsFor />
+
+  <!-- 10. Testimonials (Renders only if real reviews exist) -->
+  <Testimonials />
+
+
+  <!-- 12. FAQ Accordion (8 Questions) -->
+  <FAQAccordion />
+
+  <!-- 13. Final CTA -->
+  <FinalCTA />
+</BaseLayout>

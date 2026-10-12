@@ -1,0 +1,477 @@
+---
+// Downsell Page (/downsell) - Execution Guide & 30-Day Roadmap Only ($12 Special Offer)
+import FunnelLayout from '../layouts/FunnelLayout.astro';
+import WalletIcons from '../components/WalletIcons.astro';
+import { offerConfig } from '../../config/offer';
+
+const { downsell } = offerConfig;
+---
+
+<FunnelLayout
+  title="Special Consideration | Add Just The Execution Guide & 30-Day Roadmap"
+  description="Add the essential 38-page Execution Guide and 30-Day First Dollar Roadmap for only $12."
+>
+  <div class="downsell-page-container">
+    <div id="gating-check-spinner" class="gating-spinner">
+      <p>Loading your special offer...</p>
+    </div>
+
+    <div id="downsell-content" class="container-narrow downsell-content" style="display: none;">
+      <!-- Order Reassurance -->
+      <div class="purchase-success-banner" role="status">
+        <div class="success-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <div class="success-text">
+          <strong>Your Starter Kit files are already on their way to your email.</strong>
+          <span>This optional downsell will simply be added to your receipt if selected.</span>
+        </div>
+      </div>
+
+      <!-- Real Countdown Timer -->
+      <div class="timer-card" id="real-timer-box" style="display: none;">
+        <span class="timer-label">Special Offer Window Closes In:</span>
+        <div class="timer-digits">
+          <span class="digit-box" id="timer-hours">23</span>
+          <span class="digit-colon">:</span>
+          <span class="digit-box" id="timer-minutes">59</span>
+          <span class="digit-colon">:</span>
+          <span class="digit-box" id="timer-seconds">59</span>
+        </div>
+      </div>
+
+      <!-- Main Downsell Offer Header -->
+      <div class="downsell-header">
+        <span class="section-label">A Smaller, Focused Step</span>
+        <h1>Wait—Before You Go, Would You Like Just The Daily Roadmap & Execution Blueprint?</h1>
+        <p class="downsell-lead">
+          We completely understand if you didn't want the full video library, commercial pitch scripts, and prompt pack right now.
+        </p>
+        <p class="downsell-sublead">
+          However, having a day-by-day action plan makes all the difference when you sit down to start. You can add <em>just</em> the core execution guide and the 30-day roadmap for <strong>$12</strong> today.
+        </p>
+      </div>
+
+      <!-- Downsell Offer Box -->
+      <div class="downsell-card">
+        <div class="downsell-badge-row">
+          <span class="badge-exclusive">Over 60% Off Standalone Value</span>
+        </div>
+
+        <div class="downsell-price-row">
+          <div class="price-big">
+            <span class="p-dollar">$</span>
+            <span class="p-num">{downsell.price}</span>
+            <span class="p-unit">USD &bull; One-time</span>
+          </div>
+          <div class="price-val">
+            <span>Estimated Standalone Value:</span>
+            <del>${downsell.estimatedValue}</del>
+          </div>
+        </div>
+
+        <div class="downsell-items-list">
+          <div class="downsell-item">
+            <div class="item-check">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <div class="item-info">
+              <h4>The Complete Step-by-Step Execution Guide (38 pp)</h4>
+              <p>In-depth, field-tested instructions walking you step-by-step through execution for all home-based business models. Est. value $19.</p>
+            </div>
+          </div>
+
+          <div class="downsell-item">
+            <div class="item-check">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <div class="item-info">
+              <h4>The 30-Day First Dollar Momentum Roadmap (13 pp)</h4>
+              <p>One concrete task per day with flexible 30-minute, 60-minute, and 90-minute options so you maintain consistent progress. Est. value $12.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="downsell-cta-wrap">
+          <a
+            href={downsell.checkoutUrl}
+            class="btn-primary downsell-btn"
+            id="btn-accept-downsell"
+            data-checkout-tier="downsell"
+            data-checkout-price={downsell.price}
+          >
+            {downsell.ctaText}
+          </a>
+
+          <div class="downsell-payments">
+            <WalletIcons />
+            <div class="microcopy-secure">
+              <span>Secure Checkout</span>
+              <span>&bull;</span>
+              <span>Instant PDF Access</span>
+            </div>
+          </div>
+
+          <div class="downsell-no-thanks">
+            <a href="/thank-you" class="no-thanks-link" id="link-decline-downsell">
+              No thanks, take me directly to my order confirmation &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</FunnelLayout>
+
+<script is:inline>
+  // Downsell Gating & Countdown Timer
+  (function () {
+    const spinner = document.getElementById('gating-check-spinner');
+    const content = document.getElementById('downsell-content');
+    const timerBox = document.getElementById('real-timer-box');
+    const hoursEl = document.getElementById('timer-hours');
+    const minsEl = document.getElementById('timer-minutes');
+    const secsEl = document.getElementById('timer-seconds');
+    const downsellLink = document.getElementById('btn-accept-downsell');
+
+    // 1. Forward email
+    const params = new URLSearchParams(window.location.search);
+    const emailParam = params.get('email') || sessionStorage.getItem('hfi_customer_email');
+    if (emailParam && downsellLink) {
+      sessionStorage.setItem('hfi_customer_email', emailParam);
+      try {
+        const u = new URL(downsellLink.getAttribute('href'), window.location.origin);
+        u.searchParams.set('checkout[email]', emailParam);
+        u.searchParams.set('email', emailParam);
+        downsellLink.setAttribute('href', u.toString());
+      } catch (e) {}
+    }
+
+    // 2. Track Downsell event
+    if (typeof window.trackFunnelEvent === 'function') {
+      window.trackFunnelEvent('UpgradeViewed', {
+        tier: 'downsell_core_pack',
+        price: 12,
+        currency: 'USD'
+      }, true);
+    }
+
+    // Verify upgrade token
+    fetch('/api/verify-upgrade')
+      .then(res => res.json())
+      .then(data => {
+        const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        if (!data.valid && !isDev && !params.get('preview')) {
+          window.location.href = '/';
+          return;
+        }
+
+        if (spinner) spinner.style.display = 'none';
+        if (content) content.style.display = 'block';
+
+        let remaining = data.remainingSeconds || (24 * 3600);
+        if (remaining > 0) {
+          if (timerBox) timerBox.style.display = 'flex';
+
+          function updateTimer() {
+            if (remaining <= 0) return;
+            const h = Math.floor(remaining / 3600);
+            const m = Math.floor((remaining % 3600) / 60);
+            const s = remaining % 60;
+
+            if (hoursEl) hoursEl.textContent = String(h).padStart(2, '0');
+            if (minsEl) minsEl.textContent = String(m).padStart(2, '0');
+            if (secsEl) secsEl.textContent = String(s).padStart(2, '0');
+
+            remaining--;
+          }
+
+          updateTimer();
+          setInterval(updateTimer, 1000);
+        }
+      })
+      .catch(() => {
+        if (spinner) spinner.style.display = 'none';
+        if (content) content.style.display = 'block';
+      });
+  })();
+</script>
+
+<style>
+  .downsell-page-container {
+    padding: 2.5rem 0 4rem;
+  }
+
+  .gating-spinner {
+    text-align: center;
+    padding: 5rem 1rem;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+  }
+
+  .purchase-success-banner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--success-bg);
+    border: 1px solid #C4DFC9;
+    border-radius: var(--radius-md);
+    padding: 1.15rem 1.35rem;
+    margin-bottom: 2rem;
+  }
+
+  .success-icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: var(--success-green);
+    color: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .success-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    font-size: 0.9rem;
+    color: var(--text-headline);
+  }
+
+  .success-text span {
+    font-size: 0.825rem;
+    color: var(--text-muted);
+  }
+
+  /* Timer */
+  .timer-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: var(--terracotta-subtle);
+    border: 1px solid var(--terracotta-border);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 2.25rem;
+    flex-wrap: wrap;
+  }
+
+  .timer-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--terracotta);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .timer-digits {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .digit-box {
+    background: #FFFFFF;
+    border: 1px solid var(--terracotta-border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--terracotta);
+    padding: 0.2rem 0.5rem;
+    min-width: 36px;
+    text-align: center;
+  }
+
+  .digit-colon {
+    font-weight: 700;
+    color: var(--terracotta);
+  }
+
+  .downsell-header {
+    text-align: center;
+    margin-bottom: 2.25rem;
+  }
+
+  .downsell-header h1 {
+    font-size: clamp(1.65rem, 3.8vw, 2.2rem);
+    margin: 0.5rem 0 1rem;
+  }
+
+  .downsell-lead {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 620px;
+    margin: 0 auto 0.75rem;
+  }
+
+  .downsell-sublead {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-headline);
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  .downsell-card {
+    background: #FFFFFF;
+    border: 2px solid var(--sage-700);
+    border-radius: var(--radius-lg);
+    padding: 2.25rem 1.75rem;
+    box-shadow: var(--shadow-card);
+    margin-bottom: 2rem;
+  }
+
+  .downsell-badge-row {
+    margin-bottom: 1rem;
+  }
+
+  .badge-exclusive {
+    background: var(--sage-700);
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius-pill);
+  }
+
+  .downsell-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .price-big {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+  }
+
+  .p-dollar {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-headline);
+  }
+
+  .p-num {
+    font-family: var(--font-serif);
+    font-size: 2.75rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text-headline);
+  }
+
+  .p-unit {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-left: 0.25rem;
+  }
+
+  .price-val {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  .price-val del {
+    font-weight: 600;
+    color: var(--text-light);
+    margin-left: 0.25rem;
+  }
+
+  .downsell-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .downsell-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  .item-check {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    background: var(--sage-100);
+    color: var(--sage-800);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  .item-info h4 {
+    font-size: 1.05rem;
+    margin-bottom: 0.35rem;
+    color: var(--text-headline);
+  }
+
+  .item-info p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .downsell-cta-wrap {
+    text-align: center;
+    border-top: 1px solid var(--border-light);
+    padding-top: 1.5rem;
+  }
+
+  .downsell-btn {
+    font-size: 1.1rem;
+    min-height: 52px;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+
+  .downsell-payments {
+    margin-top: 0.85rem;
+  }
+
+  .downsell-no-thanks {
+    margin-top: 1.35rem;
+  }
+
+  .no-thanks-link {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    text-decoration: underline;
+  }
+
+  .no-thanks-link:hover {
+    color: var(--text-headline);
+  }
+
+  .downsell-guarantee {
+    text-align: center;
+    font-size: 0.825rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+</style>

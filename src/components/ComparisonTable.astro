@@ -1,0 +1,492 @@
+---
+// Comprehensive Comparison Table & Mobile Stacked Accordion
+import { offerConfig, STARTER_ITEMS, COMPLETE_EXCLUSIVE_ITEMS } from '../../config/offer';
+
+const allItems = [
+  ...STARTER_ITEMS.map(i => ({ ...i, inStarter: true, inComplete: true })),
+  ...COMPLETE_EXCLUSIVE_ITEMS.map(i => ({ ...i, inStarter: false, inComplete: true }))
+];
+
+const starterVal = offerConfig.starter.estimatedValue; // $66
+const starterPrice = offerConfig.starter.price; // $17
+const completeVal = offerConfig.complete.estimatedValue; // $132
+const completePrice = offerConfig.complete.price; // $47
+---
+
+<section class="section section-comparison" id="comparison">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Side-by-Side Breakdown</span>
+      <h2>Compare Starter vs Complete</h2>
+      <p>
+        Every single guide, checklist, template, and resource laid out transparently.
+      </p>
+    </div>
+
+    <!-- Desktop Table View (Hidden on mobile) -->
+    <div class="comparison-table-wrapper desktop-only">
+      <table class="comparison-table" aria-label="Feature comparison between Starter and Complete">
+        <thead>
+          <tr>
+            <th class="col-item" scope="col">Included Resource</th>
+            <th class="col-val" scope="col">Est. Value</th>
+            <th class="col-tier tier-starter" scope="col">
+              <span class="th-tier-name">Starter</span>
+              <span class="th-tier-price">${starterPrice}</span>
+            </th>
+            <th class="col-tier tier-complete" scope="col">
+              <span class="th-badge">Best Value</span>
+              <span class="th-tier-name">Complete</span>
+              <span class="th-tier-price">${completePrice}</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {allItems.map((item, idx) => (
+            <tr class={idx % 2 === 0 ? 'row-even' : 'row-odd'}>
+              <td class="cell-title">
+                <strong>{item.title}</strong>
+                {item.subtitle && <span class="cell-subtitle"> {item.subtitle}</span>}
+                <div class="cell-meta">
+                  {item.pages && <span>{item.pages} pages</span>}
+                  {item.templatesCount && <span>{item.templatesCount} templates</span>}
+                  {item.videosCount && <span>{item.videosCount} curated videos</span>}
+                  {item.promptsCount && <span>{item.promptsCount}+ prompts</span>}
+                </div>
+              </td>
+              <td class="cell-val">${item.estimatedValue}</td>
+              <td class="cell-mark">
+                {item.inStarter ? (
+                  <span class="check-mark" aria-label="Included in Starter">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </span>
+                ) : (
+                  <span class="dash-mark" aria-label="Not included">&mdash;</span>
+                )}
+              </td>
+              <td class="cell-mark cell-complete-col">
+                <span class="check-mark check-complete" aria-label="Included in Complete">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+        <tfoot>
+          <!-- Totals Row -->
+          <tr class="row-totals">
+            <td class="cell-title"><strong>Total Estimated Value</strong></td>
+            <td class="cell-val"></td>
+            <td class="cell-mark">
+              <div class="total-box">
+                <span class="total-val">${starterVal}</span>
+                <span class="total-price">Your price: ${starterPrice}</span>
+                <span class="total-save">Save ${starterVal - starterPrice} (74%)</span>
+              </div>
+            </td>
+            <td class="cell-mark cell-complete-col">
+              <div class="total-box total-complete-box">
+                <span class="total-val">${completeVal}</span>
+                <span class="total-price">Your price: ${completePrice}</span>
+                <span class="total-save save-complete">Save ${completeVal - completePrice} (64%)</span>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <!-- Mobile Stacked Card View (No Horizontal Scroll) -->
+    <div class="comparison-mobile mobile-only">
+      <!-- Mobile Complete Card First -->
+      <div class="mobile-tier-card mobile-complete-card">
+        <div class="mobile-card-head">
+          <div class="mobile-badge-row">
+            <span class="badge-best-value">Best Value</span>
+            <span class="badge-savings">Save $85</span>
+          </div>
+          <h3>Complete Kit</h3>
+          <div class="mobile-price-row">
+            <span class="m-price">${completePrice}</span>
+            <span class="m-val">Est. Value: <del>${completeVal}</del></span>
+          </div>
+          <p class="m-summary">All 11 resources: choosing, setup, 38-page execution, 30-day roadmap, scripts, video tracks, and AI prompts.</p>
+        </div>
+
+        <div class="mobile-items-list">
+          <div class="m-group-title">All 11 Included Assets:</div>
+          {allItems.map((item) => (
+            <div class="m-item-row">
+              <div class="m-check">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <div class="m-item-name">
+                <span>{item.title}</span>
+                <span class="m-item-tag">Est. ${item.estimatedValue}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Mobile Starter Card -->
+      <div class="mobile-tier-card mobile-starter-card">
+        <div class="mobile-card-head">
+          <span class="badge-starter">Foundation Level</span>
+          <h3>Starter Kit</h3>
+          <div class="mobile-price-row">
+            <span class="m-price">${starterPrice}</span>
+            <span class="m-val">Est. Value: <del>${starterVal}</del></span>
+          </div>
+          <p class="m-summary">6 core foundation resources: choosing your path, 145 templates, tech stack, and checklists.</p>
+        </div>
+
+        <div class="mobile-items-list">
+          <div class="m-group-title">6 Included Foundation Assets:</div>
+          {STARTER_ITEMS.map((item) => (
+            <div class="m-item-row">
+              <div class="m-check">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <div class="m-item-name">
+                <span>{item.title}</span>
+                <span class="m-item-tag">Est. ${item.estimatedValue}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Required Summary Sentence Below Comparison Table -->
+    <div class="comparison-summary-sentence">
+      <p>
+        Starter helps you choose and get set up. Complete adds the step-by-step instructions, a 30-day plan, templates, videos and AI prompts to follow through.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-comparison {
+    background-color: var(--bg-page);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  /* Desktop Table Styling */
+  .comparison-table-wrapper {
+    background: #FFFFFF;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .comparison-table th {
+    padding: 1.25rem 1rem;
+    background: var(--bg-surface-subtle);
+    border-bottom: 2px solid var(--border-medium);
+    font-size: 0.95rem;
+    color: var(--text-headline);
+  }
+
+  .col-item {
+    width: 50%;
+  }
+
+  .col-val {
+    width: 12%;
+    text-align: center;
+  }
+
+  .col-tier {
+    width: 19%;
+    text-align: center;
+  }
+
+  .th-tier-name {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .th-tier-price {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-headline);
+  }
+
+  .tier-complete {
+    background: var(--sage-100) !important;
+    border-left: 2px solid var(--sage-700);
+    border-right: 2px solid var(--sage-700);
+    position: relative;
+  }
+
+  .th-badge {
+    display: inline-block;
+    background: var(--terracotta);
+    color: #FFFFFF;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-pill);
+    margin-bottom: 0.25rem;
+  }
+
+  .comparison-table td {
+    padding: 1rem 1rem;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 0.925rem;
+  }
+
+  .row-even {
+    background: #FFFFFF;
+  }
+
+  .row-odd {
+    background: var(--bg-surface-subtle);
+  }
+
+  .cell-title {
+    color: var(--text-headline);
+  }
+
+  .cell-subtitle {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+
+  .cell-meta {
+    font-size: 0.775rem;
+    color: var(--sage-700);
+    margin-top: 0.2rem;
+  }
+
+  .cell-val {
+    text-align: center;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .cell-mark {
+    text-align: center;
+  }
+
+  .cell-complete-col {
+    background: rgba(230, 236, 227, 0.45);
+    border-left: 1px solid var(--sage-200);
+    border-right: 1px solid var(--sage-200);
+  }
+
+  .check-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    background: var(--sage-100);
+    color: var(--sage-800);
+    border-radius: 50%;
+  }
+
+  .check-complete {
+    background: var(--sage-700);
+    color: #FFFFFF;
+  }
+
+  .dash-mark {
+    color: var(--text-light);
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  /* Totals row */
+  .row-totals {
+    background: var(--bg-surface-subtle);
+    border-top: 2px solid var(--border-medium);
+  }
+
+  .row-totals td {
+    padding: 1.25rem 1rem;
+  }
+
+  .total-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+  }
+
+  .total-val {
+    font-size: 0.85rem;
+    text-decoration: line-through;
+    color: var(--text-light);
+  }
+
+  .total-price {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-headline);
+  }
+
+  .total-save {
+    font-size: 0.775rem;
+    font-weight: 600;
+    color: var(--success-green);
+    background: var(--success-bg);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-pill);
+  }
+
+  /* Mobile Views */
+  .desktop-only {
+    display: block;
+  }
+  .mobile-only {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .desktop-only {
+      display: none;
+    }
+    .mobile-only {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .mobile-tier-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .mobile-complete-card {
+      border: 2px solid var(--sage-700);
+    }
+
+    .mobile-badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .mobile-tier-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .mobile-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .m-price {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-headline);
+    }
+
+    .m-val {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .m-summary {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1.25rem;
+    }
+
+    .mobile-items-list {
+      border-top: 1px solid var(--border-light);
+      padding-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .m-group-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--sage-800);
+      margin-bottom: 0.25rem;
+    }
+
+    .m-item-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      font-size: 0.875rem;
+    }
+
+    .m-check {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      background: var(--sage-100);
+      color: var(--sage-800);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .m-item-name {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .m-item-tag {
+      font-size: 0.75rem;
+      color: var(--text-light);
+    }
+  }
+
+  .comparison-summary-sentence {
+    margin-top: 2rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--sage-50);
+    border-left: 3px solid var(--sage-700);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    text-align: center;
+  }
+
+  .comparison-summary-sentence p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-headline);
+    font-weight: 500;
+    margin: 0;
+  }
+</style>

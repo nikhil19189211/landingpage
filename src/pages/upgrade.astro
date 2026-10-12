@@ -1,0 +1,667 @@
+---
+// Upgrade Page (/upgrade) - Starter Buyers Only ($30 Special Rate)
+import FunnelLayout from '../layouts/FunnelLayout.astro';
+import WalletIcons from '../components/WalletIcons.astro';
+import { offerConfig, STARTER_ITEMS, COMPLETE_EXCLUSIVE_ITEMS } from '../../config/offer';
+
+const { upgrade, checkoutProvider } = offerConfig;
+
+/**
+ * CHECKOUT UPSIL MECHANICS & TOGGLE NOTE:
+ * - Lemon Squeezy & Gumroad: Do not support native 1-click tokenized upsells on hosted checkouts.
+ *   The upgrade is processed as a clean second checkout prefilled with customer email from query parameters (?email=...).
+ * - ThriveCart: Supports true 1-click upsell redirects.
+ *   To activate ThriveCart's 1-click flow, switch checkoutProvider to 'thrivecart' in /config/offer.ts
+ *   and paste your ThriveCart upsell URL into upgrade.checkoutUrl.
+ */
+---
+
+<FunnelLayout
+  title="Complete Your Toolkit | Special Post-Purchase Upgrade"
+  description="Add the Step-by-Step Execution Guide, 30-Day Momentum Roadmap, Scripts, Video Tracks, and AI Prompts."
+>
+  <div class="upgrade-page-container">
+    <!-- Gating Verification Overlay (Checks Cookie) -->
+    <div id="gating-check-spinner" class="gating-spinner">
+      <p>Verifying your order status...</p>
+    </div>
+
+    <div id="upgrade-content" class="container-narrow upgrade-content" style="display: none;">
+      <!-- Order Confirmation Reassurance (Never delay Starter files) -->
+      <div class="purchase-success-banner" role="status">
+        <div class="success-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <div class="success-text">
+          <strong>Order Confirmed! Your Starter Kit is on its way to your inbox.</strong>
+          <span>Check your email in 2-3 minutes for your direct download links.</span>
+        </div>
+      </div>
+
+      <!-- Real Countdown Timer (Tied to real cookie expiry) -->
+      <div class="timer-card" id="real-timer-box" style="display: none;">
+        <span class="timer-label">Exclusive Upgrade Window Closes In:</span>
+        <div class="timer-digits">
+          <span class="digit-box" id="timer-hours">23</span>
+          <span class="digit-colon">:</span>
+          <span class="digit-box" id="timer-minutes">59</span>
+          <span class="digit-colon">:</span>
+          <span class="digit-box" id="timer-seconds">59</span>
+        </div>
+      </div>
+
+      <!-- Main Upgrade Offer Header -->
+      <div class="upgrade-header">
+        <span class="section-label">One-Time Upgrade Opportunity</span>
+        <h1>You've chosen your path. Here's the step-by-step to actually do it.</h1>
+        <p class="upgrade-lead">
+          Because you already invested $17 in the Starter Kit, you can add all 5 Complete execution modules today for just $30 (bringing your total to $47, exactly matching the Complete Kit price).
+        </p>
+      </div>
+
+      <!-- Two-Column Side-by-Side Value Comparison -->
+      <div class="upgrade-columns-grid">
+        <!-- Column 1: You Already Have -->
+        <div class="upgrade-col col-owned">
+          <div class="col-head">
+            <span class="col-status-badge badge-owned">In Your Inbox</span>
+            <h3>You Already Own:</h3>
+            <div class="col-price-note">Starter Kit ($17 Paid &bull; $66 Est. Value)</div>
+          </div>
+
+          <ul class="col-item-list" role="list">
+            {STARTER_ITEMS.map((item) => (
+              <li class="col-item">
+                <span class="item-check-owned">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </span>
+                <span class="item-text">{item.title}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Column 2: Add Today -->
+        <div class="upgrade-col col-add">
+          <div class="col-head">
+            <span class="col-status-badge badge-upgrade-exclusive">Add Today</span>
+            <h3>Complete Extras:</h3>
+            <div class="col-price-note">$66 Est. Value for Just $30</div>
+          </div>
+
+          <ul class="col-item-list" role="list">
+            {COMPLETE_EXCLUSIVE_ITEMS.map((item) => (
+              <li class="col-item">
+                <span class="item-check-add">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </span>
+                <div class="item-text-add">
+                  <strong>{item.title}</strong>
+                  <span class="item-val-pill">Est. ${item.estimatedValue}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Price Math Summary -->
+      <div class="upgrade-math-box">
+        <div class="math-row">
+          <span>Starter Kit (Paid):</span>
+          <strong>$17</strong>
+        </div>
+        <div class="math-row">
+          <span>Add 5 Execution Extras Today:</span>
+          <strong>+$30</strong>
+        </div>
+        <div class="math-divider"></div>
+        <div class="math-row math-total">
+          <span>Total Investment for Complete System:</span>
+          <span class="math-total-price">$47 (Full $132 Value)</span>
+        </div>
+      </div>
+
+      <!-- Primary Action & No-Thanks Link -->
+      <div class="upgrade-action-card">
+        <a 
+          href={upgrade.checkoutUrl} 
+          class="btn-primary upgrade-cta-btn"
+          id="btn-accept-upgrade"
+          data-checkout-tier="upgrade"
+          data-checkout-price="30"
+        >
+          {upgrade.ctaText} ($30 USD)
+        </a>
+
+        <div class="upgrade-payments">
+          <WalletIcons />
+          <div class="microcopy-secure">
+            <span>Secure 256-Bit Checkout</span>
+            <span>&bull;</span>
+            <span>Instant Digital Access</span>
+          </div>
+        </div>
+
+        <div class="no-thanks-wrap">
+          <a href="/downsell" class="no-thanks-link" id="link-decline-upgrade">
+            No thanks, I will stick with the Starter Kit only &rarr;
+          </a>
+        </div>
+      </div>
+
+      <!-- 3 Key Benefits -->
+      <div class="upgrade-benefits-card">
+        <h3>Why Add The Complete Extras Today?</h3>
+        <ul class="benefits-list" role="list">
+          <li>
+            <strong>Eliminate daily second-guessing:</strong> The 30-day roadmap tells you the single task to complete each day in 30, 60, or 90-minute options.
+          </li>
+          <li>
+            <strong>Ready-to-use pitch & client scripts:</strong> Never stare at a blank screen wondering what to send to your first lead, brand, or local business.
+          </li>
+          <li>
+            <strong>Prompt and video shortcuts:</strong> 60+ copy-and-paste AI prompts and 21 curated video lessons save you dozens of hours of trial-and-error.
+          </li>
+        </ul>
+      </div>
+
+
+
+      <!-- 4-Question Mini FAQ -->
+      <div class="upgrade-mini-faq">
+        <h3>Frequently Asked Questions</h3>
+        <details class="faq-mini-item">
+          <summary>Does this delay my Starter Kit downloads?</summary>
+          <p>No. Your Starter Kit files are already being delivered to your email right now. This upgrade adds the additional execution files to your library.</p>
+        </details>
+        <details class="faq-mini-item">
+          <summary>Why is this only $30?</summary>
+          <p>Because you already paid $17 for Starter, we give you full 100% credit toward the Complete Kit ($47 total). You never pay twice for anything.</p>
+        </details>
+        <details class="faq-mini-item">
+          <summary>Can I upgrade later?</summary>
+          <p>You can purchase Complete later from our public website, but it will be at the full standalone price of $47 without the Starter credit applied.</p>
+        </details>
+        <details class="faq-mini-item">
+          <summary>How do I access the new files after upgrading?</summary>
+          <p>The upgraded files will be sent immediately to the same email address as your Starter order.</p>
+        </details>
+      </div>
+    </div>
+  </div>
+</FunnelLayout>
+
+<script is:inline>
+  // Gating Verification & Authentic Countdown Timer
+  (function () {
+    const spinner = document.getElementById('gating-check-spinner');
+    const content = document.getElementById('upgrade-content');
+    const timerBox = document.getElementById('real-timer-box');
+    const hoursEl = document.getElementById('timer-hours');
+    const minsEl = document.getElementById('timer-minutes');
+    const secsEl = document.getElementById('timer-seconds');
+    const upgradeLink = document.getElementById('btn-accept-upgrade');
+
+    // 1. Forward email if available in URL or session to prefill checkout
+    const params = new URLSearchParams(window.location.search);
+    const emailParam = params.get('email') || sessionStorage.getItem('hfi_customer_email');
+    if (emailParam && upgradeLink) {
+      sessionStorage.setItem('hfi_customer_email', emailParam);
+      try {
+        const u = new URL(upgradeLink.getAttribute('href'), window.location.origin);
+        u.searchParams.set('checkout[email]', emailParam);
+        u.searchParams.set('email', emailParam);
+        upgradeLink.setAttribute('href', u.toString());
+      } catch (e) {}
+    }
+
+    // 2. Track UpgradeViewed custom event
+    if (typeof window.trackFunnelEvent === 'function') {
+      window.trackFunnelEvent('UpgradeViewed', {
+        tier: 'complete_upgrade',
+        price: 30,
+        currency: 'USD'
+      }, true);
+    }
+
+    // Track click on upgrade
+    upgradeLink?.addEventListener('click', function () {
+      if (typeof window.trackFunnelEvent === 'function') {
+        window.trackFunnelEvent('UpgradeAccepted', {
+          tier: 'complete_upgrade',
+          price: 30,
+          currency: 'USD'
+        }, true);
+      }
+    });
+
+    // 3. Verify Upgrade Token Gating via /api/verify-upgrade
+    // In local development preview without Cookies, allow bypass if ?bypass=1 or dev mode
+    fetch('/api/verify-upgrade')
+      .then(res => res.json())
+      .then(data => {
+        // In local development or if token is present
+        const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        if (!data.valid && !isDev && !params.get('preview')) {
+          // Gating failed: redirect to home
+          window.location.href = '/';
+          return;
+        }
+
+        // Token valid: display content
+        if (spinner) spinner.style.display = 'none';
+        if (content) content.style.display = 'block';
+
+        // Setup Authentic Countdown Timer
+        let remaining = data.remainingSeconds || (24 * 3600);
+        if (remaining > 0) {
+          if (timerBox) timerBox.style.display = 'flex';
+
+          function updateTimer() {
+            if (remaining <= 0) {
+              if (hoursEl) hoursEl.textContent = '00';
+              if (minsEl) minsEl.textContent = '00';
+              if (secsEl) secsEl.textContent = '00';
+              return;
+            }
+
+            const h = Math.floor(remaining / 3600);
+            const m = Math.floor((remaining % 3600) / 60);
+            const s = remaining % 60;
+
+            if (hoursEl) hoursEl.textContent = String(h).padStart(2, '0');
+            if (minsEl) minsEl.textContent = String(m).padStart(2, '0');
+            if (secsEl) secsEl.textContent = String(s).padStart(2, '0');
+
+            remaining--;
+          }
+
+          updateTimer();
+          setInterval(updateTimer, 1000);
+        }
+      })
+      .catch(() => {
+        // Fallback for preview
+        if (spinner) spinner.style.display = 'none';
+        if (content) content.style.display = 'block';
+      });
+  })();
+</script>
+
+<style>
+  .upgrade-page-container {
+    padding: 2.5rem 0 4rem;
+  }
+
+  .gating-spinner {
+    text-align: center;
+    padding: 5rem 1rem;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+  }
+
+  .purchase-success-banner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--success-bg);
+    border: 1px solid #C4DFC9;
+    border-radius: var(--radius-md);
+    padding: 1.15rem 1.35rem;
+    margin-bottom: 2rem;
+  }
+
+  .success-icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: var(--success-green);
+    color: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .success-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    font-size: 0.9rem;
+    color: var(--text-headline);
+  }
+
+  .success-text span {
+    font-size: 0.825rem;
+    color: var(--text-muted);
+  }
+
+  /* Timer */
+  .timer-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: var(--terracotta-subtle);
+    border: 1px solid var(--terracotta-border);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 2.25rem;
+    flex-wrap: wrap;
+  }
+
+  .timer-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--terracotta);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .timer-digits {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .digit-box {
+    background: #FFFFFF;
+    border: 1px solid var(--terracotta-border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--terracotta);
+    padding: 0.2rem 0.5rem;
+    min-width: 36px;
+    text-align: center;
+  }
+
+  .digit-colon {
+    font-weight: 700;
+    color: var(--terracotta);
+  }
+
+  .upgrade-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .upgrade-header h1 {
+    font-size: clamp(1.75rem, 4vw, 2.45rem);
+    margin: 0.5rem 0 1rem;
+  }
+
+  .upgrade-lead {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  /* Columns */
+  .upgrade-columns-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (min-width: 680px) {
+    .upgrade-columns-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .upgrade-col {
+    background: #FFFFFF;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.5rem;
+    box-shadow: var(--shadow-subtle);
+  }
+
+  .col-add {
+    border: 2px solid var(--sage-700);
+    box-shadow: var(--shadow-card);
+  }
+
+  .col-status-badge {
+    display: inline-block;
+    font-size: 0.725rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-pill);
+    margin-bottom: 0.5rem;
+  }
+
+  .badge-owned {
+    background: var(--bg-surface-subtle);
+    color: var(--text-muted);
+    border: 1px solid var(--border-medium);
+  }
+
+  .badge-upgrade-exclusive {
+    background: var(--sage-700);
+    color: #FFFFFF;
+  }
+
+  .col-head h3 {
+    font-size: 1.35rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .col-price-note {
+    font-size: 0.825rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .col-item-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .col-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  .item-check-owned {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--bg-surface-subtle);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  .item-check-add {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--sage-100);
+    color: var(--sage-800);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  .item-text-add {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .item-val-pill {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  /* Math summary */
+  .upgrade-math-box {
+    background: var(--bg-surface-subtle);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .math-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.925rem;
+    margin-bottom: 0.4rem;
+    color: var(--text-body);
+  }
+
+  .math-divider {
+    height: 1px;
+    background: var(--border-medium);
+    margin: 0.65rem 0;
+  }
+
+  .math-total {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-headline);
+    margin-bottom: 0;
+  }
+
+  .math-total-price {
+    color: var(--terracotta);
+  }
+
+  /* Action Card */
+  .upgrade-action-card {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .upgrade-cta-btn {
+    font-size: 1.15rem;
+    min-height: 54px;
+    max-width: 460px;
+    margin: 0 auto;
+  }
+
+  .upgrade-payments {
+    margin-top: 0.85rem;
+  }
+
+  .no-thanks-wrap {
+    margin-top: 1.5rem;
+  }
+
+  .no-thanks-link {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    text-decoration: underline;
+  }
+
+  .no-thanks-link:hover {
+    color: var(--text-headline);
+  }
+
+  /* Benefits card */
+  .upgrade-benefits-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .upgrade-benefits-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .benefits-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .benefits-list li {
+    font-size: 0.925rem;
+    line-height: 1.55;
+    color: var(--text-body);
+  }
+
+  .upgrade-guarantee-note {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--sage-50);
+    border: 1px solid var(--sage-200);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--text-body);
+    margin-bottom: 2rem;
+  }
+
+  .note-icon {
+    flex-shrink: 0;
+    color: var(--sage-800);
+  }
+
+  .upgrade-mini-faq {
+    background: #FFFFFF;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+  }
+
+  .upgrade-mini-faq h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .faq-mini-item {
+    border-top: 1px solid var(--border-light);
+    padding: 0.85rem 0;
+  }
+
+  .faq-mini-item summary {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-headline);
+    cursor: pointer;
+  }
+
+  .faq-mini-item p {
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+</style>

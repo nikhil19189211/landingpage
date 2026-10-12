@@ -1,0 +1,45 @@
+---
+// Slim Announcement Bar
+---
+<aside class="announcement-bar" role="complementary" aria-label="Order perks">
+  <div class="container bar-content">
+    <span class="bar-pill">Digital Access</span>
+    <span class="bar-text">
+      <strong>Instant Digital Delivery</strong> via email &bull; One-Time Payment, No Subscriptions
+    </span>
+  </div>
+</aside>
+
+<style>
+  .announcement-bar {
+    background-color: var(--sage-700);
+    color: #FFFFFF;
+    font-size: 0.8125rem;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid var(--sage-800);
+  }
+  .bar-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+  .bar-pill {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.725rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .bar-text {
+    color: #F3F6F2;
+    letter-spacing: 0.01em;
+  }
+  .bar-text strong {
+    color: #FFFFFF;
+  }
+</style>

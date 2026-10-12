@@ -1,0 +1,365 @@
+---
+// Inside The Vault Spotlight - 6 Professional Toolkit & Bonus Cards (3 Base + 3 Upsell)
+interface VaultResource {
+  id: string;
+  name: string;
+  badge: string;
+  isUpsell: boolean;
+  description: string;
+  bullets: string[];
+  iconType: 'document' | 'tech' | 'clock' | 'video' | 'prompt' | 'roadmap';
+}
+
+const VAULT_RESOURCES: VaultResource[] = [
+  {
+    id: 'template-vault',
+    name: 'The 145 Fill-in Template Vault',
+    badge: '145 Document Assets',
+    isUpsell: false,
+    description: 'Pre-formatted copy-and-paste assets designed to eliminate blank-cursor anxiety and save dozens of drafting hours.',
+    bullets: [
+      'Client proposals, inquiry replies & rate cards',
+      'Digital offer copy & launch delivery sequences',
+      'Professional boundary & polite follow-up scripts'
+    ],
+    iconType: 'document'
+  },
+  {
+    id: 'zero-dollar-stack',
+    name: 'The Zero-Dollar Tech Stack',
+    badge: 'Software Blueprint',
+    isUpsell: false,
+    description: 'Verified free tools and zero-cost setups so you never spend a dime on monthly recurring software fees.',
+    bullets: [
+      'Clean payment processing without upfront costs',
+      'Instant digital delivery & document sharing',
+      'Zero-subscription calendar & communication setup'
+    ],
+    iconType: 'tech'
+  },
+  {
+    id: 'launch-blueprint',
+    name: 'The 90-Minute Launch Blueprint',
+    badge: 'Productivity System',
+    isUpsell: false,
+    description: 'A structured time-block framework designed specifically for women managing busy schedules and family commitments.',
+    bullets: [
+      'Weekly momentum tracking & milestone checkpoints',
+      'Distraction elimination for short quiet hours',
+      'Action-first launch checklists without burnout'
+    ],
+    iconType: 'clock'
+  },
+  {
+    id: 'video-library',
+    name: 'Curated Video Tutorial Library',
+    badge: 'Complete Exclusive',
+    isUpsell: true,
+    description: 'High-signal, vetted video lessons and structured YouTube playlists so you never get lost in algorithm rabbit holes.',
+    bullets: [
+      '21 bite-sized, step-by-step video tutorials',
+      'Organized playlist sequences for zero confusion',
+      'Companion progress sheet to track your completion'
+    ],
+    iconType: 'video'
+  },
+  {
+    id: 'ai-prompt-pack',
+    name: 'The High-Leverage AI Prompt Pack',
+    badge: 'Complete Exclusive',
+    isUpsell: true,
+    description: 'Tested, copy-and-paste prompts to brainstorm offers, write persuasive emails, and draft outreach in seconds.',
+    bullets: [
+      '60+ field-tested prompts for modern AI tools',
+      'Customer inquiry & email response generators',
+      'Content ideation & offer positioning formulas'
+    ],
+    iconType: 'prompt'
+  },
+  {
+    id: 'momentum-roadmap',
+    name: 'The 30-Day Momentum Roadmap',
+    badge: 'Complete Exclusive',
+    isUpsell: true,
+    description: 'One realistic micro-task per day with flexible 30, 60, and 90-minute options so you always know your next step.',
+    bullets: [
+      'Day-by-day micro-actions to build steady momentum',
+      'Flexible time tracks to match your weekly schedule',
+      'Clear finish lines with zero daily second-guessing'
+    ],
+    iconType: 'roadmap'
+  }
+];
+---
+
+<section class="section section-sage" id="vault">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Inside The Vault</span>
+      <h2>What You'll Find Inside Your Toolkit</h2>
+      <p>
+        Everything you need to eliminate guesswork, avoid costly monthly subscriptions, and launch with total confidence.
+      </p>
+    </div>
+
+    <div class="vault-grid">
+      {VAULT_RESOURCES.map((item) => (
+        <div class={`vault-card ${item.isUpsell ? 'vault-card-premium' : ''}`}>
+          <div class="vault-card-header">
+            <div class={`vault-icon-wrap ${item.isUpsell ? 'icon-premium' : 'icon-base'}`}>
+              {item.iconType === 'document' && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <line x1="10" y1="9" x2="8" y2="9"></line>
+                </svg>
+              )}
+              {item.iconType === 'tech' && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                  <polyline points="2 17 12 22 22 17"></polyline>
+                  <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+              )}
+              {item.iconType === 'clock' && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              )}
+              {item.iconType === 'video' && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                </svg>
+              )}
+              {item.iconType === 'prompt' && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+                </svg>
+              )}
+              {item.iconType === 'roadmap' && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                </svg>
+              )}
+            </div>
+
+            <span class={`vault-badge ${item.isUpsell ? 'badge-upsell-premium' : 'badge-base-clean'}`}>
+              {item.badge}
+            </span>
+          </div>
+
+          <h3 class="vault-resource-title">{item.name}</h3>
+          <p class="vault-resource-desc">{item.description}</p>
+
+          <ul class="vault-bullets" role="list">
+            {item.bullets.map((bullet) => (
+              <li class="vault-bullet-item">
+                <svg class="bullet-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>{bullet}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="vault-footer-callout">
+      <div class="vault-callout-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <div class="vault-callout-text">
+        <strong>Instant access upon checkout:</strong> Core guides and templates are included in all kits. Looking for the Video Library, AI Prompts & 30-Day Roadmap? Select the <strong>Complete Kit</strong> below.
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .vault-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .vault-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 960px) {
+    .vault-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .vault-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.5rem;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .vault-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(44, 62, 47, 0.08);
+  }
+
+  /* Premium Highlighting for Upsell Products */
+  .vault-card-premium {
+    border: 1.5px solid var(--sage-700);
+    background: linear-gradient(180deg, #FFFFFF 0%, #FAFAF7 100%);
+    box-shadow: 0 4px 18px rgba(75, 94, 78, 0.09);
+    position: relative;
+  }
+
+  .vault-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Refined Icon Containers */
+  .vault-icon-wrap {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .icon-base {
+    background: var(--bg-surface-subtle);
+    color: var(--sage-800);
+    border: 1px solid var(--border-medium);
+  }
+
+  .icon-premium {
+    background: var(--sage-100);
+    color: var(--sage-900);
+    border: 1px solid var(--sage-300);
+  }
+
+  /* Minimalist Badges */
+  .vault-badge {
+    font-size: 0.685rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.65rem;
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+  }
+
+  .badge-base-clean {
+    color: var(--text-muted);
+    background: var(--bg-surface-subtle);
+    border: 1px solid var(--border-medium);
+  }
+
+  .badge-upsell-premium {
+    color: var(--sage-900);
+    background: var(--sage-100);
+    border: 1px solid var(--sage-400);
+  }
+
+  .vault-resource-title {
+    font-size: 1.25rem;
+    color: var(--text-headline);
+    line-height: 1.35;
+    margin-bottom: 0.65rem;
+  }
+
+  .vault-resource-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Micro Bullets Checklist */
+  .vault-bullets {
+    list-style: none;
+    margin-top: auto;
+    padding-top: 1.15rem;
+    border-top: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .vault-bullet-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    font-size: 0.85rem;
+    color: var(--text-body);
+    line-height: 1.45;
+  }
+
+  .bullet-check {
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+    color: var(--sage-700);
+  }
+
+  .vault-card-premium .bullet-check {
+    color: var(--sage-800);
+  }
+
+  /* Footer Callout */
+  .vault-footer-callout {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    background: #FFFFFF;
+    border: 1px solid var(--sage-300);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.6rem;
+    max-width: 800px;
+    margin: 2.75rem auto 0;
+    font-size: 0.95rem;
+    color: var(--text-body);
+    box-shadow: var(--shadow-subtle);
+  }
+
+  .vault-callout-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: var(--sage-100);
+    color: var(--sage-800);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .vault-callout-text {
+    line-height: 1.5;
+  }
+
+  @media (max-width: 640px) {
+    .vault-footer-callout {
+      flex-direction: column;
+      text-align: center;
+      gap: 0.75rem;
+    }
+  }
+</style>

@@ -1,0 +1,324 @@
+---
+// Thank-You Page (/thank-you-complete) - Complete Tier Buyers (No more selling)
+import FunnelLayout from '../layouts/FunnelLayout.astro';
+import { offerConfig, STARTER_ITEMS, COMPLETE_EXCLUSIVE_ITEMS } from '../../config/offer';
+
+const allItems = [...STARTER_ITEMS, ...COMPLETE_EXCLUSIVE_ITEMS];
+---
+
+<FunnelLayout
+  title="Complete Access Granted | Your Entire Library Is Ready"
+  description="Thank you for your order. Your full 11-part Complete System is on its way to your email."
+>
+  <div class="container-narrow thank-you-container">
+    <div class="thank-you-card">
+      <div class="thank-you-header">
+        <div class="celebration-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <span class="section-label">All-Inclusive Access</span>
+        <h1>You're All Set With The Complete Kit!</h1>
+        <p class="thank-you-lead">
+          Your order has been processed. All 11 guides, templates, video lessons, and prompt collections are ready for you.
+        </p>
+      </div>
+
+      <!-- Which File to Open First Guide -->
+      <div class="quick-start-box">
+        <div class="quick-start-head">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon points="10 8 16 12 10 16 10 8"></polygon>
+          </svg>
+          <h3>Where to Start First:</h3>
+        </div>
+        <p>
+          Do not feel pressured to absorb everything today. We recommend following this gentle sequence:
+        </p>
+        <div class="step-guide">
+          <div class="step-pill">Step 1</div>
+          <div class="step-desc">
+            Open <strong>"Her First Income: 5 Honest Ways Women Are Earning From Home"</strong> (16 pp). Read through the models and pick the single path that fits your available hours.
+          </div>
+        </div>
+        <div class="step-guide">
+          <div class="step-pill">Step 2</div>
+          <div class="step-desc">
+            Open <strong>"The 30-Day First Dollar Momentum Roadmap"</strong> and find Day 1. Select either the 30-minute, 60-minute, or 90-minute task for your day.
+          </div>
+        </div>
+      </div>
+
+      <!-- Delivery Instructions -->
+      <div class="delivery-instructions-box">
+        <h3>Inbox & Delivery Notes:</h3>
+        <ol class="instructions-steps">
+          <li>
+            <strong>Email confirmation:</strong> A receipt with direct download links has been sent to your checkout email.
+          </li>
+          <li>
+            <strong>Check spam/promotions:</strong> If you don't see it within 3 minutes, check your spam or promotional folders and search for "Her First Income".
+          </li>
+          <li>
+            <strong>Save files:</strong> Download the PDFs to your local storage or Google Drive for lifetime offline reference.
+          </li>
+        </ol>
+      </div>
+
+      <!-- Full 11-Item Access Inventory -->
+      <div class="access-tier-box">
+        <div class="tier-box-head">
+          <span class="badge-included">Complete 11-Part Inventory</span>
+          <h3>Your Complete Toolkit Breakdown:</h3>
+        </div>
+
+        <ul class="tier-downloads-list" role="list">
+          {allItems.map((item, idx) => (
+            <li class="download-item">
+              <span class="item-num">{String(idx + 1).padStart(2, '0')}</span>
+              <div class="item-meta">
+                <strong>{item.title}</strong>
+                <span>{item.description}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Support -->
+      <div class="support-box">
+        <h4>Need help or have questions?</h4>
+        <p>
+          Check your email confirmation for immediate access links, or manage your order directly through your secure checkout receipt page.
+        </p>
+      </div>
+    </div>
+  </div>
+</FunnelLayout>
+
+<script is:inline>
+  // Fire deduplicated Meta Purchase event for Complete Kit
+  (function () {
+    if (typeof window.trackFunnelEvent === 'function') {
+      window.trackFunnelEvent('Purchase', {
+        content_name: 'complete',
+        content_type: 'product',
+        value: 47.00,
+        currency: 'USD',
+        num_items: 1
+      });
+    }
+  })();
+</script>
+
+<style>
+  .thank-you-container {
+    padding: 3rem 0 5rem;
+  }
+
+  .thank-you-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 2.25rem 1.75rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  @media (min-width: 640px) {
+    .thank-you-card {
+      padding: 3.5rem 2.5rem;
+    }
+  }
+
+  .thank-you-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .celebration-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--success-bg);
+    color: var(--success-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+    border: 2px solid #C4DFC9;
+  }
+
+  .thank-you-header h1 {
+    font-size: clamp(1.85rem, 4vw, 2.5rem);
+    margin: 0.5rem 0 0.85rem;
+  }
+
+  .thank-you-lead {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .quick-start-box {
+    background: var(--sage-50);
+    border: 1px solid var(--sage-200);
+    border-radius: var(--radius-md);
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .quick-start-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--sage-800);
+    margin-bottom: 0.65rem;
+  }
+
+  .quick-start-head h3 {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+
+  .quick-start-box p {
+    font-size: 0.925rem;
+    color: var(--text-body);
+    margin-bottom: 1.25rem;
+  }
+
+  .step-guide {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    background: #FFFFFF;
+    border: 1px solid var(--sage-200);
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .step-pill {
+    background: var(--sage-700);
+    color: #FFFFFF;
+    font-size: 0.725rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+
+  .step-desc {
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--text-headline);
+  }
+
+  .delivery-instructions-box {
+    background: var(--bg-surface-subtle);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .delivery-instructions-box h3 {
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+    color: var(--text-headline);
+  }
+
+  .instructions-steps {
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .instructions-steps li {
+    font-size: 0.925rem;
+    line-height: 1.55;
+    color: var(--text-body);
+  }
+
+  .access-tier-box {
+    border-top: 1px solid var(--border-light);
+    padding-top: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .tier-box-head {
+    margin-bottom: 1.25rem;
+  }
+
+  .tier-box-head h3 {
+    font-size: 1.35rem;
+    margin-top: 0.35rem;
+  }
+
+  .tier-downloads-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .download-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    background: var(--bg-surface-subtle);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem;
+  }
+
+  .item-num {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--sage-700);
+    flex-shrink: 0;
+    line-height: 1.2;
+    padding-top: 2px;
+  }
+
+  .item-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .item-meta strong {
+    font-size: 0.925rem;
+    color: var(--text-headline);
+  }
+
+  .item-meta span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .support-box {
+    text-align: center;
+    border-top: 1px solid var(--border-light);
+    padding-top: 2rem;
+  }
+
+  .support-box h4 {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .support-box p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+</style>

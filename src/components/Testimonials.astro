@@ -1,0 +1,102 @@
+---
+// Testimonials Component (Meta Compliance: Real testimonials only. Hidden if none exist.)
+import { offerConfig } from '../../config/offer';
+
+/**
+ * When real customer reviews are gathered, populate this array and set
+ * showTestimonials: true in /config/offer.ts.
+ * 
+ * Example item structure:
+ * {
+ *   quote: "The 145 templates saved me days of staring at a blank screen...",
+ *   name: "Sarah M.",
+ *   pathChosen: "Digital Products",
+ *   verifiedBuyer: true
+ * }
+ */
+const TESTIMONIALS_DATA: Array<{
+  quote: string;
+  name: string;
+  pathChosen: string;
+  verifiedBuyer: boolean;
+}> = [];
+
+const shouldRender = offerConfig.showTestimonials && TESTIMONIALS_DATA.length > 0;
+---
+
+{shouldRender && (
+  <section class="section section-testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Real Feedback</span>
+        <h2>What Readers Are Saying</h2>
+        <p>Honest feedback from people putting these guides into practice.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        {TESTIMONIALS_DATA.map((item) => (
+          <div class="testimonial-card">
+            <blockquote class="testimonial-quote">
+              "{item.quote}"
+            </blockquote>
+            <div class="testimonial-author">
+              <div class="author-name">{item.name}</div>
+              <div class="author-path">Focusing on: {item.pathChosen}</div>
+              {item.verifiedBuyer && <span class="badge-verified">Verified Reader</span>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .section-testimonials {
+    background-color: var(--bg-page);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  @media (min-width: 640px) {
+    .testimonials-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .testimonial-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-subtle);
+  }
+  .testimonial-quote {
+    font-size: 0.975rem;
+    line-height: 1.6;
+    color: var(--text-body);
+    margin-bottom: 1.25rem;
+    font-style: italic;
+  }
+  .author-name {
+    font-weight: 600;
+    color: var(--text-headline);
+  }
+  .author-path {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+  }
+  .badge-verified {
+    display: inline-block;
+    font-size: 0.7rem;
+    color: var(--sage-800);
+    background: var(--sage-100);
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--radius-sm);
+    margin-top: 0.35rem;
+  }
+</style>

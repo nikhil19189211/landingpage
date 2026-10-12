@@ -1,0 +1,356 @@
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/playfair-display.woff2') format('woff2');
+}
+
+/* Her First Income - Global Styles & Design System */
+:root {
+  /* Warm Ivory Backgrounds */
+  --bg-page: #FBF9F5;
+  --bg-surface: #FFFFFF;
+  --bg-surface-subtle: #F6F3EC;
+  --bg-surface-alt: #EFEBE2;
+  
+  /* Muted Sage Accents & Panels */
+  --sage-50: #F3F6F2;
+  --sage-100: #E6ECE3;
+  --sage-200: #D3DFCE;
+  --sage-300: #BACBB4;
+  --sage-700: #4B5E4E;
+  --sage-800: #39483C;
+  
+  /* Warm Taupe Typography */
+  --text-headline: #2B2521;
+  --text-body: #473F3A;
+  --text-muted: #6E6660;
+  --text-light: #948B84;
+  
+  /* Restrained Terracotta Accent (CTAs & Badges) */
+  --terracotta: #C85A3A;
+  --terracotta-hover: #B44D2F;
+  --terracotta-active: #9A3F24;
+  --terracotta-subtle: #FAEEEA;
+  --terracotta-border: #E8B9AC;
+  
+  /* Borders & Dividers */
+  --border-light: #EBE5DB;
+  --border-medium: #DCD4C7;
+  --border-focus: #C85A3A;
+  
+  /* Status & Accents */
+  --success-green: #3F704D;
+  --success-bg: #EDF5F0;
+  
+  /* Typography System */
+  --font-serif: "Newsreader", "Playfair Display", "Cormorant Garamond", Georgia, Cambria, "Times New Roman", serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  
+  /* Spacing & Layout */
+  --container-max: 1040px;
+  --container-narrow: 760px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-pill: 9999px;
+  
+  /* Shadows */
+  --shadow-subtle: 0 2px 8px rgba(43, 37, 33, 0.04);
+  --shadow-card: 0 4px 16px rgba(43, 37, 33, 0.06);
+  --shadow-elevated: 0 12px 32px rgba(43, 37, 33, 0.08);
+  --shadow-button: 0 4px 12px rgba(200, 90, 58, 0.22);
+}
+
+/* Reset & Box Sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--bg-page);
+  color: var(--text-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  color: var(--text-body);
+  background-color: var(--bg-page);
+}
+
+/* Typography Defaults */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--text-headline);
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw + 0.5rem, 3.25rem);
+  line-height: 1.18;
+}
+
+h2 {
+  font-size: clamp(1.65rem, 3.5vw + 0.25rem, 2.35rem);
+  line-height: 1.22;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 2.5vw, 1.55rem);
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-body);
+  margin-bottom: 1rem;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+a {
+  color: var(--terracotta);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--terracotta-hover);
+}
+
+/* Container Utilities */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.container-narrow {
+  width: 100%;
+  max-width: var(--container-narrow);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.section {
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+.section-sage {
+  background-color: var(--sage-50);
+  border-top: 1px solid var(--sage-200);
+  border-bottom: 1px solid var(--sage-200);
+}
+
+.section-subtle {
+  background-color: var(--bg-surface-subtle);
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Primary CTA Button (Consistent everywhere) */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 52px;
+  padding: 0.9rem 1.75rem;
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #FFFFFF !important;
+  background-color: var(--terracotta);
+  border: 1px solid var(--terracotta-hover);
+  border-radius: var(--radius-md);
+  text-decoration: none !important;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-button);
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--terracotta-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(200, 90, 58, 0.3);
+}
+
+.btn-primary:active {
+  background-color: var(--terracotta-active);
+  transform: translateY(0);
+}
+
+/* Secondary Button / Outline */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.8rem 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-headline) !important;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  text-decoration: none !important;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--bg-surface-subtle);
+  border-color: var(--text-muted);
+}
+
+/* Trust Badges & Microcopy */
+.microcopy-secure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin-top: 0.65rem;
+  text-align: center;
+}
+
+.microcopy-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Wallet Icons Container */
+.wallet-icons-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  opacity: 0.85;
+}
+
+/* Section Header Typography */
+.section-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 2.5rem;
+}
+
+.section-label {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sage-700);
+  background-color: var(--sage-100);
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--radius-pill);
+  margin-bottom: 0.75rem;
+}
+
+.section-header h2 {
+  margin-bottom: 0.75rem;
+}
+
+.section-header p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+}
+
+/* Card Styling */
+.card-base {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-card);
+}
+
+/* Badge System */
+.badge-best-value {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--terracotta);
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-pill);
+}
+
+.badge-included {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--sage-100);
+  color: var(--sage-800);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Legal & Compliance Notice Box */
+.compliance-notice {
+  font-size: 0.775rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+/* Accessibility */
+:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

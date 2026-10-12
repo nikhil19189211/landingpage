@@ -1,0 +1,27 @@
+---
+// Final CTA Section - Both Pricing Cards in Compact Form
+import PricingCards from './PricingCards.astro';
+---
+
+<section class="section section-final-cta" id="final-cta">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Get Started Today</span>
+      <h2>Begin Your Path with Complete Confidence</h2>
+      <p>
+        Select your kit below for immediate PDF delivery to your email inbox. One-time payment, instant access.
+      </p>
+    </div>
+
+    <PricingCards compact={true} />
+  </div>
+</section>
+
+<style>
+  .section-final-cta {
+    background-color: var(--bg-surface-subtle);
+    border-bottom: 1px solid var(--border-light);
+    padding-top: 4.5rem;
+    padding-bottom: 5rem;
+  }
+</style>

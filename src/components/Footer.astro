@@ -1,0 +1,168 @@
+---
+// Universal Site Footer with Required Legal Disclaimers & Policies
+import { offerConfig } from '../../config/offer';
+const { productName } = offerConfig;
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo">{productName}</span>
+        <p class="footer-tagline">
+          Honest, practical blueprints for choosing and building independent home-based income streams.
+        </p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer Navigation">
+        <div class="footer-links-group">
+          <span class="group-title">Legal & Policies</span>
+          <ul>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="/refund">Refund Policy</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Mandatory Meta Ads & FTC Earnings Disclaimer -->
+    <div class="footer-disclaimer-box">
+      <h4 class="disclaimer-title">Earnings, Legal & Results Disclaimer</h4>
+      <p>
+        The materials and templates provided within {productName} are educational resources designed to provide practical business tools and frameworks. Results will vary substantially based on individual background, skill level, personal effort, time commitment, and unpredictable market conditions. We make zero express or implied claims, warranties, or guarantees regarding specific income amounts, timelines, or financial results.
+      </p>
+      <p>
+        Nothing contained within our websites, guides, templates, or emails constitutes legal, accounting, tax, investment, or certified financial advice. You are advised to consult qualified independent legal and accounting professionals regarding specific tax and business obligations in your jurisdiction.
+      </p>
+      <p>
+        This site is not affiliated with, endorsed by, or a part of Meta Platforms, Inc., Facebook, Instagram, or any of their subsidiaries. FACEBOOK and INSTAGRAM are trademarks of Meta Platforms, Inc.
+      </p>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {currentYear} {productName}. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: #24201D;
+    color: #C5BFB8;
+    padding-top: 4rem;
+    padding-bottom: 3.5rem;
+    font-size: 0.875rem;
+    border-top: 1px solid #38322D;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer-top {
+      grid-template-columns: 1.5fr 1fr;
+    }
+  }
+
+  .footer-logo {
+    font-family: var(--font-serif);
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-tagline {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #A9A29A;
+    max-width: 440px;
+  }
+
+  .footer-nav {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .group-title {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #E2DDD6;
+    margin-bottom: 0.85rem;
+  }
+
+  .footer-links-group ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .footer-links-group a {
+    color: #B5ADA4;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .footer-links-group a:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
+  }
+
+  .support-email-text {
+    font-size: 0.8rem;
+    color: #8C847C;
+  }
+
+  .footer-disclaimer-box {
+    background: #1B1816;
+    border: 1px solid #332D28;
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.775rem;
+    line-height: 1.55;
+    color: #968F87;
+  }
+
+  .disclaimer-title {
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: #CFC7BD;
+    margin-bottom: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .footer-disclaimer-box p {
+    margin-bottom: 0.65rem;
+    color: inherit;
+    font-size: inherit;
+  }
+
+  .footer-disclaimer-box p:last-child {
+    margin-bottom: 0;
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #332D28;
+    padding-top: 1.75rem;
+    font-size: 0.8125rem;
+    color: #7A736C;
+  }
+</style>

@@ -1,0 +1,256 @@
+---
+// Hero Section with A/B Headline Variants and Trust Bullets
+import { offerConfig } from '../../config/offer';
+import MockupGraphic from './MockupGraphic.astro';
+import WalletIcons from './WalletIcons.astro';
+
+/**
+ * 3 HEADLINE OPTIONS FOR A/B TESTING (switch via ?v=1 | ?v=2 | ?v=3):
+ * 
+ * Variant 1 (Clarity & Honest Pace - Default):
+ * "A Quiet, Honest Way to Build Real Income From Home."
+ * "Zero hype. Zero expensive software. Choose one realistic path and follow clear, step-by-step guidance designed for busy schedules."
+ * 
+ * Variant 2 (Eliminating Guesswork & Tech Barriers):
+ * "Stop Guessing Online. Pick One Clear Path and Get Started."
+ * "Realistic guidance, free-tool blueprints, and 145 fill-in templates to launch a practical, independent income stream in your spare time."
+ * 
+ * Variant 3 (Practical Direct-Response Action):
+ * "Practical Guidance to Earn Your First Independent Dollar From Home."
+ * "No complicated funnels or social media burnout. Just proven, realistic business models broken down into honest, manageable steps."
+ */
+
+const defaultV = offerConfig.defaultHeadlineVariant;
+const defaultData = offerConfig.headlineVariants[defaultV];
+---
+
+<header class="hero-section" id="hero">
+  <div class="container hero-container">
+    <div class="hero-text-col">
+      <!-- Trust Tag -->
+      <div class="hero-pill-badge">
+        <span class="pill-dot"></span>
+        <span class="pill-text">Complete Starter & Execution System</span>
+      </div>
+
+      <!-- Main H1 (Dynamically updated if ?v=2 or ?v=3 is present) -->
+      <h1 id="hero-headline" class="hero-headline">
+        {defaultData.headline}
+      </h1>
+
+      <p id="hero-subheadline" class="hero-subheadline">
+        {defaultData.subheadline}
+      </p>
+
+      <!-- Primary CTA Area -->
+      <div class="hero-cta-box">
+        <a 
+          href="#pricing" 
+          class="btn-primary hero-btn"
+          id="hero-primary-cta"
+        >
+          {offerConfig.starter.ctaText}
+        </a>
+
+        <!-- Wallet Icons & Security Notice -->
+        <div class="hero-payment-trust">
+          <WalletIcons />
+          <div class="microcopy-secure">
+            <span class="microcopy-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              Secure 256-Bit Checkout
+            </span>
+            <span>&bull;</span>
+            <span class="microcopy-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              Instant PDF Delivery
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Compliance-Safe Trust Bullets -->
+      <ul class="hero-trust-bullets" aria-label="Product assurances">
+        <li class="bullet-item">
+          <div class="bullet-icon-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div>
+            <strong>Instant email delivery:</strong> Immediate PDF access with zero shipping waits.
+          </div>
+        </li>
+        <li class="bullet-item">
+          <div class="bullet-icon-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div>
+            <strong>One-time payment:</strong> No recurring monthly subscriptions or unexpected renewals.
+          </div>
+        </li>
+        <li class="bullet-item">
+          <div class="bullet-icon-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div>
+            <strong>145 ready-to-use templates:</strong> Copy-and-paste assets for every path, ready from day one.
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Right Mockup Column -->
+    <div class="hero-mockup-col">
+      <MockupGraphic />
+    </div>
+  </div>
+</header>
+
+<script is:inline define:vars={{ variants: offerConfig.headlineVariants }}>
+  // Dynamic A/B headline variant detection & DOM swap
+  (function () {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      let v = params.get('v');
+      if (v) {
+        if (!v.startsWith('v')) v = 'v' + v;
+        if (variants[v]) {
+          const hEl = document.getElementById('hero-headline');
+          const subEl = document.getElementById('hero-subheadline');
+          if (hEl && subEl) {
+            hEl.textContent = variants[v].headline;
+            subEl.textContent = variants[v].subheadline;
+          }
+          if (window.sessionStorage) {
+            sessionStorage.setItem('hfi_headline_variant', v);
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('Headline variant init error', e);
+    }
+  })();
+</script>
+
+<style>
+  .hero-section {
+    padding-top: 2.75rem;
+    padding-bottom: 3.5rem;
+    background: radial-gradient(circle at 80% 20%, #F5EFE6 0%, #FBF9F5 65%);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .hero-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .hero-section {
+      padding-top: 4.5rem;
+      padding-bottom: 4.5rem;
+    }
+    .hero-container {
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3.5rem;
+    }
+  }
+
+  .hero-pill-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--sage-100);
+    color: var(--sage-800);
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    margin-bottom: 1.25rem;
+    border: 1px solid var(--sage-200);
+  }
+
+  .pill-dot {
+    width: 7px;
+    height: 7px;
+    background-color: var(--sage-700);
+    border-radius: 50%;
+  }
+
+  .hero-headline {
+    margin-bottom: 1.1rem;
+    color: var(--text-headline);
+  }
+
+  .hero-subheadline {
+    font-size: clamp(1.05rem, 2vw, 1.2rem);
+    line-height: 1.6;
+    color: var(--text-body);
+    margin-bottom: 2rem;
+    max-width: 600px;
+  }
+
+  .hero-cta-box {
+    max-width: 440px;
+    margin-bottom: 2.25rem;
+  }
+
+  .hero-btn {
+    font-size: 1.125rem;
+    min-height: 54px;
+  }
+
+  .hero-payment-trust {
+    margin-top: 0.85rem;
+    text-align: center;
+  }
+
+  .hero-trust-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    max-width: 520px;
+  }
+
+  .bullet-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.925rem;
+    line-height: 1.45;
+    color: var(--text-body);
+  }
+
+  .bullet-icon-wrap {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--sage-100);
+    color: var(--sage-800);
+    border-radius: 50%;
+    margin-top: 1px;
+  }
+
+  .hero-mockup-col {
+    display: flex;
+    justify-content: center;
+  }
+</style>

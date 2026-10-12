@@ -1,0 +1,59 @@
+---
+// Base Layout for Landing Page
+import AnnouncementBar from '../components/AnnouncementBar.astro';
+import Footer from '../components/Footer.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+import { offerConfig } from '../../config/offer';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Her First Income | Practical Blueprints to Build Real At-Home Income",
+  description = "A calm, honest guide to choosing and launching one legitimate at-home income path. Zero hype, free tool setups, and 145 fill-in templates."
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+
+    <!-- SEO & Social Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/mockup-preview.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Preload Self-Hosted Font -->
+    <link 
+      rel="preload" 
+      href="/fonts/playfair-display.woff2" 
+      as="font" 
+      type="font/woff2" 
+      crossorigin 
+    />
+
+    <!-- Dual Client Tracker -->
+    <script src="/tracker.js" defer></script>
+  </head>
+  <body>
+    <AnnouncementBar />
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <Footer />
+    <StickyMobileCTA />
+    <CookieBanner />
+  </body>
+</html>

@@ -1,0 +1,98 @@
+---
+// Funnel Layout (No Navigation Header, Legal Footer Only)
+import Footer from '../components/Footer.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = "Her First Income secure order update portal."
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title}</title>
+
+    <!-- Preload Self-Hosted Font -->
+    <link 
+      rel="preload" 
+      href="/fonts/playfair-display.woff2" 
+      as="font" 
+      type="font/woff2" 
+      crossorigin 
+    />
+
+    <!-- Dual Client Tracker -->
+    <script src="/tracker.js" defer></script>
+  </head>
+  <body class="funnel-body">
+    <!-- Slim Funnel Header Bar (Brand Name Only, No Navigation Links) -->
+    <header class="funnel-header" role="banner">
+      <div class="container funnel-header-inner">
+        <span class="funnel-brand">Her First Income</span>
+        <div class="funnel-secure-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          Secure Customer Portal
+        </div>
+      </div>
+    </header>
+
+    <main id="funnel-content">
+      <slot />
+    </main>
+
+    <Footer />
+    <CookieBanner />
+  </body>
+</html>
+
+<style>
+  .funnel-body {
+    background-color: var(--bg-page);
+  }
+
+  .funnel-header {
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--border-medium);
+    padding: 0.85rem 0;
+  }
+
+  .funnel-header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .funnel-brand {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-headline);
+  }
+
+  .funnel-secure-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--sage-800);
+    background: var(--sage-100);
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-pill);
+  }
+</style>

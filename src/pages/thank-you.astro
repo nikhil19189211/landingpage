@@ -1,0 +1,249 @@
+---
+// Thank-You Page (/thank-you) - Starter Tier (No more selling)
+import FunnelLayout from '../layouts/FunnelLayout.astro';
+import { offerConfig, STARTER_ITEMS } from '../../config/offer';
+
+---
+
+<FunnelLayout
+  title="Order Confirmed | Your Downloads Are Ready"
+  description="Thank you for your order. Your Starter Kit files are on their way to your email."
+>
+  <div class="container-narrow thank-you-container">
+    <div class="thank-you-card">
+      <div class="thank-you-header">
+        <div class="celebration-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <span class="section-label">Order Confirmed</span>
+        <h1>Welcome to Her First Income</h1>
+        <p class="thank-you-lead">
+          Your payment was successful, and your complete digital download package has been generated.
+        </p>
+      </div>
+
+      <!-- Delivery Instructions & Spam Notice -->
+      <div class="delivery-instructions-box">
+        <h3>How to Access Your Materials:</h3>
+        <ol class="instructions-steps">
+          <li>
+            <strong>Check your email inbox:</strong> You will find a message from <em>Her First Income</em> (or our checkout delivery address) containing your direct download links.
+          </li>
+          <li>
+            <strong>Check spam/promotions folders:</strong> Automated delivery emails can occasionally land in spam or promotions. Search for "Her First Income" if you don't see it within 3 minutes.
+          </li>
+          <li>
+            <strong>Save the files locally:</strong> Download and save the PDFs to your phone, tablet, Google Drive, or computer so you always have offline access.
+          </li>
+        </ol>
+      </div>
+
+      <!-- Access List by Tier -->
+      <div class="access-tier-box">
+        <div class="tier-box-head">
+          <span class="badge-included">Included in Your Starter Kit</span>
+          <h3>Your Download Inventory:</h3>
+        </div>
+
+        <ul class="tier-downloads-list" role="list">
+          {STARTER_ITEMS.map((item) => (
+            <li class="download-item">
+              <div class="item-check">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <div class="item-meta">
+                <strong>{item.title}</strong>
+                <span>{item.description}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Support & Help -->
+      <div class="support-box">
+        <h4>Need assistance or didn't receive the email?</h4>
+        <p>
+          Check your spam and promotions folders for your receipt, or access your digital downloads directly via your checkout order confirmation page.
+        </p>
+      </div>
+    </div>
+  </div>
+</FunnelLayout>
+
+<script is:inline>
+  // Fire deduplicated Meta Purchase event
+  (function () {
+    if (typeof window.trackFunnelEvent === 'function') {
+      window.trackFunnelEvent('Purchase', {
+        content_name: 'starter',
+        content_type: 'product',
+        value: 17.00,
+        currency: 'USD',
+        num_items: 1
+      });
+    }
+  })();
+</script>
+
+<style>
+  .thank-you-container {
+    padding: 3rem 0 5rem;
+  }
+
+  .thank-you-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 2.25rem 1.75rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  @media (min-width: 640px) {
+    .thank-you-card {
+      padding: 3.5rem 2.5rem;
+    }
+  }
+
+  .thank-you-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .celebration-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--success-bg);
+    color: var(--success-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+    border: 2px solid #C4DFC9;
+  }
+
+  .thank-you-header h1 {
+    font-size: clamp(1.85rem, 4vw, 2.5rem);
+    margin: 0.5rem 0 0.85rem;
+  }
+
+  .thank-you-lead {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .delivery-instructions-box {
+    background: var(--sage-50);
+    border: 1px solid var(--sage-200);
+    border-radius: var(--radius-md);
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .delivery-instructions-box h3 {
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+    color: var(--sage-800);
+  }
+
+  .instructions-steps {
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .instructions-steps li {
+    font-size: 0.925rem;
+    line-height: 1.55;
+    color: var(--text-body);
+  }
+
+  .access-tier-box {
+    border-top: 1px solid var(--border-light);
+    padding-top: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .tier-box-head {
+    margin-bottom: 1.25rem;
+  }
+
+  .tier-box-head h3 {
+    font-size: 1.35rem;
+    margin-top: 0.35rem;
+  }
+
+  .tier-downloads-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .download-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    background: var(--bg-surface-subtle);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem;
+  }
+
+  .item-check {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    background: var(--sage-100);
+    color: var(--sage-800);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  .item-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .item-meta strong {
+    font-size: 0.925rem;
+    color: var(--text-headline);
+  }
+
+  .item-meta span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .support-box {
+    text-align: center;
+    border-top: 1px solid var(--border-light);
+    padding-top: 2rem;
+  }
+
+  .support-box h4 {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .support-box p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+</style>
