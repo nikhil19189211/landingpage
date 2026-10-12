@@ -50,10 +50,15 @@ const isCompleteFirst = tierOrderMobile === 'complete-first';
       </button>
     </div>
 
+    <div class="pricing-mobile-hint mobile-only">
+      <span>Swipe card or tap tabs above to switch</span>
+    </div>
+
     <div class={`pricing-cards-container ${isCompleteFirst ? 'order-complete-mobile-first' : ''}`}>
       <!-- COMPLETE CARD ($47) -->
       <div class="pricing-card complete-card" id="card-complete">
         <div class="card-badge-header">
+          <span class="card-tier-step mobile-only">Card 1 of 2</span>
           <span class="badge-best-value">{complete.badge || 'Best Value'}</span>
           <span class="badge-savings">Save 64% by Value</span>
         </div>
@@ -143,6 +148,7 @@ const isCompleteFirst = tierOrderMobile === 'complete-first';
       <!-- STARTER CARD ($17) -->
       <div class="pricing-card starter-card" id="card-starter">
         <div class="card-badge-header">
+          <span class="card-tier-step mobile-only">Card 2 of 2</span>
           <span class="badge-starter">Foundation Level</span>
         </div>
 
@@ -386,6 +392,26 @@ const isCompleteFirst = tierOrderMobile === 'complete-first';
       border-top: 1px dashed var(--border-medium);
     }
 
+    .pricing-mobile-hint {
+      display: block;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-top: -0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-tier-step {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--bg-surface-subtle);
+      padding: 0.2rem 0.5rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-light);
+    }
+
     .btn-switch-inline {
       background: none;
       border: none;
@@ -397,6 +423,11 @@ const isCompleteFirst = tierOrderMobile === 'complete-first';
       padding: 0.25rem 0.5rem;
       font-family: inherit;
     }
+  }
+
+  .pricing-mobile-hint,
+  .card-tier-step {
+    display: none;
   }
 
   .pricing-card {
@@ -653,6 +684,31 @@ const isCompleteFirst = tierOrderMobile === 'complete-first';
           }
         });
       });
+
+      // Mobile Touch Swipe Gesture Support
+      var touchStartX = 0;
+      var touchStartY = 0;
+      container.addEventListener('touchstart', function (e) {
+        if (!e.changedTouches || e.changedTouches.length === 0) return;
+        touchStartX = e.changedTouches[0].clientX;
+        touchStartY = e.changedTouches[0].clientY;
+      }, { passive: true });
+
+      container.addEventListener('touchend', function (e) {
+        if (!e.changedTouches || e.changedTouches.length === 0) return;
+        var diffX = e.changedTouches[0].clientX - touchStartX;
+        var diffY = e.changedTouches[0].clientY - touchStartY;
+        // Horizontal swipe threshold
+        if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY)) {
+          if (diffX < 0) {
+            // Swiped left -> switch to starter
+            setTier('starter');
+          } else {
+            // Swiped right -> switch to complete
+            setTier('complete');
+          }
+        }
+      }, { passive: true });
     });
   }
 

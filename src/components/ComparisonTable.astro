@@ -1,5 +1,7 @@
 ---
-// Comprehensive Comparison Table & Mobile Stacked Accordion
+// Comprehensive Comparison Table & Mobile Single-Card Tier Switcher
+// Desktop: Side-by-side 11-row table.
+// Mobile: Single-card view (1 card at a time) with segmented toggle & touch swipe support.
 import { offerConfig, STARTER_ITEMS, COMPLETE_EXCLUSIVE_ITEMS } from '../../config/offer';
 
 const allItems = [
@@ -58,7 +60,7 @@ const completePrice = offerConfig.complete.price; // $47
               <td class="cell-mark">
                 {item.inStarter ? (
                   <span class="check-mark" aria-label="Included in Starter">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
                   </span>
@@ -68,7 +70,7 @@ const completePrice = offerConfig.complete.price; // $47
               </td>
               <td class="cell-mark cell-complete-col">
                 <span class="check-mark check-complete" aria-label="Included in Complete">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
                 </span>
@@ -100,69 +102,165 @@ const completePrice = offerConfig.complete.price; // $47
       </table>
     </div>
 
-    <!-- Mobile Responsive Side-by-Side Matrix Table -->
-    <div class="comparison-mobile-matrix mobile-only">
-      <div class="mobile-matrix-card">
-        <!-- Matrix Header -->
-        <div class="matrix-header-row">
-          <div class="m-col-resource">
-            <span class="m-header-label">Resource</span>
-          </div>
-          <div class="m-col-tier m-col-starter">
-            <span class="m-tier-title">Starter</span>
-            <span class="m-tier-price">${starterPrice}</span>
-          </div>
-          <div class="m-col-tier m-col-complete">
-            <span class="m-tier-badge">Best Value</span>
-            <span class="m-tier-title">Complete</span>
-            <span class="m-tier-price">${completePrice}</span>
-          </div>
-        </div>
+    <!-- Mobile Single-Card Tier Breakdown (1 Card at a Time) -->
+    <div class="comparison-mobile-container mobile-only">
+      <!-- Segmented Switcher for Comparison -->
+      <div class="comparison-mobile-switcher" role="tablist" aria-label="Select comparison tier">
+        <button
+          type="button"
+          class="comp-switcher-tab active"
+          role="tab"
+          aria-selected="true"
+          data-comp-target="complete"
+          id="comp-tab-complete"
+        >
+          <span class="comp-tab-label">Complete</span>
+          <span class="comp-tab-price">${completePrice}</span>
+          <span class="comp-tab-badge">Best Value</span>
+        </button>
+        <button
+          type="button"
+          class="comp-switcher-tab"
+          role="tab"
+          aria-selected="false"
+          data-comp-target="starter"
+          id="comp-tab-starter"
+        >
+          <span class="comp-tab-label">Starter</span>
+          <span class="comp-tab-price">${starterPrice}</span>
+        </button>
+      </div>
 
-        <!-- Matrix Rows -->
-        <div class="matrix-body">
-          {allItems.map((item, idx) => (
-            <div class={`matrix-row ${idx % 2 === 0 ? 'matrix-row-even' : 'matrix-row-odd'}`}>
-              <div class="m-col-resource">
-                <span class="m-res-name">{item.title}</span>
-                <span class="m-res-val">Est. ${item.estimatedValue}</span>
-              </div>
-              <div class="m-col-tier m-col-starter">
-                {item.inStarter ? (
-                  <span class="m-check-icon check-starter" aria-label="Included in Starter">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                      <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-                  </span>
-                ) : (
-                  <span class="m-dash" aria-label="Not included">&mdash;</span>
-                )}
-              </div>
-              <div class="m-col-tier m-col-complete highlight-col">
-                <span class="m-check-icon check-complete" aria-label="Included in Complete">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <div class="comp-mobile-hint">
+        <span>Swipe card or tap tabs above to compare</span>
+      </div>
+
+      <!-- Mobile Cards Track: Shows only 1 Card at a Time -->
+      <div class="comp-cards-track" id="comp-cards-track">
+        <!-- COMPLETE COMPARISON CARD -->
+        <div class="comp-mobile-card comp-card-complete active" id="comp-card-complete">
+          <div class="comp-card-badge-header">
+            <span class="comp-step-badge">Card 1 of 2</span>
+            <span class="comp-badge-highlight">Best Value &bull; All 11 Deliverables</span>
+          </div>
+
+          <div class="comp-card-head">
+            <h3 class="comp-tier-title">Complete Kit Breakdown</h3>
+            <p class="comp-tier-sub">Everything needed to choose, launch, and execute with zero guesswork.</p>
+          </div>
+
+          <div class="comp-items-list">
+            <div class="comp-list-title">All 11 Inclusions in Complete:</div>
+            {allItems.map((item) => (
+              <div class="comp-item-row">
+                <div class="comp-item-icon icon-complete">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
-                </span>
+                </div>
+                <div class="comp-item-text">
+                  <div class="comp-item-name-line">
+                    <span class="comp-item-name">{item.title}</span>
+                    <span class="comp-item-val">Est. ${item.estimatedValue}</span>
+                  </div>
+                  <div class="comp-item-meta">
+                    {item.pages && <span>{item.pages} pages</span>}
+                    {item.templatesCount && <span>{item.templatesCount} templates</span>}
+                    {item.videosCount && <span>{item.videosCount} curated videos</span>}
+                    {item.promptsCount && <span>{item.promptsCount}+ prompts</span>}
+                    {!item.inStarter && <span class="badge-exclusive">Complete Exclusive</span>}
+                  </div>
+                </div>
               </div>
+            ))}
+          </div>
+
+          <div class="comp-card-totals">
+            <div class="comp-total-row">
+              <span class="comp-total-label">Total Estimated Value:</span>
+              <span class="comp-total-val-strikethrough">${completeVal}</span>
             </div>
-          ))}
+            <div class="comp-price-row">
+              <span class="comp-price-label">Your One-Time Price:</span>
+              <span class="comp-price-val">${completePrice}</span>
+            </div>
+            <div class="comp-savings-badge">
+              Save ${completeVal - completePrice} (64% Off Value)
+            </div>
+          </div>
+
+          <div class="comp-switch-footer">
+            <button type="button" class="btn-comp-switch" data-switch-comp="starter">
+              View Starter Kit inclusions ($17) &rarr;
+            </button>
+          </div>
         </div>
 
-        <!-- Matrix Totals Footer -->
-        <div class="matrix-footer-row">
-          <div class="m-col-resource">
-            <span class="m-footer-title">Total Value</span>
-            <span class="m-footer-sub">One-time</span>
+        <!-- STARTER COMPARISON CARD -->
+        <div class="comp-mobile-card comp-card-starter" id="comp-card-starter">
+          <div class="comp-card-badge-header">
+            <span class="comp-step-badge">Card 2 of 2</span>
+            <span class="comp-badge-neutral">Foundation Level &bull; 6 Core Inclusions</span>
           </div>
-          <div class="m-col-tier m-col-starter">
-            <span class="m-footer-val">${starterVal}</span>
-            <span class="m-footer-price">${starterPrice}</span>
+
+          <div class="comp-card-head">
+            <h3 class="comp-tier-title">Starter Kit Breakdown</h3>
+            <p class="comp-tier-sub">Essential guides, templates, and zero-dollar blueprints to pick your direction.</p>
           </div>
-          <div class="m-col-tier m-col-complete highlight-col">
-            <span class="m-footer-val">${completeVal}</span>
-            <span class="m-footer-price">${completePrice}</span>
-            <span class="m-footer-save">Save 64%</span>
+
+          <div class="comp-items-list">
+            <div class="comp-list-title">6 Inclusions in Starter:</div>
+            {STARTER_ITEMS.map((item) => (
+              <div class="comp-item-row">
+                <div class="comp-item-icon icon-starter">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <div class="comp-item-text">
+                  <div class="comp-item-name-line">
+                    <span class="comp-item-name">{item.title}</span>
+                    <span class="comp-item-val">Est. ${item.estimatedValue}</span>
+                  </div>
+                  <div class="comp-item-meta">
+                    {item.pages && <span>{item.pages} pages</span>}
+                    {item.templatesCount && <span>{item.templatesCount} templates</span>}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- Notice of what Complete adds -->
+          <div class="comp-not-included-box">
+            <div class="not-included-title">What Complete Adds (+5 Items):</div>
+            <ul class="not-included-list">
+              <li>Step-by-Step Execution Guide (38 pages)</li>
+              <li>30-Day Momentum Roadmap (13 pages)</li>
+              <li>9 Commercial Pitch Scripts (21 pages)</li>
+              <li>Video Tutorial Library (21 lessons)</li>
+              <li>High-Leverage AI Prompt Pack (60+ prompts)</li>
+            </ul>
+          </div>
+
+          <div class="comp-card-totals">
+            <div class="comp-total-row">
+              <span class="comp-total-label">Total Estimated Value:</span>
+              <span class="comp-total-val-strikethrough">${starterVal}</span>
+            </div>
+            <div class="comp-price-row">
+              <span class="comp-price-label">Your One-Time Price:</span>
+              <span class="comp-price-val">${starterPrice}</span>
+            </div>
+            <div class="comp-savings-badge">
+              Save ${starterVal - starterPrice} (74% Off Value)
+            </div>
+          </div>
+
+          <div class="comp-switch-footer">
+            <button type="button" class="btn-comp-switch" data-switch-comp="complete">
+              View Complete Kit inclusions ($47) &rarr;
+            </button>
           </div>
         </div>
       </div>
@@ -199,92 +297,110 @@ const completePrice = offerConfig.complete.price; // $47
   }
 
   .comparison-table th {
+    background-color: #FAF8F5;
     padding: 1.25rem 1rem;
-    background: var(--bg-surface-subtle);
-    border-bottom: 2px solid var(--border-medium);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    font-weight: 600;
     color: var(--text-headline);
+    border-bottom: 2px solid var(--border-medium);
+    vertical-align: middle;
   }
 
   .col-item {
-    width: 50%;
+    width: 52%;
+    padding-left: 1.75rem !important;
   }
 
   .col-val {
-    width: 12%;
+    width: 14%;
     text-align: center;
+    color: var(--text-muted);
   }
 
   .col-tier {
-    width: 19%;
+    width: 17%;
     text-align: center;
   }
 
   .th-tier-name {
     display: block;
-    font-family: var(--font-serif);
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 1rem;
+    font-weight: 700;
   }
 
   .th-tier-price {
+    display: block;
     font-size: 1.15rem;
     font-weight: 700;
-    color: var(--text-headline);
-  }
-
-  .tier-complete {
-    background: var(--sage-100) !important;
-    border-left: 2px solid var(--sage-700);
-    border-right: 2px solid var(--sage-700);
-    position: relative;
+    color: var(--sage-800);
+    margin-top: 0.2rem;
   }
 
   .th-badge {
     display: inline-block;
-    background: var(--terracotta);
-    color: #FFFFFF;
     font-size: 0.65rem;
     font-weight: 700;
-    letter-spacing: 0.05em;
     text-transform: uppercase;
-    padding: 0.15rem 0.5rem;
+    letter-spacing: 0.05em;
+    background: var(--sage-100);
+    color: var(--sage-900);
+    padding: 0.2rem 0.5rem;
     border-radius: var(--radius-pill);
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .tier-complete {
+    background-color: var(--sage-50) !important;
+    border-left: 1px solid var(--border-medium);
   }
 
   .comparison-table td {
-    padding: 1rem 1rem;
+    padding: 1.1rem 1rem;
     border-bottom: 1px solid var(--border-light);
-    font-size: 0.925rem;
+    vertical-align: middle;
   }
 
   .row-even {
-    background: #FFFFFF;
+    background-color: #FFFFFF;
   }
 
   .row-odd {
-    background: var(--bg-surface-subtle);
+    background-color: #FDFCFA;
   }
 
   .cell-title {
+    padding-left: 1.75rem !important;
+  }
+
+  .cell-title strong {
     color: var(--text-headline);
+    font-size: 0.925rem;
+    display: block;
   }
 
   .cell-subtitle {
+    font-size: 0.825rem;
     color: var(--text-muted);
-    font-size: 0.85rem;
     font-style: italic;
   }
 
   .cell-meta {
-    font-size: 0.775rem;
-    color: var(--sage-700);
-    margin-top: 0.2rem;
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .cell-meta span {
+    font-size: 0.725rem;
+    color: var(--text-light);
+    background: var(--bg-surface-subtle);
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--radius-sm);
   }
 
   .cell-val {
     text-align: center;
+    font-size: 0.875rem;
     color: var(--text-muted);
     font-weight: 500;
   }
@@ -294,20 +410,19 @@ const completePrice = offerConfig.complete.price; // $47
   }
 
   .cell-complete-col {
-    background: rgba(230, 236, 227, 0.45);
-    border-left: 1px solid var(--sage-200);
-    border-right: 1px solid var(--sage-200);
+    background-color: rgba(75, 94, 78, 0.02);
+    border-left: 1px solid var(--border-light);
   }
 
   .check-mark {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
     background: var(--sage-100);
     color: var(--sage-800);
-    border-radius: 50%;
   }
 
   .check-complete {
@@ -318,229 +433,415 @@ const completePrice = offerConfig.complete.price; // $47
   .dash-mark {
     color: var(--text-light);
     font-size: 1.25rem;
-    font-weight: 600;
   }
 
-  /* Totals row */
-  .row-totals {
-    background: var(--bg-surface-subtle);
-    border-top: 2px solid var(--border-medium);
-  }
-
+  /* Table Totals Row */
   .row-totals td {
-    padding: 1.25rem 1rem;
+    padding: 1.5rem 1rem;
+    background-color: #FAF8F5;
+    border-top: 2px solid var(--border-medium);
+    border-bottom: none;
   }
 
   .total-box {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.15rem;
+    gap: 0.2rem;
   }
 
   .total-val {
     font-size: 0.85rem;
+    color: var(--text-muted);
     text-decoration: line-through;
-    color: var(--text-light);
   }
 
   .total-price {
+    font-size: 1.15rem;
     font-weight: 700;
-    font-size: 1.1rem;
     color: var(--text-headline);
   }
 
   .total-save {
-    font-size: 0.775rem;
-    font-weight: 600;
-    color: var(--success-green);
-    background: var(--success-bg);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--sage-800);
+    background: var(--sage-100);
     padding: 0.15rem 0.5rem;
     border-radius: var(--radius-pill);
+    margin-top: 0.25rem;
   }
 
-  /* Mobile Views */
-  .desktop-only {
-    display: block;
+  .save-complete {
+    background: var(--sage-200);
+    color: var(--sage-900);
   }
-  .mobile-only {
+
+  /* ========================================================
+     MOBILE ONLY: Strictly 1 Card in View at a Time
+     ======================================================== */
+  .comparison-mobile-container {
     display: none;
   }
 
-  @media (max-width: 768px) {
-    .desktop-only {
-      display: none;
-    }
-    .mobile-only {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+  @media (max-width: 819px) {
+    .comparison-table-wrapper {
+      display: none !important;
     }
 
-    .mobile-matrix-card {
+    .comparison-mobile-container {
+      display: block;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    /* Segmented Switcher */
+    .comparison-mobile-switcher {
+      display: flex;
+      background: #EBE7DF;
+      padding: 0.35rem;
+      border-radius: var(--radius-pill);
+      gap: 0.35rem;
+      max-width: 340px;
+      margin: 0 auto 0.75rem;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    .comp-switcher-tab {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.65rem 0.75rem;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      color: var(--text-muted);
+    }
+
+    .comp-switcher-tab.active {
+      background: #FFFFFF;
+      color: var(--text-headline);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .comp-tab-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .comp-tab-price {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-headline);
+    }
+
+    .comp-tab-badge {
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: var(--sage-100);
+      color: var(--sage-900);
+      padding: 0.15rem 0.4rem;
+      border-radius: var(--radius-pill);
+      letter-spacing: 0.03em;
+    }
+
+    .comp-mobile-hint {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-bottom: 1.25rem;
+    }
+
+    /* Cards Track */
+    .comp-cards-track {
+      width: 100%;
+    }
+
+    /* Single Card Display: active shows, inactive hides */
+    .comp-mobile-card {
+      display: none;
       background: #FFFFFF;
       border: 1px solid var(--border-medium);
       border-radius: var(--radius-lg);
+      padding: 1.5rem 1.25rem;
       box-shadow: var(--shadow-card);
-      overflow: hidden;
     }
 
-    .matrix-header-row {
-      display: grid;
-      grid-template-columns: 1fr 68px 84px;
+    .comp-mobile-card.active {
+      display: block;
+      animation: fadeInCard 0.2s ease-in-out;
+    }
+
+    @keyframes fadeInCard {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .comp-card-complete {
+      border: 1.5px solid var(--sage-700);
+    }
+
+    .comp-card-badge-header {
+      display: flex;
       align-items: center;
-      background: var(--bg-surface-subtle);
-      border-bottom: 2px solid var(--border-medium);
-      padding: 0.85rem 0.65rem;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
     }
 
-    .m-header-label {
+    .comp-step-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--bg-surface-subtle);
+      padding: 0.2rem 0.5rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-light);
+    }
+
+    .comp-badge-highlight {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--sage-900);
+      background: var(--sage-100);
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--sage-300);
+    }
+
+    .comp-badge-neutral {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--bg-surface-subtle);
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-light);
+    }
+
+    .comp-card-head {
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 0.85rem;
+    }
+
+    .comp-tier-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-headline);
+      margin-bottom: 0.25rem;
+    }
+
+    .comp-tier-sub {
+      font-size: 0.825rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .comp-list-title {
       font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--text-muted);
+      color: var(--sage-800);
+      margin-bottom: 0.85rem;
     }
 
-    .m-col-tier {
+    .comp-items-list {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
     }
 
-    .m-tier-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--text-headline);
-      line-height: 1.2;
-    }
-
-    .m-tier-price {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--text-headline);
-    }
-
-    .m-tier-badge {
-      font-size: 0.6rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--sage-900);
-      background: var(--sage-100);
-      padding: 0.15rem 0.45rem;
-      border-radius: var(--radius-pill);
-      margin-bottom: 0.2rem;
-    }
-
-    .matrix-row {
-      display: grid;
-      grid-template-columns: 1fr 68px 84px;
-      align-items: center;
-      padding: 0.7rem 0.65rem;
+    .comp-item-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      padding-bottom: 0.65rem;
       border-bottom: 1px solid var(--border-light);
     }
 
-    .matrix-row-even {
-      background: #FFFFFF;
+    .comp-item-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
     }
 
-    .matrix-row-odd {
-      background: var(--bg-surface-subtle);
-    }
-
-    .m-col-resource {
+    .comp-item-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
       display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-      padding-right: 0.5rem;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
     }
 
-    .m-res-name {
-      font-size: 0.8rem;
+    .icon-complete {
+      background: var(--sage-700);
+      color: #FFFFFF;
+    }
+
+    .icon-starter {
+      background: var(--sage-100);
+      color: var(--sage-800);
+    }
+
+    .comp-item-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .comp-item-name-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+
+    .comp-item-name {
+      font-size: 0.85rem;
       font-weight: 600;
       color: var(--text-headline);
       line-height: 1.35;
     }
 
-    .m-res-val {
-      font-size: 0.7rem;
-      color: var(--text-light);
+    .comp-item-val {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      flex-shrink: 0;
     }
 
-    .highlight-col {
-      background: rgba(75, 94, 78, 0.04);
-      padding-top: 0.25rem;
-      padding-bottom: 0.25rem;
+    .comp-item-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.2rem;
+    }
+
+    .comp-item-meta span {
+      font-size: 0.7rem;
+      color: var(--text-light);
+      background: var(--bg-surface-subtle);
+      padding: 0.05rem 0.35rem;
       border-radius: var(--radius-sm);
     }
 
-    .m-check-icon {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .badge-exclusive {
+      color: var(--sage-900) !important;
+      background: var(--sage-100) !important;
+      font-weight: 600;
     }
 
-    .check-starter {
-      background: var(--sage-100);
-      color: var(--sage-800);
-    }
-
-    .check-complete {
-      background: var(--sage-700);
-      color: #FFFFFF;
-    }
-
-    .m-dash {
-      color: var(--text-light);
-      font-size: 1.1rem;
-      line-height: 1;
-    }
-
-    .matrix-footer-row {
-      display: grid;
-      grid-template-columns: 1fr 68px 84px;
-      align-items: center;
-      padding: 0.85rem 0.65rem;
+    /* What Complete Adds Callout in Starter Card */
+    .comp-not-included-box {
       background: var(--bg-surface-subtle);
-      border-top: 2px solid var(--border-medium);
+      border: 1px dashed var(--border-medium);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.25rem;
     }
 
-    .m-footer-title {
-      font-size: 0.8rem;
+    .not-included-title {
+      font-size: 0.75rem;
       font-weight: 700;
-      color: var(--text-headline);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
     }
 
-    .m-footer-sub {
-      font-size: 0.675rem;
+    .not-included-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-size: 0.785rem;
       color: var(--text-muted);
     }
 
-    .m-footer-val {
-      font-size: 0.725rem;
-      color: var(--text-light);
+    .not-included-list li::before {
+      content: "+ ";
+      color: var(--sage-800);
+      font-weight: 700;
+    }
+
+    /* Totals Box */
+    .comp-card-totals {
+      background: var(--bg-surface-subtle);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .comp-total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .comp-total-val-strikethrough {
       text-decoration: line-through;
     }
 
-    .m-footer-price {
-      font-size: 0.9rem;
+    .comp-price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--text-headline);
+      margin-bottom: 0.5rem;
     }
 
-    .m-footer-save {
-      font-size: 0.65rem;
+    .comp-price-val {
+      font-size: 1.25rem;
+      color: var(--sage-800);
+    }
+
+    .comp-savings-badge {
+      display: inline-block;
+      font-size: 0.75rem;
       font-weight: 700;
       color: var(--sage-900);
       background: var(--sage-100);
-      padding: 0.1rem 0.35rem;
+      padding: 0.2rem 0.6rem;
       border-radius: var(--radius-pill);
-      margin-top: 0.15rem;
+      border: 1px solid var(--sage-300);
+    }
+
+    .comp-switch-footer {
+      text-align: center;
+      margin-top: 1.25rem;
+      padding-top: 0.85rem;
+      border-top: 1px dashed var(--border-medium);
+    }
+
+    .btn-comp-switch {
+      background: none;
+      border: none;
+      color: var(--sage-800);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0.25rem 0.5rem;
+      font-family: inherit;
     }
   }
 
@@ -561,3 +862,74 @@ const completePrice = offerConfig.complete.price; // $47
     margin: 0;
   }
 </style>
+
+<script is:inline>
+  (function initComparisonMobileSwitcher() {
+    var tabs = document.querySelectorAll('.comp-switcher-tab');
+    var completeCard = document.getElementById('comp-card-complete');
+    var starterCard = document.getElementById('comp-card-starter');
+    var switchBtns = document.querySelectorAll('.btn-comp-switch');
+    var track = document.getElementById('comp-cards-track');
+    if (!tabs.length || !completeCard || !starterCard) return;
+
+    function setComparisonTier(tier) {
+      tabs.forEach(function (tab) {
+        var isMatch = tab.getAttribute('data-comp-target') === tier;
+        tab.classList.toggle('active', isMatch);
+        tab.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+      });
+
+      if (tier === 'starter') {
+        completeCard.classList.remove('active');
+        starterCard.classList.add('active');
+      } else {
+        starterCard.classList.remove('active');
+        completeCard.classList.add('active');
+      }
+    }
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var targetTier = tab.getAttribute('data-comp-target') || 'complete';
+        setComparisonTier(targetTier);
+      });
+    });
+
+    switchBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var targetTier = btn.getAttribute('data-switch-comp') || 'complete';
+        setComparisonTier(targetTier);
+        var targetCard = targetTier === 'starter' ? starterCard : completeCard;
+        if (targetCard) {
+          targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Touch swipe support for Comparison mobile cards
+    if (track) {
+      var touchStartX = 0;
+      var touchStartY = 0;
+      track.addEventListener('touchstart', function (e) {
+        if (!e.changedTouches || e.changedTouches.length === 0) return;
+        touchStartX = e.changedTouches[0].clientX;
+        touchStartY = e.changedTouches[0].clientY;
+      }, { passive: true });
+
+      track.addEventListener('touchend', function (e) {
+        if (!e.changedTouches || e.changedTouches.length === 0) return;
+        var diffX = e.changedTouches[0].clientX - touchStartX;
+        var diffY = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY)) {
+          if (diffX < 0) {
+            // Swiped left -> switch to starter
+            setComparisonTier('starter');
+          } else {
+            // Swiped right -> switch to complete
+            setComparisonTier('complete');
+          }
+        }
+      }, { passive: true });
+    }
+  })();
+</script>
