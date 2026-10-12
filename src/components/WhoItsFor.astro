@@ -1,5 +1,48 @@
 ---
 // Who It's For & Who It's Not For - Setting Honest, Grounded Expectations
+
+interface ExpectationItem {
+  title: string;
+  desc: string;
+}
+
+const BUILT_FOR: ExpectationItem[] = [
+  {
+    title: "Limited quiet time (30–90 min)",
+    desc: "You need guidance that can be implemented in realistic 30, 60, or 90-minute blocks around existing life commitments."
+  },
+  {
+    title: "Calm, practical honesty",
+    desc: "You are tired of aggressive sales pitches, loud claims, and complicated funnels, and just want clear steps."
+  },
+  {
+    title: "Zero startup tool cost",
+    desc: "You prefer to use reputable free software and tools rather than paying $100+/month in subscriptions before earning anything."
+  },
+  {
+    title: "Focus on 1 model",
+    desc: "You understand that committing to one clear, focused business model is how real traction happens."
+  }
+];
+
+const NOT_FOR: ExpectationItem[] = [
+  {
+    title: "Expecting overnight riches",
+    desc: "Building independent income requires genuine effort, consistency, and patience. There are no magic buttons."
+  },
+  {
+    title: "Passive 'done-for-you' hype",
+    desc: "These guides provide clear templates and instructions, but the actual execution is up to you."
+  },
+  {
+    title: "Interested in MLMs or crypto",
+    desc: "We do not cover multi-level marketing, recruitment models, or speculative trading of any kind."
+  },
+  {
+    title: "Wanting academic textbooks",
+    desc: "Everything in this kit is direct, action-oriented, and concise. If you want 400 pages of academic theory, this is not that."
+  }
+];
 ---
 
 <section class="section section-who" id="who-its-for">
@@ -16,55 +59,64 @@
       <!-- Who It's For -->
       <div class="who-card who-for">
         <div class="who-card-header">
-          <div class="who-icon icon-check">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <div class="who-icon icon-check" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </div>
-          <h3>This System Is Built For You If:</h3>
+          <h3 class="who-title">
+            <span class="title-short mobile-only">Built For You</span>
+            <span class="title-full desktop-only">This System Is Built For You If:</span>
+          </h3>
         </div>
 
         <ul class="who-list" role="list">
-          <li>
-            <strong>You have limited quiet time:</strong> You need guidance that can be implemented in realistic 30, 60, or 90-minute blocks around existing life commitments.
-          </li>
-          <li>
-            <strong>You value calm, practical honesty:</strong> You are tired of aggressive sales pitches, loud claims, and complicated funnels, and just want clear steps.
-          </li>
-          <li>
-            <strong>You want to keep costs at zero:</strong> You prefer to use reputable free software and tools rather than paying $100+/month in subscriptions before earning anything.
-          </li>
-          <li>
-            <strong>You are ready to focus on one path:</strong> You understand that committing to one clear, focused business model is how real traction happens.
-          </li>
+          {BUILT_FOR.map((item) => (
+            <li class="who-item">
+              <span class="item-bullet bullet-check" aria-hidden="true">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              <div class="item-content">
+                <strong class="point-title">{item.title}</strong>
+                <span class="point-desc desktop-only">: {item.desc}</span>
+              </div>
+            </li>
+          ))}
         </ul>
       </div>
 
       <!-- Who It's Not For -->
       <div class="who-card who-not">
         <div class="who-card-header">
-          <div class="who-icon icon-cross">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <div class="who-icon icon-cross" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </div>
-          <h3>Please Do Not Buy If:</h3>
+          <h3 class="who-title">
+            <span class="title-short mobile-only">Please Pass If</span>
+            <span class="title-full desktop-only">Please Do Not Buy If:</span>
+          </h3>
         </div>
 
         <ul class="who-list" role="list">
-          <li>
-            <strong>You are expecting overnight riches:</strong> Building independent income requires genuine effort, consistency, and patience. There are no magic buttons.
-          </li>
-          <li>
-            <strong>You are looking for passive "done-for-you" systems:</strong> These guides provide clear templates and instructions, but the actual execution is up to you.
-          </li>
-          <li>
-            <strong>You are interested in MLMs or crypto:</strong> We do not cover multi-level marketing, recruitment models, or speculative trading of any kind.
-          </li>
-          <li>
-            <strong>You prefer theoretical textbooks:</strong> Everything in this kit is direct, action-oriented, and concise. If you want 400 pages of academic theory, this is not that.
-          </li>
+          {NOT_FOR.map((item) => (
+            <li class="who-item">
+              <span class="item-bullet bullet-cross" aria-hidden="true">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </span>
+              <div class="item-content">
+                <strong class="point-title">{item.title}</strong>
+                <span class="point-desc desktop-only">: {item.desc}</span>
+              </div>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
@@ -77,46 +129,54 @@
     border-bottom: 1px solid var(--border-light);
   }
 
+  /* Responsive visibility utilities */
+  .mobile-only {
+    display: none;
+  }
+
+  .desktop-only {
+    display: inline;
+  }
+
   .who-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
     max-width: 960px;
     margin: 0 auto;
   }
 
-  @media (min-width: 768px) {
-    .who-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
   .who-card {
     background: #FFFFFF;
-    border: 1px solid var(--border-medium);
     border-radius: var(--radius-lg);
-    padding: 2rem 1.75rem;
     box-shadow: var(--shadow-card);
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .who-card.who-for {
+    border: 1px solid var(--sage-300);
+  }
+
+  .who-card.who-not {
+    border: 1px solid rgba(200, 109, 81, 0.25);
+    background: #FCFAF8;
   }
 
   .who-card-header {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.25rem;
     border-bottom: 1px solid var(--border-light);
   }
 
-  .who-card-header h3 {
-    font-size: 1.25rem;
+  .who-title {
     color: var(--text-headline);
     margin: 0;
+    line-height: 1.25;
   }
 
   .who-icon {
-    width: 32px;
-    height: 32px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -138,16 +198,163 @@
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 1.15rem;
+    padding: 0;
+    margin: 0;
   }
 
-  .who-list li {
-    font-size: 0.925rem;
-    line-height: 1.55;
-    color: var(--text-body);
+  .who-item {
+    display: flex;
+    align-items: flex-start;
   }
 
-  .who-list strong {
+  .item-bullet {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .bullet-check {
+    background: var(--sage-100);
+    color: var(--sage-800);
+  }
+
+  .bullet-cross {
+    background: #FDF2EE;
+    color: var(--terracotta);
+  }
+
+  .item-content {
+    flex: 1;
+  }
+
+  .point-title {
     color: var(--text-headline);
+  }
+
+  .point-desc {
+    color: var(--text-body);
+    font-weight: 400;
+  }
+
+  /* Mobile Screen (< 768px): Side-by-Side 2-Column with punchy titles and no descriptions */
+  @media (max-width: 767px) {
+    .mobile-only {
+      display: inline !important;
+    }
+
+    .desktop-only {
+      display: none !important;
+    }
+
+    .who-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
+
+    .who-card {
+      padding: 1rem 0.65rem;
+      border-radius: var(--radius-md);
+    }
+
+    .who-card-header {
+      flex-direction: row;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.6rem;
+    }
+
+    .who-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .who-icon svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .who-title {
+      font-size: 0.825rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .who-list {
+      gap: 0.65rem;
+    }
+
+    .who-item {
+      gap: 0.35rem;
+    }
+
+    .item-bullet {
+      width: 16px;
+      height: 16px;
+      margin-top: 1px;
+    }
+
+    .item-bullet svg {
+      width: 10px;
+      height: 10px;
+    }
+
+    .point-title {
+      font-size: 0.74rem;
+      font-weight: 600;
+      line-height: 1.3;
+      display: block;
+    }
+  }
+
+  /* Desktop Screen (>= 768px): Rich cards with full descriptive text */
+  @media (min-width: 768px) {
+    .who-grid {
+      gap: 2rem;
+    }
+
+    .who-card {
+      padding: 2rem 1.75rem;
+    }
+
+    .who-card-header {
+      gap: 0.85rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.25rem;
+    }
+
+    .who-icon {
+      width: 32px;
+      height: 32px;
+    }
+
+    .who-title {
+      font-size: 1.25rem;
+    }
+
+    .who-list {
+      gap: 1.25rem;
+    }
+
+    .who-item {
+      gap: 0.65rem;
+    }
+
+    .item-bullet {
+      width: 20px;
+      height: 20px;
+      margin-top: 3px;
+    }
+
+    .point-title {
+      font-size: 0.925rem;
+    }
+
+    .point-desc {
+      font-size: 0.925rem;
+      line-height: 1.55;
+    }
   }
 </style>
