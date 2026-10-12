@@ -97,10 +97,10 @@ export const offerConfig = {
 ### Offer Tiers
 | Tier | Price | Est. Value | Core Assets Included |
 | :--- | :--- | :--- | :--- |
-| **Starter** | **$17** | **$66** | 5 Honest Ways Guide (16 pp), 145 Template Vault, Zero-Dollar Tech Stack (12 pp), Confidence & Mindset Guide (12 pp), 90-Min Launch Blueprint (10 pp), First Dollar Checklist (8 pp). |
-| **Complete** | **$47** | **$132** | Everything in Starter PLUS: Step-by-Step Execution Guide (38 pp), 30-Day Momentum Roadmap (13 pp), 9 Essential Pitch Templates (21 pp), Side Hustle Video Library (13 pp, 21 videos), AI Prompt Pack (25 pp, 60+ prompts). |
-| **Upgrade** | **+$30** | **$66** | The 5 Complete extras for Starter buyers ($17 + $30 = $47 total paid). |
-| **Downsell** | **+$12** | **$31** | Execution Guide (38 pp, $19) + 30-Day Momentum Roadmap (13 pp, $12). |
+| **Starter** | **$27** | **$120** | 5 Honest Ways Guide (16 pp), 145 Template Vault, Zero-Dollar Tech Stack (12 pp), Confidence & Mindset Guide (12 pp), 90-Min Launch Blueprint (10 pp), First Dollar Checklist (8 pp). |
+| **Complete** | **$57** | **$275** | Everything in Starter PLUS: Step-by-Step Execution Guide (38 pp), 30-Day Momentum Roadmap (13 pp), 9 Essential Pitch Templates (21 pp), Side Hustle Video Library (13 pp, 21 videos), AI Prompt Pack (25 pp, 60+ prompts). |
+| **Upgrade** | **+$30** | **$155** | The 5 Complete extras for Starter buyers ($27 + $30 = $57 total paid). |
+| **Downsell** | **+$12** | **$78** | Execution Guide (38 pp, $49) + 30-Day Momentum Roadmap (13 pp, $29). |
 
 ---
 
@@ -112,7 +112,7 @@ export const offerConfig = {
                           ▼
             [ Landing Page: / (A/B ?v=1|2|3) ]
              /                             \
-    (Buys Complete: $47)          (Buys Starter: $17)
+    (Buys Complete: $57)          (Buys Starter: $27)
            │                               │
            ▼                               ▼
   [/thank-you-complete]        Redirects to: [/api/starter-success]
@@ -186,7 +186,7 @@ All events fire both on the client via Meta Pixel and on the server via Cloudfla
 - `PageView`: Fired when cookie consent is granted.
 - `ViewContent`: Fired on landing page view.
 - `InitiateCheckout`: Fired on checkout button click (parameters: `content_name: 'starter' | 'complete' | 'upgrade' | 'downsell'`, `value`, `currency: 'USD'`).
-- `Purchase`: Fired on `/thank-you` ($17) and `/thank-you-complete` ($47).
+- `Purchase`: Fired on `/thank-you` ($27) and `/thank-you-complete` ($57).
 - `UpgradeViewed`: Custom event fired on `/upgrade` and `/downsell`.
 - `UpgradeAccepted`: Custom event fired when buyer clicks the upgrade checkout CTA.
 
@@ -264,7 +264,7 @@ npm run preview
 
 ## Pre-Launch Checklist
 
-- [ ] **Checkout Links Updated**: In `/config/offer.ts`, replace placeholder URLs with your live store links for Starter ($17), Complete ($47), Upgrade ($30), and Downsell ($12).
+- [ ] **Checkout Links Updated**: In `/config/offer.ts`, replace placeholder URLs with your live store links for Starter ($27), Complete ($57), Upgrade ($30), and Downsell ($12).
 - [ ] **Starter Redirect URL Set**: In your checkout platform's Starter product settings, set the post-purchase redirect URL to:  
   `https://yourdomain.com/api/starter-success`
 - [ ] **Complete Redirect URL Set**: Set Complete product post-purchase redirect URL to:  

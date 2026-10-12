@@ -39,8 +39,8 @@ export interface UpgradeConfig {
   id: 'upgrade';
   name: string;
   price: number; // in USD ($30 upgrade for Starter buyers)
-  estimatedValue: number; // in USD ($66 value of the 5 Complete extras)
-  totalFunnelPaid: number; // $17 + $30 = $47 total
+  estimatedValue: number; // in USD ($155 value of the 5 Complete extras)
+  totalFunnelPaid: number; // $27 + $30 = $57 total
   headline: string;
   ctaText: string;
   checkoutUrl: string;
@@ -91,7 +91,7 @@ export interface OfferConfiguration {
 }
 
 /**
- * 1. STARTER ITEMS (Total estimated value: $66)
+ * 1. STARTER ITEMS (Total estimated value: $120)
  * Focused on choosing the right path and getting properly set up without costly mistakes.
  */
 export const STARTER_ITEMS: OfferItem[] = [
@@ -99,21 +99,21 @@ export const STARTER_ITEMS: OfferItem[] = [
     id: 'core-starter-guide',
     title: 'Her First Income: 5 Honest Ways Women Are Earning From Home',
     pages: 16,
-    estimatedValue: 27,
+    estimatedValue: 45,
     description: 'A realistic, no-fluff guide comparing proven home-based business models with practical pros, cons, and setup requirements so you can pick one clear direction.'
   },
   {
     id: 'template-vault',
     title: 'The Complete Template Vault (145 Fill-in Templates)',
     templatesCount: 145,
-    estimatedValue: 9,
+    estimatedValue: 30,
     description: 'Pre-formatted copy-and-paste assets across 6 practical categories: Client Communication (25), Digital Products & Sales (26), Social & Audience (28), Partnerships (25), Outreach Scripts (28), and Workflow Systems (13).'
   },
   {
     id: 'zero-dollar-stack',
     title: 'The Zero-Dollar Tech Stack',
     pages: 12,
-    estimatedValue: 7,
+    estimatedValue: 15,
     description: 'Zero-cost software recommendations and free tier setups for every path—no expensive subscriptions or hidden tool costs required.'
   },
   {
@@ -121,27 +121,27 @@ export const STARTER_ITEMS: OfferItem[] = [
     title: 'Confidence & Mindset Guide',
     subtitle: '"The Imposter Syndrome Antidote"',
     pages: 12,
-    estimatedValue: 7,
+    estimatedValue: 10,
     description: 'Practical, low-pressure cognitive exercises to quiet self-doubt, price your first offer objectively, and take consistent action.'
   },
   {
     id: 'launch-blueprint',
     title: 'The 90-Minute WFH Launch Blueprint & Weekly Productivity Tracker',
     pages: 10,
-    estimatedValue: 9,
+    estimatedValue: 12,
     description: 'A structured framework designed to turn small pockets of quiet time into focused, measurable progress every week.'
   },
   {
     id: 'first-dollar-checklist',
     title: 'The First Dollar Action Checklist',
     pages: 8,
-    estimatedValue: 7,
+    estimatedValue: 8,
     description: 'Straightforward checklist for clean financial separation, PayPal/Stripe setup, income tracking, and fundamental legal/tax basics.'
   }
 ];
 
 /**
- * 2. COMPLETE EXTRAS (Total estimated value: $66)
+ * 2. COMPLETE EXTRAS (Total estimated value: $155)
  * Step-by-step instructions, 30-day daily roadmap, video lessons, high-leverage scripts, and AI prompts.
  */
 export const COMPLETE_EXCLUSIVE_ITEMS: OfferItem[] = [
@@ -149,21 +149,21 @@ export const COMPLETE_EXCLUSIVE_ITEMS: OfferItem[] = [
     id: 'execution-guide',
     title: 'The Complete Step-by-Step Execution Guide',
     pages: 38,
-    estimatedValue: 19,
+    estimatedValue: 49,
     description: 'In-depth, field-tested instructions walking you step by step through launch and execution for all home-based business models.'
   },
   {
     id: 'momentum-roadmap',
     title: 'The 30-Day First Dollar Momentum Roadmap',
     pages: 13,
-    estimatedValue: 12,
+    estimatedValue: 29,
     description: 'One actionable micro-task per day with flexible 30-minute, 60-minute, and 90-minute options to fit whatever time you have.'
   },
   {
     id: 'essential-templates',
     title: 'Nine Essential Commercial Templates & Pitch Scripts',
     pages: 21,
-    estimatedValue: 14,
+    estimatedValue: 29,
     description: 'Cold pitch, brand/affiliate pitch, launch sequence, client agreement outline, onboarding pack, testimonial collector, flash-sale script, polite-pivot reply, local-business follow-up.'
   },
   {
@@ -171,7 +171,7 @@ export const COMPLETE_EXCLUSIVE_ITEMS: OfferItem[] = [
     title: 'Video Library & Learning Tracker',
     pages: 13,
     videosCount: 21,
-    estimatedValue: 9,
+    estimatedValue: 24,
     description: '21 curated, high-signal tutorials and structured YouTube playlists organized by topic, with a tracking sheet so you never get lost in algorithm rabbit holes.'
   },
   {
@@ -179,7 +179,7 @@ export const COMPLETE_EXCLUSIVE_ITEMS: OfferItem[] = [
     title: 'The AI Prompt Pack & How-to-Use Guide',
     pages: 25,
     promptsCount: 60,
-    estimatedValue: 12,
+    estimatedValue: 24,
     description: '60+ tested, copy-and-paste prompts for drafting product ideas, social captions, email subject lines, client proposals, and customer responses in seconds.'
   }
 ];
@@ -193,7 +193,7 @@ export const COMPLETE_CARD_ITEMS: OfferItem[] = [
   {
     id: 'starter-bundle',
     title: 'Everything in the Starter Kit',
-    estimatedValue: 66,
+    estimatedValue: 120,
     description: 'Includes Core Guide, 145-Template Vault, Zero-$ Tech Stack, Confidence Mindset Guide, 90-Min Launch Blueprint, and First Dollar Action Checklist.'
   },
   ...COMPLETE_EXCLUSIVE_ITEMS
@@ -264,31 +264,31 @@ export const offerConfig: OfferConfiguration = {
     description: 'Listen to every guide and checklist on the go while doing chores or commuting.'
   },
 
-  // Tier 1: Starter Kit ($17)
+  // Tier 1: Starter Kit ($27)
   starter: {
     id: 'starter',
     name: 'Starter Kit',
-    price: 17,
-    estimatedValue: 66,
+    price: 27,
+    estimatedValue: 120,
     shortPitch: 'Choose your path and get set up with zero-dollar tools, practical checklists, and the complete 145-template vault.',
     ctaText: 'Get Instant Access',
     // Hosted checkout URL (replace with actual store link)
     checkoutUrl: 'https://herfirstincome.gumroad.com/l/starter-kit',
-    productId: 'prod_starter_17',
+    productId: 'prod_starter_27',
     items: STARTER_ITEMS
   },
 
-  // Tier 2: Complete Kit ($47)
+  // Tier 2: Complete Kit ($57)
   complete: {
     id: 'complete',
     name: 'Complete Kit',
-    badge: 'Best Value', // Math: $132 value for $47 = 64% savings (never "Most Popular" unless verified)
-    price: 47,
-    estimatedValue: 132,
+    badge: 'Best Value', // Math: $275 value for $57 = 79% savings (never "Most Popular" unless verified)
+    price: 57,
+    estimatedValue: 275,
     shortPitch: 'Everything in Starter PLUS the 38-page execution guide, 30-day momentum roadmap, 9 commercial pitch scripts, curated video library, and 60+ AI prompts.',
     ctaText: 'Get Instant Access',
     checkoutUrl: 'https://herfirstincome.gumroad.com/l/complete-kit',
-    productId: 'prod_complete_47',
+    productId: 'prod_complete_57',
     items: COMPLETE_CARD_ITEMS
   },
 
@@ -297,8 +297,8 @@ export const offerConfig: OfferConfiguration = {
     id: 'upgrade',
     name: 'Complete Upgrade',
     price: 30,
-    estimatedValue: 66,
-    totalFunnelPaid: 47,
+    estimatedValue: 155,
+    totalFunnelPaid: 57,
     headline: "You've chosen your path. Here's the step-by-step to actually do it.",
     ctaText: 'Yes, Upgrade My Kit',
     checkoutUrl: 'https://herfirstincome.gumroad.com/l/upgrade-kit',
@@ -311,14 +311,14 @@ export const offerConfig: OfferConfiguration = {
     id: 'downsell',
     name: 'Core Execution Pack',
     price: 12,
-    estimatedValue: 31, // Execution Guide ($19) + 30-Day Roadmap ($12)
+    estimatedValue: 78, // Execution Guide ($49) + 30-Day Roadmap ($29)
     headline: 'Keep The Step-By-Step Execution Guide & 30-Day Roadmap For Just $12.',
     ctaText: 'Yes, Add Execution & Roadmap for $12',
     checkoutUrl: 'https://herfirstincome.gumroad.com/l/downsell-pack',
     productId: 'prod_downsell_12',
     items: [
-      COMPLETE_EXCLUSIVE_ITEMS[0], // Step-by-Step Execution Guide ($19)
-      COMPLETE_EXCLUSIVE_ITEMS[1]  // 30-Day Momentum Roadmap ($12)
+      COMPLETE_EXCLUSIVE_ITEMS[0], // Step-by-Step Execution Guide ($49)
+      COMPLETE_EXCLUSIVE_ITEMS[1]  // 30-Day Momentum Roadmap ($29)
     ]
   }
 };
