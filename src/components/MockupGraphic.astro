@@ -1,46 +1,42 @@
 ---
-// Realistic Mockup Graphic Placeholder (Tablet + Phone + PDF Guides)
-// Designed in clean SVG & CSS. Readily swappable with custom product renders.
+// Photorealistic Starter Pack Mockup Graphic
+// Responsive: displays 16:9 landscape on desktop/tablets, 1:1 square on mobile
+// Completely uncropped to preserve all 6 resources, titles, badges, and category pills.
 ---
 
-<div class="mockup-container" aria-label="Digital kit mockup showing tablet and phone guides">
-  <div class="mockup-stage">
-    <!-- Tablet Device (Main Guide) -->
-    <div class="device tablet">
-      <div class="tablet-frame">
-        <div class="screen">
-          <div class="guide-cover">
-            <div class="cover-tag">Digital PDF Guide</div>
-            <div class="cover-title">Her First Income</div>
-            <div class="cover-subtitle">5 Honest Ways Women Are Earning From Home</div>
-            <div class="cover-paths-list">
-              <span>Step-by-Step Blueprints</span> &bull; 
-              <span>Zero-Cost Tools</span> &bull; 
-              <span>145 Templates</span>
-            </div>
-            <div class="cover-bottom">
-              <span class="cover-badge">No Hype &bull; Realistic Setup</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="mockup-container" aria-label="Her First Income Starter Pack mockup showing 6 digital guides and templates">
+  <div class="mockup-frame-wrap">
+    <picture>
+      <!-- Mobile screens: 1:1 square render for maximum vertical readability -->
+      <source
+        media="(max-width: 640px)"
+        srcset="/images/mockups/starter-pack-square.webp"
+        type="image/webp"
+      />
+      <source
+        media="(max-width: 640px)"
+        srcset="/images/mockups/starter-pack-square.jpg"
+        type="image/jpeg"
+      />
 
-    <!-- Phone Device (Template Vault) -->
-    <div class="device phone">
-      <div class="phone-frame">
-        <div class="screen phone-screen">
-          <div class="phone-cover">
-            <div class="phone-tag">Vault</div>
-            <div class="phone-title">145 Fill-In Templates</div>
-            <div class="phone-subtitle">Instant Copy & Paste</div>
-            <div class="phone-pill">6 Resource Categories</div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <!-- Desktop & Tablets: 16:9 landscape render -->
+      <source
+        srcset="/images/mockups/starter-pack-landscape.webp"
+        type="image/webp"
+      />
+      <img
+        src="/images/mockups/starter-pack-landscape.jpg"
+        alt="Her First Income Starter Pack - 6 Valuable Resources including Core Guide, Worksheets, Toolkit, Confidence Reset, Weekly Planner, and First Dollar Action Checklist"
+        class="mockup-img"
+        width="1024"
+        height="576"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </picture>
 
-    <!-- Floating Document Badge -->
+    <!-- Floating Trust Badge (Non-obstructing bottom tag) -->
     <div class="floating-badge">
       <div class="badge-icon">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -52,8 +48,8 @@
         </svg>
       </div>
       <div>
-        <div class="badge-text-main">Instant PDF Downloads</div>
-        <div class="badge-text-sub">Delivered directly to your inbox</div>
+        <div class="badge-text-main">Instant Digital Access</div>
+        <div class="badge-text-sub">Delivered directly to your inbox &bull; Zero waiting</div>
       </div>
     </div>
   </div>
@@ -63,181 +59,55 @@
   .mockup-container {
     position: relative;
     width: 100%;
-    max-width: 480px;
+    max-width: 580px;
     margin: 0 auto;
-    padding: 1rem 0 2rem;
-  }
-  .mockup-stage {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    min-height: 380px;
+    padding: 0.5rem 0 1.5rem;
   }
 
-  /* Tablet */
-  .device.tablet {
+  .mockup-frame-wrap {
     position: relative;
-    z-index: 1;
-    width: 290px;
-    height: 370px;
-    background: #1E1B18;
-    border-radius: 20px;
-    padding: 10px;
-    box-shadow: 0 20px 40px rgba(44, 39, 36, 0.2), 0 2px 6px rgba(0,0,0,0.1);
-  }
-  .tablet-frame {
+    display: block;
     width: 100%;
-    height: 100%;
-    border-radius: 14px;
-    overflow: hidden;
+    border-radius: var(--radius-lg, 16px);
     background: #FFFFFF;
-  }
-  .screen {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #FBF9F5 0%, #F1EBE0 100%);
-    position: relative;
-    overflow: hidden;
-  }
-  .guide-cover {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    padding: 1.5rem 1.25rem;
+    box-shadow: 0 18px 45px -10px rgba(44, 39, 36, 0.16), 0 2px 10px rgba(0, 0, 0, 0.04);
     border: 1px solid var(--border-light);
-    border-radius: 8px;
-    margin: 8px;
-    background: #FFFFFF;
-    text-align: center;
-  }
-  .cover-tag {
-    font-size: 0.65rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--sage-700);
-  }
-  .cover-title {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    font-weight: 600;
-    line-height: 1.15;
-    color: var(--text-headline);
-    margin-top: 0.5rem;
-  }
-  .cover-subtitle {
-    font-size: 0.775rem;
-    color: var(--text-muted);
-    line-height: 1.4;
-    margin-top: 0.35rem;
-  }
-  .cover-paths-list {
-    font-size: 0.675rem;
-    color: var(--sage-700);
-    padding: 0.6rem 0;
-    border-top: 1px solid var(--border-light);
-    border-bottom: 1px solid var(--border-light);
-    margin: 0.75rem 0;
-  }
-  .cover-bottom {
-    margin-top: auto;
-  }
-  .cover-badge {
-    display: inline-block;
-    background: var(--sage-50);
-    color: var(--sage-800);
-    font-size: 0.68rem;
-    font-weight: 600;
-    padding: 0.25rem 0.6rem;
-    border-radius: var(--radius-pill);
-    border: 1px solid var(--sage-200);
+    overflow: visible;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
 
-  /* Phone */
-  .device.phone {
-    position: absolute;
-    right: 0;
-    bottom: -10px;
-    z-index: 2;
-    width: 175px;
-    height: 280px;
-    background: #1E1B18;
-    border-radius: 24px;
-    padding: 7px;
-    box-shadow: 0 20px 35px rgba(44, 39, 36, 0.25);
-  }
-  .phone-frame {
-    width: 100%;
-    height: 100%;
-    border-radius: 18px;
-    overflow: hidden;
-    background: #FFFFFF;
-  }
-  .phone-screen {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    background: #FAF8F5;
-  }
-  .phone-cover {
-    width: 100%;
-    height: 100%;
-    background: #FFFFFF;
-    border: 1px solid var(--border-light);
-    border-radius: 12px;
-    padding: 1rem 0.75rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: center;
-  }
-  .phone-tag {
-    font-size: 0.6rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--terracotta);
-  }
-  .phone-title {
-    font-family: var(--font-serif);
-    font-size: 1.05rem;
-    font-weight: 600;
-    line-height: 1.2;
-    color: var(--text-headline);
-    margin: 0.25rem 0;
-  }
-  .phone-subtitle {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-  }
-  .phone-pill {
-    background: var(--terracotta-subtle);
-    color: var(--terracotta);
-    font-size: 0.625rem;
-    font-weight: 600;
-    padding: 0.25rem 0.5rem;
-    border-radius: var(--radius-pill);
-    border: 1px solid var(--terracotta-border);
+  .mockup-frame-wrap:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 22px 50px -10px rgba(44, 39, 36, 0.2), 0 4px 12px rgba(0, 0, 0, 0.05);
   }
 
-  /* Floating Badge */
+  /* Uncropped Image Display */
+  .mockup-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain; /* Guarantee zero cropping */
+    border-radius: var(--radius-lg, 16px);
+  }
+
+  /* Floating Badge positioned cleanly below */
   .floating-badge {
     position: absolute;
-    left: -10px;
-    bottom: 25px;
+    left: 1.25rem;
+    bottom: -1.25rem;
     z-index: 3;
     display: flex;
     align-items: center;
-    gap: 0.65rem;
-    background: #FFFFFF;
+    gap: 0.75rem;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(8px);
     border: 1px solid var(--border-light);
     border-radius: var(--radius-md);
-    padding: 0.65rem 0.9rem;
+    padding: 0.6rem 0.95rem;
     box-shadow: 0 10px 24px rgba(44, 39, 36, 0.12);
   }
+
   .badge-icon {
     display: flex;
     align-items: center;
@@ -247,36 +117,33 @@
     border-radius: 8px;
     background: var(--sage-100);
     color: var(--sage-800);
+    flex-shrink: 0;
   }
+
   .badge-text-main {
     font-size: 0.8125rem;
     font-weight: 600;
     color: var(--text-headline);
     line-height: 1.2;
   }
+
   .badge-text-sub {
     font-size: 0.7rem;
     color: var(--text-muted);
     line-height: 1.2;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 640px) {
     .mockup-container {
-      max-width: 320px;
-    }
-    .device.tablet {
-      width: 240px;
-      height: 320px;
-    }
-    .device.phone {
-      width: 145px;
-      height: 240px;
-      right: -5px;
+      max-width: 380px;
+      padding-bottom: 2rem;
     }
     .floating-badge {
-      left: 0;
-      bottom: -15px;
-      padding: 0.5rem 0.75rem;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -1rem;
+      width: calc(100% - 2rem);
+      max-width: 320px;
     }
   }
 </style>

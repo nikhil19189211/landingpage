@@ -80,6 +80,19 @@ const isCompleteFirst = tierOrderMobile === 'complete-first';
           </div>
         </div>
 
+        <!-- Uncropped Visual Preview -->
+        <div class="pricing-card-preview">
+          <img
+            src="/images/mockups/action-vault-square.webp"
+            alt="Action Vault Complete Resource Kit - 5 Additional Premium Resources"
+            class="tier-preview-img"
+            width="1024"
+            height="1024"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
         <!-- CTA Button -->
         <div class="card-cta-wrap">
           <a
@@ -167,6 +180,19 @@ const isCompleteFirst = tierOrderMobile === 'complete-first';
               <span class="value-strikethrough">${starter.estimatedValue}</span>
             </div>
           </div>
+        </div>
+
+        <!-- Uncropped Visual Preview -->
+        <div class="pricing-card-preview">
+          <img
+            src="/images/mockups/starter-pack-square.webp"
+            alt="Starter Pack Resource Kit - 6 Valuable Resources"
+            class="tier-preview-img"
+            width="1024"
+            height="1024"
+            loading="lazy"
+            decoding="async"
+          />
         </div>
 
         <!-- CTA Button -->
@@ -501,7 +527,31 @@ const isCompleteFirst = tierOrderMobile === 'complete-first';
     border: 1px solid var(--border-light);
     border-radius: var(--radius-md);
     padding: 1rem 1.25rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Uncropped Mockup Image inside Pricing Card */
+  .pricing-card-preview {
+    margin: 0 0 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+    background: #FFFFFF;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(44, 39, 36, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .pricing-card-preview:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(44, 39, 36, 0.1);
+  }
+
+  .tier-preview-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain; /* Guarantees zero cropping */
   }
 
   .price-row {

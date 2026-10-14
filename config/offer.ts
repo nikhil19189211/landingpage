@@ -281,7 +281,7 @@ export const offerConfig: OfferConfiguration = {
   // Tier 2: Complete Kit ($57)
   complete: {
     id: 'complete',
-    name: 'Complete Kit',
+    name: 'Complete Action Vault',
     badge: 'Best Value', // Math: $275 value for $57 = 79% savings (never "Most Popular" unless verified)
     price: 57,
     estimatedValue: 275,
@@ -295,7 +295,7 @@ export const offerConfig: OfferConfiguration = {
   // Upgrade: Post-Purchase for Starter Buyers Only ($30)
   upgrade: {
     id: 'upgrade',
-    name: 'Complete Upgrade',
+    name: 'Action Vault Upgrade',
     price: 30,
     estimatedValue: 155,
     totalFunnelPaid: 57,

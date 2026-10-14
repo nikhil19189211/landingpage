@@ -57,8 +57,37 @@ const { upgrade, checkoutProvider } = offerConfig;
         <span class="section-label">One-Time Upgrade Opportunity</span>
         <h1>You've chosen your path. Here's the step-by-step to actually do it.</h1>
         <p class="upgrade-lead">
-          Because you already invested $27 in the Starter Kit, you can add all 5 Complete execution modules today for just $30 (bringing your total to $57, exactly matching the Complete Kit price).
+          Because you already invested $27 in the Starter Kit, you can add all 5 Action Vault execution modules today for just $30 (bringing your total to $57, exactly matching the Complete Kit price).
         </p>
+      </div>
+
+      <!-- Action Vault Visual Showcase (Uncropped) -->
+      <div class="upgrade-visual-showcase">
+        <picture>
+          <source
+            media="(max-width: 640px)"
+            srcset="/images/mockups/action-vault-square.webp"
+            type="image/webp"
+          />
+          <source
+            media="(max-width: 640px)"
+            srcset="/images/mockups/action-vault-square.jpg"
+            type="image/jpeg"
+          />
+          <source
+            srcset="/images/mockups/action-vault-landscape.webp"
+            type="image/webp"
+          />
+          <img
+            src="/images/mockups/action-vault-landscape.jpg"
+            alt="Her First Income Action Vault - 5 Additional Premium Resources including Step-by-Step Guide, AI Prompts, 30-Day Roadmap, 9 Templates, and Video Library"
+            class="upgrade-mockup-img"
+            width="1024"
+            height="576"
+            loading="eager"
+            decoding="async"
+          />
+        </picture>
       </div>
 
       <!-- Two-Column Side-by-Side Value Comparison -->
@@ -405,6 +434,27 @@ const { upgrade, checkoutProvider } = offerConfig;
     color: var(--text-muted);
     max-width: 620px;
     margin: 0 auto;
+  }
+
+  /* Uncropped Action Vault Showcase */
+  .upgrade-visual-showcase {
+    width: 100%;
+    max-width: 760px;
+    margin: 1.75rem auto 2.5rem;
+    background: #FFFFFF;
+    border-radius: var(--radius-lg, 16px);
+    border: 1px solid var(--border-light);
+    box-shadow: 0 16px 40px -10px rgba(44, 39, 36, 0.15), 0 2px 10px rgba(0, 0, 0, 0.04);
+    overflow: visible;
+  }
+
+  .upgrade-mockup-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain; /* Guarantees zero cropping */
+    border-radius: var(--radius-lg, 16px);
   }
 
   /* Columns */
