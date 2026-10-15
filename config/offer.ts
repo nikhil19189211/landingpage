@@ -320,5 +320,8 @@ export const offerConfig: OfferConfiguration = {
       COMPLETE_EXCLUSIVE_ITEMS[0], // Step-by-Step Execution Guide ($49)
       COMPLETE_EXCLUSIVE_ITEMS[1]  // 30-Day Momentum Roadmap ($29)
     ]
-  }
+  },
+
+  // Meta Dataset / Pixel ID
+  metaPixelId: '1195368395361870'
 };

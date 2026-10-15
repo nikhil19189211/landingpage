@@ -33,11 +33,6 @@
       if (!consent) {
         // Show banner after short delay
         setTimeout(() => banner.classList.add('visible'), 500);
-      } else if (consent === 'accepted') {
-        // Already accepted in past session, trigger page events
-        if (typeof window.trackFunnelEvent === 'function') {
-          window.trackFunnelEvent('PageView');
-        }
       }
     } catch (e) {
       console.warn('Consent check error', e);
@@ -50,7 +45,6 @@
       banner.classList.remove('visible');
 
       if (status === 'accepted' && typeof window.trackFunnelEvent === 'function') {
-        window.trackFunnelEvent('PageView');
         window.trackFunnelEvent('ViewContent', {
           content_name: 'Her First Income Landing Page',
           content_category: 'Offer'
