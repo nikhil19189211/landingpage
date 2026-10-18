@@ -1,0 +1,316 @@
+---
+// Recent Purchase Social Proof Toast (Bottom-Left Corner)
+// Subtle, lightweight, non-intrusive notification pill for mobile and desktop.
+---
+
+<div
+  id="recent-purchase-toast"
+  class="recent-toast-container"
+  role="status"
+  aria-live="polite"
+>
+  <div class="toast-card" id="toast-card-inner">
+    <div class="toast-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+      </svg>
+    </div>
+    <div class="toast-details">
+      <p class="toast-headline">
+        <span class="toast-name" id="toast-name">Sarah P.</span> purchased <strong class="toast-tier" id="toast-tier">The Complete Toolkit</strong>
+      </p>
+      <p class="toast-subline">
+        <span class="toast-time" id="toast-time">2 hours ago</span>
+        <span class="toast-sep" aria-hidden="true">&bull;</span>
+        <span class="toast-verified">Verified order</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    // Dataset adhering strictly to requirements:
+    // 1. No locations.
+    // 2. Synthetic, believable names (zero overlap with review names: Elena, Claire, Jessica, Amanda, Rachel, Brooke).
+    // 3. No minutes (all times >= 1 hour).
+    // 4. Exact distribution: 8 items from 1hr-24hr, 3 each from 1d-6d (18 items), 5 each from 1w-4w (20 items).
+    // Total = 46 items.
+    const PURCHASE_DATA = [
+      // 1 hr - 24 hr (8 items)
+      { name: "Sarah P.", tier: "The Complete Toolkit", time: "1 hour ago" },
+      { name: "Lauren W.", tier: "The Complete Toolkit", time: "2 hours ago" },
+      { name: "Danielle B.", tier: "The Starter Pack", time: "3 hours ago" },
+      { name: "Hannah C.", tier: "The Complete Toolkit", time: "5 hours ago" },
+      { name: "Stephanie M.", tier: "The Complete Toolkit", time: "8 hours ago" },
+      { name: "Nicole V.", tier: "The Starter Pack", time: "12 hours ago" },
+      { name: "Ashley D.", tier: "The Complete Toolkit", time: "17 hours ago" },
+      { name: "Olivia H.", tier: "The Complete Toolkit", time: "21 hours ago" },
+
+      // 1 day - 6 day (3 each = 18 items)
+      { name: "Megan L.", tier: "The Complete Toolkit", time: "1 day ago" },
+      { name: "Katherine G.", tier: "The Starter Pack", time: "1 day ago" },
+      { name: "Brittany K.", tier: "The Complete Toolkit", time: "1 day ago" },
+
+      { name: "Samantha F.", tier: "The Complete Toolkit", time: "2 days ago" },
+      { name: "Natalie R.", tier: "The Starter Pack", time: "2 days ago" },
+      { name: "Emily W.", tier: "The Complete Toolkit", time: "2 days ago" },
+
+      { name: "Taylor S.", tier: "The Complete Toolkit", time: "3 days ago" },
+      { name: "Courtney B.", tier: "The Complete Toolkit", time: "3 days ago" },
+      { name: "Kimberly M.", tier: "The Starter Pack", time: "3 days ago" },
+
+      { name: "Allison J.", tier: "The Complete Toolkit", time: "4 days ago" },
+      { name: "Heather T.", tier: "The Starter Pack", time: "4 days ago" },
+      { name: "Morgan D.", tier: "The Complete Toolkit", time: "4 days ago" },
+
+      { name: "Kelsey R.", tier: "The Complete Toolkit", time: "5 days ago" },
+      { name: "Vanessa C.", tier: "The Complete Toolkit", time: "5 days ago" },
+      { name: "Laura H.", tier: "The Starter Pack", time: "5 days ago" },
+
+      { name: "Paige S.", tier: "The Complete Toolkit", time: "6 days ago" },
+      { name: "Christina L.", tier: "The Complete Toolkit", time: "6 days ago" },
+      { name: "Rebecca B.", tier: "The Starter Pack", time: "6 days ago" },
+
+      // 1 week - 4 week (5 each = 20 items)
+      { name: "Victoria E.", tier: "The Complete Toolkit", time: "1 week ago" },
+      { name: "Amber N.", tier: "The Starter Pack", time: "1 week ago" },
+      { name: "Jenna P.", tier: "The Complete Toolkit", time: "1 week ago" },
+      { name: "Melissa K.", tier: "The Complete Toolkit", time: "1 week ago" },
+      { name: "Lindsey R.", tier: "The Starter Pack", time: "1 week ago" },
+
+      { name: "Chelsea M.", tier: "The Complete Toolkit", time: "2 weeks ago" },
+      { name: "Haley G.", tier: "The Complete Toolkit", time: "2 weeks ago" },
+      { name: "Erin W.", tier: "The Starter Pack", time: "2 weeks ago" },
+      { name: "Kelly S.", tier: "The Complete Toolkit", time: "2 weeks ago" },
+      { name: "Shannon D.", tier: "The Complete Toolkit", time: "2 weeks ago" },
+
+      { name: "Andrea F.", tier: "The Complete Toolkit", time: "3 weeks ago" },
+      { name: "Monica L.", tier: "The Starter Pack", time: "3 weeks ago" },
+      { name: "Kayla B.", tier: "The Complete Toolkit", time: "3 weeks ago" },
+      { name: "Brianna T.", tier: "The Complete Toolkit", time: "3 weeks ago" },
+      { name: "Sydney H.", tier: "The Complete Toolkit", time: "3 weeks ago" },
+
+      { name: "Leah M.", tier: "The Complete Toolkit", time: "4 weeks ago" },
+      { name: "Chloe D.", tier: "The Starter Pack", time: "4 weeks ago" },
+      { name: "Alicia R.", tier: "The Complete Toolkit", time: "4 weeks ago" },
+      { name: "Valerie K.", tier: "The Complete Toolkit", time: "4 weeks ago" },
+      { name: "Melanie S.", tier: "The Complete Toolkit", time: "4 weeks ago" }
+    ];
+
+    const container = document.getElementById('recent-purchase-toast');
+    const nameEl = document.getElementById('toast-name');
+    const tierEl = document.getElementById('toast-tier');
+    const timeEl = document.getElementById('toast-time');
+    const cardEl = document.getElementById('toast-card-inner');
+
+    if (!container || !nameEl || !tierEl || !timeEl || !cardEl) return;
+
+    // Start with a recent item first, then cycle through remainder
+    let currentIndex = 0;
+    let isHovered = false;
+    let hideTimer = null;
+    let cycleTimer = null;
+
+    // Smoothly scroll down to pricing on tap/click without disturbing normal page use
+    cardEl.addEventListener('click', function () {
+      const pricingSection = document.getElementById('pricing');
+      if (pricingSection) {
+        pricingSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
+    // Pause the 5s timer if user is reading (hover)
+    cardEl.addEventListener('mouseenter', function () {
+      isHovered = true;
+      if (hideTimer) clearTimeout(hideTimer);
+    });
+
+    cardEl.addEventListener('mouseleave', function () {
+      isHovered = false;
+      // Fade out after a short buffer once cursor leaves
+      hideTimer = setTimeout(hideToast, 1200);
+    });
+
+    function showToast() {
+      const item = PURCHASE_DATA[currentIndex];
+      nameEl.textContent = item.name;
+      tierEl.textContent = item.tier;
+      timeEl.textContent = item.time;
+
+      container.classList.add('is-visible');
+
+      // Stay visible for 3-4 seconds (randomized between 3200ms and 3800ms)
+      const visibleDuration = Math.floor(Math.random() * 600) + 3200;
+      hideTimer = setTimeout(function () {
+        if (!isHovered) {
+          hideToast();
+        }
+      }, visibleDuration);
+
+      // Advance index
+      currentIndex = (currentIndex + 1) % PURCHASE_DATA.length;
+    }
+
+    function hideToast() {
+      container.classList.remove('is-visible');
+
+      // Wait 1-2 seconds (randomized between 1200ms and 1800ms) before the next popup appears
+      const nextGap = Math.floor(Math.random() * 600) + 1200;
+      cycleTimer = setTimeout(showToast, nextGap);
+    }
+
+    // Coordinate with mobile sticky bar so bottom-left anchor never collides with or hides behind mobile CTA
+    function updateMobileOffset() {
+      const stickyBar = document.getElementById('sticky-mobile-bar');
+      if (stickyBar && stickyBar.classList.contains('visible')) {
+        const height = stickyBar.offsetHeight || 76;
+        container.style.setProperty('--mobile-bottom', (height + 12) + 'px');
+        container.classList.add('above-sticky-bar');
+      } else {
+        container.classList.remove('above-sticky-bar');
+      }
+    }
+
+    window.addEventListener('scroll', updateMobileOffset, { passive: true });
+    window.addEventListener('resize', updateMobileOffset, { passive: true });
+    updateMobileOffset();
+
+    // Initial appearance after 4 seconds
+    setTimeout(showToast, 4000);
+  })();
+</script>
+
+<style>
+  .recent-toast-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1005;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+    transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), bottom 0.25s ease;
+    max-width: 285px;
+  }
+
+  .recent-toast-container.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .toast-card {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.55rem 0.85rem;
+    background: #FFFFFF;
+    border: 1px solid var(--border-light, #EBE5DB);
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(43, 37, 33, 0.08), 0 1px 3px rgba(43, 37, 33, 0.04);
+    cursor: pointer;
+    user-select: none;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .toast-card:hover {
+    border-color: var(--border-medium, #DCD4C7);
+    box-shadow: 0 6px 18px rgba(43, 37, 33, 0.12);
+  }
+
+  .toast-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--success-bg, #EDF5F0);
+    color: var(--success-green, #3F704D);
+  }
+
+  .toast-details {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.25;
+  }
+
+  .toast-headline {
+    margin: 0;
+    font-size: 0.775rem;
+    color: var(--text-headline, #2B2521);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 400;
+  }
+
+  .toast-name {
+    font-weight: 600;
+    color: var(--text-headline, #2B2521);
+  }
+
+  .toast-tier {
+    font-weight: 600;
+    color: var(--terracotta, #C85A3A);
+  }
+
+  .toast-subline {
+    margin: 0.15rem 0 0 0;
+    font-size: 0.685rem;
+    color: var(--text-muted, #6E6660);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+  }
+
+  .toast-sep {
+    opacity: 0.5;
+  }
+
+  .toast-verified {
+    color: var(--success-green, #3F704D);
+    font-weight: 500;
+  }
+
+  /* Mobile Screen Adaptation: Strictly anchored to bottom-left corner */
+  @media (max-width: 819px) {
+    .recent-toast-container {
+      bottom: 14px;
+      left: 12px;
+      max-width: 250px; /* Small footprint leaves 110px+ free on right side for thumb scrolling */
+    }
+
+    /* Elevate smoothly above sticky mobile bar when it is shown */
+    .recent-toast-container.above-sticky-bar {
+      bottom: var(--mobile-bottom, 90px);
+    }
+
+    .toast-card {
+      padding: 0.45rem 0.65rem;
+      gap: 0.5rem;
+    }
+
+    .toast-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .toast-icon svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .toast-headline {
+      font-size: 0.715rem;
+    }
+
+    .toast-subline {
+      font-size: 0.635rem;
+    }
+  }
+</style>
