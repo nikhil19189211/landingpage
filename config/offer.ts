@@ -273,7 +273,7 @@ export const offerConfig: OfferConfiguration = {
     shortPitch: 'Choose your path and get set up with zero-dollar tools, practical checklists, and the complete 145-template vault.',
     ctaText: 'Get Instant Access',
     // Hosted checkout URL (replace with actual store link)
-    checkoutUrl: 'https://shopbynikhil.gumroad.com/l/her-first-income',
+    checkoutUrl: 'https://herfirstincome.gumroad.com/l/her-first-income',
     productId: 'her-first-income',
     items: STARTER_ITEMS
   },
@@ -287,7 +287,7 @@ export const offerConfig: OfferConfiguration = {
     estimatedValue: 275,
     shortPitch: 'Everything in Starter PLUS the 38-page execution guide, 30-day momentum roadmap, 9 commercial pitch scripts, curated video library, and 60+ AI prompts.',
     ctaText: 'Get Instant Access',
-    checkoutUrl: 'https://shopbynikhil.gumroad.com/l/bidpfn',
+    checkoutUrl: 'https://herfirstincome.gumroad.com/l/bidpfn',
     productId: 'bidpfn',
     items: COMPLETE_CARD_ITEMS
   },
