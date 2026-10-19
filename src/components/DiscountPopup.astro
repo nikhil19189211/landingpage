@@ -1,0 +1,641 @@
+---
+// Limited-Time 45% Discount Popup Modal with 18h Countdown
+import { offerConfig } from '../../config/offer';
+
+const popup = offerConfig.discountPopup;
+if (!popup || !popup.enabled) {
+  return null;
+}
+---
+
+<div
+  id="discount-modal-overlay"
+  class="discount-overlay"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="discount-title"
+  aria-hidden="true"
+  style="display: none;"
+>
+  <div class="discount-dialog" role="document">
+    <!-- Cross Close Button -->
+    <button
+      type="button"
+      class="discount-close-btn"
+      id="btn-close-discount"
+      aria-label="Close limited-time discount offer"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+    <!-- Header Badge -->
+    <div class="discount-badge-wrap">
+      <span class="discount-badge">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        {popup.badgeText}
+      </span>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="discount-body">
+      <h3 id="discount-title" class="discount-title">
+        {popup.headline}
+      </h3>
+      <p class="discount-sub">
+        {popup.subheadline}
+      </p>
+
+      <!-- 18-Hour Real-Time Countdown Box -->
+      <div class="discount-timer-card">
+        <div class="timer-label-row">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span>Special Offer Window Closes In:</span>
+        </div>
+        <div class="countdown-display" aria-label="Countdown timer">
+          <div class="time-block">
+            <span class="time-num" id="discount-hours">18</span>
+            <span class="time-unit">Hours</span>
+          </div>
+          <span class="time-colon">:</span>
+          <div class="time-block">
+            <span class="time-num" id="discount-mins">00</span>
+            <span class="time-unit">Mins</span>
+          </div>
+          <span class="time-colon">:</span>
+          <div class="time-block">
+            <span class="time-num" id="discount-secs">00</span>
+            <span class="time-unit">Secs</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Offer Snapshot Preview (Card + Price Comparison) -->
+      <div class="offer-preview-box">
+        <div class="preview-thumb">
+          <img
+            src="/images/mockups/action-vault-square.webp"
+            alt="Her First Income Action Vault"
+            width="120"
+            height="120"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+        <div class="preview-details">
+          <div class="preview-product-name">Complete Action Vault</div>
+          <div class="preview-specs">All 145 templates + 38-page guide + 30-day roadmap + scripts & prompts</div>
+          <div class="preview-pricing">
+            <span class="price-strikethrough">${popup.originalPrice}</span>
+            <span class="price-discounted">${popup.discountedPrice}</span>
+            <span class="price-currency">USD</span>
+            <span class="discount-savings-pill">Save 45%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <div class="discount-actions">
+        <a
+          href={popup.checkoutUrl}
+          class="btn-primary discount-cta-btn"
+          id="btn-discount-claim"
+          data-checkout-tier="complete-discount-45"
+          data-checkout-price={popup.discountedPrice}
+        >
+          {popup.ctaText}
+        </a>
+
+        <div class="discount-microcopy">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span>One-time payment • Secure 256-bit checkout • Instant email delivery</span>
+        </div>
+
+        <button
+          type="button"
+          class="discount-decline-link"
+          id="btn-decline-discount"
+        >
+          {popup.declineText}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Overlay Backdrop */
+  .discount-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background-color: rgba(35, 29, 25, 0.72);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .discount-overlay.is-active {
+    opacity: 1;
+  }
+
+  /* Modal Dialog Card */
+  .discount-dialog {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    background-color: #FFFFFF;
+    border: 1px solid var(--border-light, #EBE5DB);
+    border-radius: 20px;
+    box-shadow: 0 24px 60px rgba(43, 37, 33, 0.28), 0 4px 16px rgba(43, 37, 33, 0.08);
+    padding: 2.25rem 2rem 1.85rem;
+    transform: scale(0.93) translateY(12px);
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    max-height: 92vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .discount-overlay.is-active .discount-dialog {
+    transform: scale(1) translateY(0);
+  }
+
+  /* Cross Close Button */
+  .discount-close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-surface-subtle, #F6F3EC);
+    color: var(--text-muted, #6E6660);
+    border: 1px solid var(--border-light, #EBE5DB);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+    z-index: 2;
+  }
+
+  .discount-close-btn:hover,
+  .discount-close-btn:focus-visible {
+    background-color: var(--terracotta-subtle, #FAEEEA);
+    color: var(--terracotta, #C85A3A);
+    border-color: var(--terracotta-border, #E8B9AC);
+    outline: none;
+    transform: rotate(90deg);
+  }
+
+  /* Badge */
+  .discount-badge-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .discount-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.85rem;
+    background-color: #FEF3F0;
+    color: var(--terracotta, #C85A3A);
+    border: 1px solid var(--terracotta-border, #E8B9AC);
+    border-radius: var(--radius-pill, 9999px);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--terracotta, #C85A3A);
+    border-radius: 50%;
+    animation: pulse 1.8s infinite ease-in-out;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(0.9); opacity: 1; box-shadow: 0 0 0 0 rgba(200, 90, 58, 0.7); }
+    70% { transform: scale(1.15); opacity: 0.8; box-shadow: 0 0 0 7px rgba(200, 90, 58, 0); }
+    100% { transform: scale(0.9); opacity: 1; box-shadow: 0 0 0 0 rgba(200, 90, 58, 0); }
+  }
+
+  /* Typography */
+  .discount-title {
+    font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+    font-size: 1.6rem;
+    line-height: 1.25;
+    color: var(--text-headline, #2B2521);
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .discount-sub {
+    font-size: 0.925rem;
+    line-height: 1.45;
+    color: var(--text-muted, #6E6660);
+    text-align: center;
+    margin-bottom: 1.25rem;
+    max-width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Countdown Card */
+  .discount-timer-card {
+    background-color: var(--bg-surface-subtle, #F6F3EC);
+    border: 1px solid var(--border-light, #EBE5DB);
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    margin-bottom: 1.25rem;
+    text-align: center;
+  }
+
+  .timer-label-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-headline, #2B2521);
+    margin-bottom: 0.5rem;
+  }
+
+  .countdown-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+  }
+
+  .time-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #FFFFFF;
+    border: 1px solid var(--border-medium, #DCD4C7);
+    border-radius: 8px;
+    padding: 0.35rem 0.65rem;
+    min-width: 58px;
+    box-shadow: 0 2px 5px rgba(43, 37, 33, 0.04);
+  }
+
+  .time-num {
+    font-family: var(--font-sans, -apple-system, sans-serif);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--terracotta, #C85A3A);
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .time-unit {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-light, #948B84);
+    font-weight: 600;
+    margin-top: 0.15rem;
+  }
+
+  .time-colon {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-light, #948B84);
+    margin-top: -0.8rem;
+  }
+
+  /* Offer Preview Snapshot */
+  .offer-preview-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem;
+    background-color: #FFFFFF;
+    border: 1px dashed var(--border-medium, #DCD4C7);
+    border-radius: 12px;
+    margin-bottom: 1.25rem;
+  }
+
+  .preview-thumb {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--bg-surface-subtle, #F6F3EC);
+    box-shadow: 0 2px 8px rgba(43, 37, 33, 0.08);
+  }
+
+  .preview-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .preview-details {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .preview-product-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-headline, #2B2521);
+    line-height: 1.2;
+    margin-bottom: 0.2rem;
+  }
+
+  .preview-specs {
+    font-size: 0.775rem;
+    color: var(--text-muted, #6E6660);
+    line-height: 1.35;
+    margin-bottom: 0.45rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .preview-pricing {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+  }
+
+  .price-strikethrough {
+    font-size: 0.9rem;
+    color: var(--text-light, #948B84);
+    text-decoration: line-through;
+  }
+
+  .price-discounted {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--terracotta, #C85A3A);
+    line-height: 1;
+  }
+
+  .price-currency {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted, #6E6660);
+  }
+
+  .discount-savings-pill {
+    margin-left: auto;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: var(--success-bg, #EDF5F0);
+    color: var(--success-green, #3F704D);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-pill, 9999px);
+    letter-spacing: 0.03em;
+  }
+
+  /* Actions */
+  .discount-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .discount-cta-btn {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.95rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: var(--radius-pill, 9999px);
+    background-color: var(--terracotta, #C85A3A);
+    color: #FFFFFF;
+    box-shadow: 0 4px 16px rgba(200, 90, 58, 0.32);
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .discount-cta-btn:hover {
+    background-color: var(--terracotta-hover, #B44D2F);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(200, 90, 58, 0.4);
+  }
+
+  .discount-microcopy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    color: var(--text-light, #948B84);
+    text-align: center;
+  }
+
+  .discount-decline-link {
+    background: none;
+    border: none;
+    color: var(--text-light, #948B84);
+    font-size: 0.8rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    transition: color 0.15s ease;
+    margin-top: 0.2rem;
+  }
+
+  .discount-decline-link:hover {
+    color: var(--text-muted, #6E6660);
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 480px) {
+    .discount-dialog {
+      padding: 1.85rem 1.25rem 1.5rem;
+      border-radius: 16px;
+    }
+
+    .discount-title {
+      font-size: 1.35rem;
+    }
+
+    .preview-thumb {
+      width: 60px;
+      height: 60px;
+    }
+
+    .time-block {
+      min-width: 50px;
+      padding: 0.25rem 0.45rem;
+    }
+
+    .time-num {
+      font-size: 1.15rem;
+    }
+
+    .discount-cta-btn {
+      font-size: 0.975rem;
+      padding: 0.85rem 1.2rem;
+    }
+  }
+</style>
+
+<script is:inline define:vars={{ delaySec: popup.delaySeconds, countdownHours: popup.countdownHours }}>
+  (function () {
+    const STORAGE_DISMISSED = 'hfi_discount_popup_dismissed';
+    const STORAGE_EXPIRY = 'hfi_discount_countdown_expiry';
+
+    const overlay = document.getElementById('discount-modal-overlay');
+    const closeBtn = document.getElementById('btn-close-discount');
+    const declineBtn = document.getElementById('btn-decline-discount');
+    const claimBtn = document.getElementById('btn-discount-claim');
+    const elHours = document.getElementById('discount-hours');
+    const elMins = document.getElementById('discount-mins');
+    const elSecs = document.getElementById('discount-secs');
+
+    if (!overlay) return;
+
+    // 1. Check if user already dismissed or claimed in this session
+    function isDismissed() {
+      try {
+        return sessionStorage.getItem(STORAGE_DISMISSED) === 'true';
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function markDismissed() {
+      try {
+        sessionStorage.setItem(STORAGE_DISMISSED, 'true');
+      } catch (e) {}
+    }
+
+    // 2. Persistent 18-Hour Countdown Timer
+    function getOrSetExpiry() {
+      try {
+        let stored = localStorage.getItem(STORAGE_EXPIRY);
+        if (stored) {
+          const num = parseInt(stored, 10);
+          if (!isNaN(num) && num > Date.now()) {
+            return num;
+          }
+        }
+        // Set new 18-hour window from now
+        const newExpiry = Date.now() + (countdownHours || 18) * 60 * 60 * 1000;
+        localStorage.setItem(STORAGE_EXPIRY, newExpiry.toString());
+        return newExpiry;
+      } catch (e) {
+        return Date.now() + 18 * 60 * 60 * 1000;
+      }
+    }
+
+    const expiryTime = getOrSetExpiry();
+
+    function updateCountdown() {
+      const now = Date.now();
+      const diff = Math.max(0, expiryTime - now);
+
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+      if (elHours) elHours.textContent = hours.toString().padStart(2, '0');
+      if (elMins) elMins.textContent = mins.toString().padStart(2, '0');
+      if (elSecs) elSecs.textContent = secs.toString().padStart(2, '0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // 3. Open Modal with Animation
+    function openModal() {
+      if (isDismissed()) return;
+
+      overlay.style.display = 'flex';
+      overlay.setAttribute('aria-hidden', 'false');
+      // Force reflow for transition
+      void overlay.offsetWidth;
+      overlay.classList.add('is-active');
+
+      // Track Impression
+      if (typeof window.trackFunnelEvent === 'function') {
+        window.trackFunnelEvent('DiscountPopupViewed', {
+          discount_percent: 45,
+          offer_price: 31,
+          currency: 'USD'
+        }, true);
+      }
+    }
+
+    // 4. Close Modal
+    function closeModal() {
+      overlay.classList.remove('is-active');
+      overlay.setAttribute('aria-hidden', 'true');
+      markDismissed();
+      setTimeout(function () {
+        overlay.style.display = 'none';
+      }, 320);
+    }
+
+    // 5. Event Listeners for Cross & Dismissal
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeModal);
+    }
+    if (declineBtn) {
+      declineBtn.addEventListener('click', closeModal);
+    }
+
+    // Close on clicking backdrop outside dialog
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) {
+        closeModal();
+      }
+    });
+
+    // Close on ESC key
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && overlay.classList.contains('is-active')) {
+        closeModal();
+      }
+    });
+
+    // When CTA is clicked, mark dismissed so it doesn't reopen
+    if (claimBtn) {
+      claimBtn.addEventListener('click', function () {
+        markDismissed();
+      });
+    }
+
+    // 6. Trigger popup 5-6 seconds after page loads (default: 5.5s)
+    if (!isDismissed()) {
+      const delayMs = Math.max(1000, (delaySec || 5.5) * 1000);
+      setTimeout(openModal, delayMs);
+    }
+  })();
+</script>

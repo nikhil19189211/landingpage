@@ -69,6 +69,21 @@ export interface OrderBumpConfig {
   description: string;
 }
 
+export interface DiscountPopupConfig {
+  enabled: boolean;
+  discountPercent: number; // 45
+  originalPrice: number; // 57
+  discountedPrice: number; // 31
+  countdownHours: number; // 18
+  delaySeconds: number; // 5.5
+  badgeText: string;
+  headline: string;
+  subheadline: string;
+  checkoutUrl: string;
+  ctaText: string;
+  declineText: string;
+}
+
 export interface OfferConfiguration {
   productName: string;
   checkoutProvider: CheckoutProvider;
@@ -87,6 +102,7 @@ export interface OfferConfiguration {
   complete: TierConfig;
   upgrade: UpgradeConfig;
   downsell: DownsellConfig;
+  discountPopup?: DiscountPopupConfig;
   metaPixelId?: string;
 }
 
@@ -323,5 +339,21 @@ export const offerConfig: OfferConfiguration = {
   },
 
   // Meta Dataset / Pixel ID
-  metaPixelId: '1195368395361870'
+  metaPixelId: '1195368395361870',
+
+  // Limited Time 45% Discount Popup
+  discountPopup: {
+    enabled: true,
+    discountPercent: 45,
+    originalPrice: 57,
+    discountedPrice: 31,
+    countdownHours: 18,
+    delaySeconds: 5.5,
+    badgeText: 'FLASH SALE • 45% OFF',
+    headline: 'Unlock The Complete Action Vault For 45% Off',
+    subheadline: 'A private welcome gift: claim everything in the Complete Action Vault before this 18-hour window closes forever.',
+    checkoutUrl: 'https://herfirstincome.gumroad.com/l/bidpfn?wanted=true&discount_code=SAVE45',
+    ctaText: 'Claim 45% Off Now — Just $31',
+    declineText: 'No thanks, I will pay full price later'
+  }
 };
