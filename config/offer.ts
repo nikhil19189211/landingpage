@@ -69,18 +69,28 @@ export interface OrderBumpConfig {
   description: string;
 }
 
+export interface DiscountPopupTier {
+  id: 'starter' | 'complete';
+  name: string;
+  badge?: string;
+  originalPrice: number;
+  discountedPrice: number;
+  pitch: string;
+  checkoutUrl: string;
+  ctaText: string;
+  image: string;
+}
+
 export interface DiscountPopupConfig {
   enabled: boolean;
   discountPercent: number; // 45
-  originalPrice: number; // 57
-  discountedPrice: number; // 31
   countdownHours: number; // 18
   delaySeconds: number; // 5.5
   badgeText: string;
   headline: string;
   subheadline: string;
-  checkoutUrl: string;
-  ctaText: string;
+  starter: DiscountPopupTier;
+  complete: DiscountPopupTier;
   declineText: string;
 }
 
@@ -341,19 +351,37 @@ export const offerConfig: OfferConfiguration = {
   // Meta Dataset / Pixel ID
   metaPixelId: '1195368395361870',
 
-  // Limited Time 45% Discount Popup
+  // Limited Time 45% Discount Popup (Both Kits)
   discountPopup: {
     enabled: true,
     discountPercent: 45,
-    originalPrice: 57,
-    discountedPrice: 31,
     countdownHours: 18,
     delaySeconds: 5.5,
     badgeText: 'FLASH SALE • 45% OFF',
-    headline: 'Unlock The Complete Action Vault For 45% Off',
-    subheadline: 'A private welcome gift: claim everything in the Complete Action Vault before this 18-hour window closes forever.',
-    checkoutUrl: 'https://herfirstincome.gumroad.com/l/bidpfn?wanted=true&discount_code=SAVE45',
-    ctaText: 'Claim 45% Off Now — Just $31',
+    headline: 'Choose Your Kit With 45% Off',
+    subheadline: 'A limited welcome gift: unlock 45% savings on either kit before this 18-hour window closes forever.',
+    starter: {
+      id: 'starter',
+      name: 'Starter Kit',
+      badge: 'Foundation Level',
+      originalPrice: 27,
+      discountedPrice: 15,
+      pitch: 'Zero-dollar tech stack, practical checklists, and the complete 145-template vault.',
+      checkoutUrl: 'https://herfirstincome.gumroad.com/l/her-first-income?wanted=true&discount_code=SAVE45',
+      ctaText: 'Get Starter for $15',
+      image: '/images/mockups/starter-pack-square.webp'
+    },
+    complete: {
+      id: 'complete',
+      name: 'Complete Action Vault',
+      badge: 'Best Value',
+      originalPrice: 57,
+      discountedPrice: 31,
+      pitch: 'Everything in Starter PLUS 38-page guide, 30-day roadmap, 9 pitch scripts, curated video library & 60+ AI prompts.',
+      checkoutUrl: 'https://herfirstincome.gumroad.com/l/bidpfn?wanted=true&discount_code=SAVE45',
+      ctaText: 'Get Complete for $31',
+      image: '/images/mockups/action-vault-square.webp'
+    },
     declineText: 'No thanks, I will pay full price later'
   }
 };

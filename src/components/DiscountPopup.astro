@@ -1,11 +1,12 @@
 ---
-// Limited-Time 45% Discount Popup Modal with 18h Countdown
+// Limited-Time 45% Discount Popup Modal with 18h Countdown (Both Kits)
 import { offerConfig } from '../../config/offer';
 
 const popup = offerConfig.discountPopup;
 if (!popup || !popup.enabled) {
   return null;
 }
+const { starter, complete } = popup;
 ---
 
 <div
@@ -75,42 +76,89 @@ if (!popup || !popup.enabled) {
         </div>
       </div>
 
-      <!-- Offer Snapshot Preview (Card + Price Comparison) -->
-      <div class="offer-preview-box">
-        <div class="preview-thumb">
-          <img
-            src="/images/mockups/action-vault-square.webp"
-            alt="Her First Income Action Vault"
-            width="120"
-            height="120"
-            loading="eager"
-            decoding="async"
-          />
-        </div>
-        <div class="preview-details">
-          <div class="preview-product-name">Complete Action Vault</div>
-          <div class="preview-specs">All 145 templates + 38-page guide + 30-day roadmap + scripts & prompts</div>
-          <div class="preview-pricing">
-            <span class="price-strikethrough">${popup.originalPrice}</span>
-            <span class="price-discounted">${popup.discountedPrice}</span>
-            <span class="price-currency">USD</span>
-            <span class="discount-savings-pill">Save 45%</span>
+      <!-- Both Kits Side-by-Side (Stacked on Mobile) -->
+      <div class="discount-tiers-grid">
+        <!-- STARTER KIT ($15) -->
+        <div class="discount-tier-card tier-starter">
+          <div class="tier-badge-row">
+            <span class="tier-pill tier-pill-neutral">{starter.badge || 'Foundation'}</span>
+            <span class="tier-save-tag">45% OFF</span>
           </div>
+
+          <div class="tier-img-wrap">
+            <img
+              src={starter.image}
+              alt="Starter Kit Mockup"
+              width="100"
+              height="100"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+
+          <div class="tier-info">
+            <h4 class="tier-name">{starter.name}</h4>
+            <div class="tier-pricing-row">
+              <span class="price-old">${starter.originalPrice}</span>
+              <span class="price-current">${starter.discountedPrice}</span>
+              <span class="price-cur">USD</span>
+            </div>
+            <p class="tier-pitch">{starter.pitch}</p>
+          </div>
+
+          <a
+            href={starter.checkoutUrl}
+            class="btn-tier-cta btn-starter-cta"
+            id="btn-discount-starter"
+            data-checkout-tier="starter-discount-45"
+            data-checkout-price={starter.discountedPrice}
+          >
+            {starter.ctaText}
+          </a>
+        </div>
+
+        <!-- COMPLETE ACTION VAULT ($31) - FEATURED -->
+        <div class="discount-tier-card tier-complete featured">
+          <div class="tier-badge-row">
+            <span class="tier-pill tier-pill-featured">{complete.badge || 'Best Value'}</span>
+            <span class="tier-save-tag save-featured">45% OFF</span>
+          </div>
+
+          <div class="tier-img-wrap">
+            <img
+              src={complete.image}
+              alt="Complete Action Vault Mockup"
+              width="100"
+              height="100"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+
+          <div class="tier-info">
+            <h4 class="tier-name">{complete.name}</h4>
+            <div class="tier-pricing-row">
+              <span class="price-old">${complete.originalPrice}</span>
+              <span class="price-current highlight">${complete.discountedPrice}</span>
+              <span class="price-cur">USD</span>
+            </div>
+            <p class="tier-pitch">{complete.pitch}</p>
+          </div>
+
+          <a
+            href={complete.checkoutUrl}
+            class="btn-tier-cta btn-complete-cta"
+            id="btn-discount-complete"
+            data-checkout-tier="complete-discount-45"
+            data-checkout-price={complete.discountedPrice}
+          >
+            {complete.ctaText}
+          </a>
         </div>
       </div>
 
-      <!-- Action Button -->
-      <div class="discount-actions">
-        <a
-          href={popup.checkoutUrl}
-          class="btn-primary discount-cta-btn"
-          id="btn-discount-claim"
-          data-checkout-tier="complete-discount-45"
-          data-checkout-price={popup.discountedPrice}
-        >
-          {popup.ctaText}
-        </a>
-
+      <!-- Footer Microcopy & Dismissal -->
+      <div class="discount-footer">
         <div class="discount-microcopy">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
@@ -143,8 +191,8 @@ if (!popup || !popup.enabled) {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.25rem;
-    background-color: rgba(35, 29, 25, 0.72);
+    padding: 1rem;
+    background-color: rgba(35, 29, 25, 0.75);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     opacity: 0;
@@ -159,15 +207,15 @@ if (!popup || !popup.enabled) {
   .discount-dialog {
     position: relative;
     width: 100%;
-    max-width: 520px;
+    max-width: 640px;
     background-color: #FFFFFF;
     border: 1px solid var(--border-light, #EBE5DB);
     border-radius: 20px;
-    box-shadow: 0 24px 60px rgba(43, 37, 33, 0.28), 0 4px 16px rgba(43, 37, 33, 0.08);
-    padding: 2.25rem 2rem 1.85rem;
+    box-shadow: 0 24px 64px rgba(43, 37, 33, 0.3), 0 4px 16px rgba(43, 37, 33, 0.08);
+    padding: 2.25rem 2rem 1.75rem;
     transform: scale(0.93) translateY(12px);
     transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
-    max-height: 92vh;
+    max-height: 94vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -209,7 +257,7 @@ if (!popup || !popup.enabled) {
   .discount-badge-wrap {
     display: flex;
     justify-content: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.85rem;
   }
 
   .discount-badge {
@@ -244,20 +292,20 @@ if (!popup || !popup.enabled) {
   /* Typography */
   .discount-title {
     font-family: var(--font-serif, "Playfair Display", Georgia, serif);
-    font-size: 1.6rem;
+    font-size: 1.55rem;
     line-height: 1.25;
     color: var(--text-headline, #2B2521);
     text-align: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
   }
 
   .discount-sub {
-    font-size: 0.925rem;
+    font-size: 0.9rem;
     line-height: 1.45;
     color: var(--text-muted, #6E6660);
     text-align: center;
-    margin-bottom: 1.25rem;
-    max-width: 440px;
+    margin-bottom: 1.1rem;
+    max-width: 480px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -267,7 +315,7 @@ if (!popup || !popup.enabled) {
     background-color: var(--bg-surface-subtle, #F6F3EC);
     border: 1px solid var(--border-light, #EBE5DB);
     border-radius: 12px;
-    padding: 0.85rem 1rem;
+    padding: 0.75rem 1rem;
     margin-bottom: 1.25rem;
     text-align: center;
   }
@@ -276,17 +324,17 @@ if (!popup || !popup.enabled) {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    font-size: 0.8rem;
+    font-size: 0.775rem;
     font-weight: 600;
     color: var(--text-headline, #2B2521);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.45rem;
   }
 
   .countdown-display {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.45rem;
+    gap: 0.4rem;
   }
 
   .time-block {
@@ -296,14 +344,14 @@ if (!popup || !popup.enabled) {
     background-color: #FFFFFF;
     border: 1px solid var(--border-medium, #DCD4C7);
     border-radius: 8px;
-    padding: 0.35rem 0.65rem;
-    min-width: 58px;
+    padding: 0.3rem 0.6rem;
+    min-width: 54px;
     box-shadow: 0 2px 5px rgba(43, 37, 33, 0.04);
   }
 
   .time-num {
     font-family: var(--font-sans, -apple-system, sans-serif);
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     font-weight: 800;
     color: var(--terracotta, #C85A3A);
     line-height: 1.1;
@@ -311,7 +359,7 @@ if (!popup || !popup.enabled) {
   }
 
   .time-unit {
-    font-size: 0.65rem;
+    font-size: 0.625rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--text-light, #948B84);
@@ -320,139 +368,195 @@ if (!popup || !popup.enabled) {
   }
 
   .time-colon {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: var(--text-light, #948B84);
-    margin-top: -0.8rem;
+    margin-top: -0.7rem;
   }
 
-  /* Offer Preview Snapshot */
-  .offer-preview-box {
-    display: flex;
-    align-items: center;
+  /* Two-Tier Cards Grid */
+  .discount-tiers-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 1rem;
-    padding: 0.85rem;
-    background-color: #FFFFFF;
-    border: 1px dashed var(--border-medium, #DCD4C7);
-    border-radius: 12px;
     margin-bottom: 1.25rem;
   }
 
-  .preview-thumb {
-    flex-shrink: 0;
-    width: 72px;
-    height: 72px;
+  .discount-tier-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    border: 1.5px solid var(--border-medium, #DCD4C7);
+    border-radius: 14px;
+    padding: 1.15rem 1rem 1rem;
+    position: relative;
+    transition: all 0.2s ease;
+  }
+
+  .discount-tier-card.featured {
+    border-color: var(--terracotta, #C85A3A);
+    background-color: #FFFAF8;
+    box-shadow: 0 4px 16px rgba(200, 90, 58, 0.1);
+  }
+
+  .tier-badge-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+
+  .tier-pill {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-pill, 9999px);
+  }
+
+  .tier-pill-neutral {
+    background-color: var(--bg-surface-subtle, #F6F3EC);
+    color: var(--text-muted, #6E6660);
+    border: 1px solid var(--border-light, #EBE5DB);
+  }
+
+  .tier-pill-featured {
+    background-color: var(--terracotta, #C85A3A);
+    color: #FFFFFF;
+  }
+
+  .tier-save-tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--success-green, #3F704D);
+    background-color: var(--success-bg, #EDF5F0);
+    padding: 0.2rem 0.45rem;
+    border-radius: var(--radius-pill, 9999px);
+  }
+
+  .tier-img-wrap {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 0.75rem;
     border-radius: 8px;
     overflow: hidden;
     background-color: var(--bg-surface-subtle, #F6F3EC);
-    box-shadow: 0 2px 8px rgba(43, 37, 33, 0.08);
+    box-shadow: 0 2px 6px rgba(43, 37, 33, 0.08);
   }
 
-  .preview-thumb img {
+  .tier-img-wrap img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
   }
 
-  .preview-details {
+  .tier-info {
+    text-align: center;
     flex: 1;
-    min-width: 0;
+    margin-bottom: 0.85rem;
   }
 
-  .preview-product-name {
-    font-weight: 700;
-    font-size: 0.95rem;
+  .tier-name {
+    font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+    font-size: 1.1rem;
     color: var(--text-headline, #2B2521);
+    margin-bottom: 0.35rem;
     line-height: 1.2;
-    margin-bottom: 0.2rem;
   }
 
-  .preview-specs {
-    font-size: 0.775rem;
-    color: var(--text-muted, #6E6660);
-    line-height: 1.35;
-    margin-bottom: 0.45rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .preview-pricing {
+  .tier-pricing-row {
     display: flex;
     align-items: baseline;
-    gap: 0.45rem;
+    justify-content: center;
+    gap: 0.35rem;
+    margin-bottom: 0.5rem;
   }
 
-  .price-strikethrough {
-    font-size: 0.9rem;
+  .price-old {
+    font-size: 0.85rem;
     color: var(--text-light, #948B84);
     text-decoration: line-through;
   }
 
-  .price-discounted {
-    font-size: 1.45rem;
+  .price-current {
+    font-size: 1.35rem;
     font-weight: 800;
-    color: var(--terracotta, #C85A3A);
+    color: var(--text-headline, #2B2521);
     line-height: 1;
   }
 
-  .price-currency {
-    font-size: 0.75rem;
+  .price-current.highlight {
+    color: var(--terracotta, #C85A3A);
+  }
+
+  .price-cur {
+    font-size: 0.7rem;
     font-weight: 600;
     color: var(--text-muted, #6E6660);
   }
 
-  .discount-savings-pill {
-    margin-left: auto;
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    background-color: var(--success-bg, #EDF5F0);
-    color: var(--success-green, #3F704D);
-    padding: 0.2rem 0.5rem;
-    border-radius: var(--radius-pill, 9999px);
-    letter-spacing: 0.03em;
+  .tier-pitch {
+    font-size: 0.76rem;
+    color: var(--text-muted, #6E6660);
+    line-height: 1.35;
   }
 
-  /* Actions */
-  .discount-actions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.65rem;
-  }
-
-  .discount-cta-btn {
+  /* CTAs */
+  .btn-tier-cta {
     width: 100%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.95rem 1.5rem;
-    font-size: 1.05rem;
+    padding: 0.75rem 0.9rem;
+    font-size: 0.9rem;
     font-weight: 700;
     text-decoration: none;
     border-radius: var(--radius-pill, 9999px);
-    background-color: var(--terracotta, #C85A3A);
-    color: #FFFFFF;
-    box-shadow: 0 4px 16px rgba(200, 90, 58, 0.32);
     transition: all 0.2s ease;
     border: none;
     cursor: pointer;
+    text-align: center;
   }
 
-  .discount-cta-btn:hover {
+  .btn-starter-cta {
+    background-color: var(--bg-surface-subtle, #F6F3EC);
+    color: var(--text-headline, #2B2521);
+    border: 1.5px solid var(--border-medium, #DCD4C7);
+  }
+
+  .btn-starter-cta:hover {
+    background-color: #EFEBE2;
+    border-color: var(--text-muted, #6E6660);
+    transform: translateY(-1px);
+  }
+
+  .btn-complete-cta {
+    background-color: var(--terracotta, #C85A3A);
+    color: #FFFFFF;
+    box-shadow: 0 3px 12px rgba(200, 90, 58, 0.3);
+  }
+
+  .btn-complete-cta:hover {
     background-color: var(--terracotta-hover, #B44D2F);
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(200, 90, 58, 0.4);
+    box-shadow: 0 5px 16px rgba(200, 90, 58, 0.4);
+  }
+
+  /* Footer */
+  .discount-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .discount-microcopy {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    font-size: 0.75rem;
+    font-size: 0.725rem;
     color: var(--text-light, #948B84);
     text-align: center;
   }
@@ -461,13 +565,12 @@ if (!popup || !popup.enabled) {
     background: none;
     border: none;
     color: var(--text-light, #948B84);
-    font-size: 0.8rem;
+    font-size: 0.775rem;
     text-decoration: underline;
     text-underline-offset: 3px;
     cursor: pointer;
-    padding: 0.25rem 0.5rem;
+    padding: 0.2rem 0.5rem;
     transition: color 0.15s ease;
-    margin-top: 0.2rem;
   }
 
   .discount-decline-link:hover {
@@ -475,33 +578,36 @@ if (!popup || !popup.enabled) {
   }
 
   /* Mobile responsiveness */
-  @media (max-width: 480px) {
+  @media (max-width: 560px) {
     .discount-dialog {
-      padding: 1.85rem 1.25rem 1.5rem;
+      padding: 1.75rem 1.15rem 1.4rem;
       border-radius: 16px;
     }
 
     .discount-title {
-      font-size: 1.35rem;
+      font-size: 1.3rem;
     }
 
-    .preview-thumb {
-      width: 60px;
-      height: 60px;
+    .discount-tiers-grid {
+      grid-template-columns: 1fr;
+      gap: 0.85rem;
+    }
+
+    .discount-tier-card {
+      padding: 0.9rem 0.85rem;
+    }
+
+    .tier-img-wrap {
+      display: none;
     }
 
     .time-block {
-      min-width: 50px;
+      min-width: 48px;
       padding: 0.25rem 0.45rem;
     }
 
     .time-num {
       font-size: 1.15rem;
-    }
-
-    .discount-cta-btn {
-      font-size: 0.975rem;
-      padding: 0.85rem 1.2rem;
     }
   }
 </style>
@@ -514,7 +620,8 @@ if (!popup || !popup.enabled) {
     const overlay = document.getElementById('discount-modal-overlay');
     const closeBtn = document.getElementById('btn-close-discount');
     const declineBtn = document.getElementById('btn-decline-discount');
-    const claimBtn = document.getElementById('btn-discount-claim');
+    const starterBtn = document.getElementById('btn-discount-starter');
+    const completeBtn = document.getElementById('btn-discount-complete');
     const elHours = document.getElementById('discount-hours');
     const elMins = document.getElementById('discount-mins');
     const elSecs = document.getElementById('discount-secs');
@@ -587,7 +694,8 @@ if (!popup || !popup.enabled) {
       if (typeof window.trackFunnelEvent === 'function') {
         window.trackFunnelEvent('DiscountPopupViewed', {
           discount_percent: 45,
-          offer_price: 31,
+          starter_price: 15,
+          complete_price: 31,
           currency: 'USD'
         }, true);
       }
@@ -625,9 +733,14 @@ if (!popup || !popup.enabled) {
       }
     });
 
-    // When CTA is clicked, mark dismissed so it doesn't reopen
-    if (claimBtn) {
-      claimBtn.addEventListener('click', function () {
+    // When either CTA is clicked, mark dismissed so it doesn't reopen
+    if (starterBtn) {
+      starterBtn.addEventListener('click', function () {
+        markDismissed();
+      });
+    }
+    if (completeBtn) {
+      completeBtn.addEventListener('click', function () {
         markDismissed();
       });
     }
